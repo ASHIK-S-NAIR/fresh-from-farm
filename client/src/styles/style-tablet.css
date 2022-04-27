@@ -1,0 +1,123 @@
+@media screen and (max-width: 1024px ){
+    /* general settings starts */
+
+    .wrap{
+        width: 92%;
+    }
+    /* general settings ends */
+
+    /* nav section starts */
+
+    .nav-wrap-mobile{
+        display: none;
+    }
+
+    .nav-wrap{
+        height: 4em;
+    }
+
+    .nav-link{
+        font-size: 0.875rem;
+    }
+
+    .nav-logo{
+        font-size: 1.563rem;
+    }
+
+    .nav-btn{
+        font-size: 0.875rem;
+    }
+    /* nav section ends */
+
+    /* shop section starts */
+
+    .products-wrap{
+        grid-template-columns: repeat(4, 11.75em);
+    }
+
+    .product-sec{
+        height: 16.5em;
+        padding: 0.8em;
+    }
+
+    .product-category-sec{
+        width: 3.5em;
+        height: 1em;
+    }
+
+    .product-category{
+        font-size: 0.625rem;
+    }
+
+    .product-name{
+        font-size: 0.875rem;
+    }
+
+    .product-stock{
+        font-size: 0.625rem;
+    }
+
+    .product-price{
+        font-size: 1.125rem;
+    }
+
+    /* shop section ends */
+
+    /* productDetail section starts */
+
+    .productDetail-img-sec{
+        padding-right: 2.3em;
+    }
+
+    .productDetail-img-container{
+        width: 18.75em;
+        height: 18.75em;
+    }
+
+    .productDetail-category-sec{
+        width: 6em;
+        height: 1.6em;
+    }
+
+    .productDetail-category{
+        font-size: 0.813rem;
+    }
+
+    .productDetail-info{
+        padding-left: 2.3em;
+    }
+
+    .productDetail-name{
+        font-size: 1.563rem;
+    }
+
+    .productDetail-price{
+        font-size: 1.063rem;
+    }
+
+    .productDetail-description{
+        font-size: 0.813rem;
+    }
+
+    .productDetail-stock{
+        font-size: 1rem;
+    }
+
+    .productDetail-quantity-p{
+        font-size: 0.75rem;
+    }
+
+    .productDetail-quantity{
+        width: 3.5em;
+        height: 1.688em;
+        font-size: 0.875rem;
+    }
+
+    .productDetail-btn{
+        font-size: 0.938rem;
+        width: 13.25em;
+        height: 2.5em;
+    }
+
+/* productDetail section ends */
+}

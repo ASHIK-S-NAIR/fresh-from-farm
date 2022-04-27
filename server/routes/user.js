@@ -1,0 +1,33 @@
+const express = require("express");
+const router = express.Router();
+
+const {getUserById, getUser, getAllUsers, updateUser, deleteUser, addToUserCart,  updateFromUserCart, deleteFromUserCart} = require("../controllers/user");
+const {isSignedIn, isAuthenticated, isAdmin} = require("../controllers/auth");
+
+// params
+router.param('userId', getUserById);
+
+// routes
+// getUser
+router.get("/user/:userId", isSignedIn, isAuthenticated, getUser);
+
+// getAllUsers
+router.get("/user/allusers/:userId", isSignedIn, isAuthenticated, isAdmin, getAllUsers);
+
+// updateUser
+router.put("/user/:userId", isSignedIn, isAuthenticated, updateUser);
+
+// deleteUser
+router.delete("/user/:userId", isSignedIn, isAuthenticated, deleteUser);
+
+// addtousercart
+router.post("/user/addtocart/:userId", isSignedIn, isAuthenticated, addToUserCart);
+
+// updateFromUserCart
+router.post("/user/updatecart/:userId", isSignedIn, isAuthenticated, updateFromUserCart);
+
+// deleteFromUserCart
+router.post("/user/deletecart/:userId", isSignedIn, isAuthenticated, deleteFromUserCart);
+
+
+module.exports = router;
