@@ -16,22 +16,21 @@ const Login = () => {
     setValues({ ...values, [name]: event.target.value });
   };
 
-  const handleSubmit = async () => {
-    console.log(`email : ${email}`);
-    console.log(`password : ${password}`);
-
-    try {
-      const data = await login({email, password});
+  const onSubmit = async (event) => {
+    // event.preventDefault();
+   await login({email, password})
+   .then((data) => {
+    console.log("Data", + data)
       if(data.error){
-        console.log(data.error);
+        console.log(data);
       }else{
         console.log(data);
-        authenticate(data);
+        // authenticate(data);
         setAuthActive(null);
       }
-    } catch (error) {
+   })
+   .catch(error => console.log(error))
       
-    }
   }
   return (
     <section className="login-section">
@@ -69,7 +68,7 @@ const Login = () => {
                   />
                 </div>
               </div>
-              <button className="popup-form-btn" onClick={() => handleSubmit()}>Log In</button>
+              <button className="popup-form-btn" onClick={() => onSubmit()}>Log In</button>
             </div>
           </div>
         </div>

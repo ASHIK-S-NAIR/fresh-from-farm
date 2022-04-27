@@ -18,10 +18,7 @@ exports.signup = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  // console.log("login started");
   try {
-    // const { email, password } = req.body;
-
     if (!req.body.email) {
       return res.status(400).json({
         message: "Email not found",
@@ -47,12 +44,9 @@ exports.login = async (req, res) => {
         message: "Email and password does not match",
       });
     }
-    // console.log("reached here")
 
-    // console.log(user);
-
-    const token = await jwt.sign({ _id: user._id }, process.env.SECRET);
-    await res.cookie("token", token, { expire: new Date() + 9999 });
+    const token = jwt.sign({ _id: user._id }, process.env.SECRET);
+    res.cookie("token", token, { expire: new Date() + 9999 });
 
     const {_id, name, email, role} = user;
 

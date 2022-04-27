@@ -1,15 +1,22 @@
 import {API} from '../backend';
-import axios from 'axios';
-
+// import axios from 'axios';
 
 export const login = async (user) => {
-    try {
-        const response = await axios.post(`${API}/login`, user);
-        console.log(response.data);
-        return response.data;
-    } catch (error) {
-        console.log(error);
-    }
+    await fetch(`${API}/login`, {
+        method : "POST",
+        body: JSON.stringify(user),
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+        }
+    }).then((response) => {
+        console.log(response);
+        return response;
+    })
+    .catch((error) => {
+        console.log(error)
+    })
+
 }
 
 export const authenticate = (data) => {
