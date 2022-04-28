@@ -16,7 +16,6 @@ export const login = async (user) => {
     .catch((error) => {
         console.log(error)
     })
-
 }
 
 export const authenticate = (data) => {

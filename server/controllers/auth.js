@@ -29,19 +29,19 @@ exports.login = async (req, res) => {
 
     if (!user) {
       return res.status(400).json({
-        message: "User with this email not found",
+        error: "User with this email not found",
       });
     }
 
     if (!req.body.password) {
       return res.status(400).json({
-        message: "Password not found",
+        error: "Password not found",
       });
     }
 
     if (!user.authenticate(req.body.password)) {
       return res.status(400).json({
-        message: "Email and password does not match",
+        error: "Email and password does not match",
       });
     }
 
@@ -54,7 +54,7 @@ exports.login = async (req, res) => {
   } catch (error) {
     console.log(error.message);
     return res.status(400).json({
-      message: "Failed to Login In",
+      error: "Failed to Login In",
     });
   }
 };

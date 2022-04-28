@@ -17,20 +17,17 @@ const Login = () => {
   };
 
   const onSubmit = async (event) => {
-    // event.preventDefault();
-   await login({email, password})
-   .then((data) => {
-    console.log("Data", + data)
-      if(data.error){
-        console.log(data);
+    await login({email, password})
+    .then((data) => {
+      console.log(`Data : ${data}`);
+      if(data.status >= 400){
+        console.log("error :" + data.status);
       }else{
-        console.log(data);
-        // authenticate(data);
-        setAuthActive(null);
+        authenticate(data);
+        // setAuthActive(null);
       }
-   })
-   .catch(error => console.log(error))
-      
+    })
+   
   }
   return (
     <section className="login-section">
