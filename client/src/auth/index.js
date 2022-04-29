@@ -1,37 +1,54 @@
-import {API} from '../backend';
-// import axios from 'axios';
+import { API } from "../backend";
 
-export const login = async (user) => {
-    await fetch(`${API}/login`, {
-        method : "POST",
-        body: JSON.stringify(user),
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
-        }
-    }).then((response) => {
-        console.log(response);
-        return response;
-    })
-    .catch((error) => {
-        console.log(error)
-    })
-}
+export const login = async ({ email, password }) => {
+  try {
+    const result = await fetch(`${API}/login`, {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return result.json();
+  } catch (error) {
+    console.log(error);
+    // return error;
+  }
+};
+
+export const logout = async (next) => {
+  console.log("reached here");
+  try {
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("jwt");
+    }
+    next();
+
+    const result = await fetch(`${API}/logout`, {
+      method: "GET",
+    });
+
+    console.log(result);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const authenticate = (data) => {
-    if(typeof window !== "undefined"){
-        localStorage.setItem("jwt", JSON.stringify(data));
-    }
-}
+  if (typeof window !== "undefined") {
+    localStorage.setItem("jwt", JSON.stringify(data));
+  }
+};
 
 export const isAuthenticated = () => {
-    if(typeof window == "undefined"){
-        return false;
-    }
+  if (typeof window == "undefined") {
+    return false;
+  }
 
-    if(localStorage.getItem("jwt")){
-        return JSON.parse(localStorage.getItem("jwt"));
-    }else{
-        return false;
-    }
-}
+  if (localStorage.getItem("jwt")) {
+    return JSON.parse(localStorage.getItem("jwt"));
+  } else {
+    return false;
+  }
+};

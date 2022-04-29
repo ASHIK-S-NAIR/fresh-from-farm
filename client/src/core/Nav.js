@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/Context";
-import { isAuthenticated } from "../auth/index";
+import { isAuthenticated, logout } from "../auth/index";
 import Signup from "../user/Signup";
 import Login from "../user/Login";
+
 
 const Nav = () => {
   const [active, setActive] = useState(false);
@@ -21,6 +22,8 @@ const Nav = () => {
   const toggle = () => {
     setToggled(!toggled);
   };
+
+  const navigate = useNavigate();
 
   return (
     <section className="nav-section">
@@ -77,7 +80,7 @@ const Nav = () => {
                     <li className="nav-drop-li">My Accounts</li>
                     <li className="nav-drop-li">My Settings</li>
                     <li className="nav-drop-li">
-                      <button className="nav-drop-btn">Log Out</button>
+                      <button className="nav-drop-btn" onClick={() => {logout(() => navigate("/"))}}>Log Out</button>
                     </li>
                   </ul>
                 )}
@@ -103,7 +106,7 @@ const Nav = () => {
                     <li className="nav-drop-li">Accounts</li>
                     <li className="nav-drop-li">Settings</li>
                     <li className="nav-drop-li">
-                      <button className="nav-drop-btn">Log Out</button>
+                      <button className="nav-drop-btn" onClick={() => {logout(() => navigate("/"))}}>Log Out</button>
                     </li>
                   </ul>
                 )}
@@ -133,7 +136,7 @@ const Nav = () => {
                       <button className="nav-drop-btn">Make Available</button>
                     </li>
                     <li className="nav-drop-li">
-                      <button className="nav-drop-btn">Log Out</button>
+                      <button className="nav-drop-btn" onClick={() => {logout(() => navigate("/"))}} >Log Out</button>
                     </li>
                   </ul>
                 )}
@@ -153,7 +156,7 @@ const Nav = () => {
                 <button className="nav-btn">Sign Up</button>
               </li>
               <li className="nav-li nav-border">
-                <button className="nav-btn">Log In</button>
+                <button className="nav-btn" onClick={() => setAuthActive('login')}>Log In</button>
               </li>
               <li className="nav-li">
                 <div
@@ -193,7 +196,7 @@ const Nav = () => {
                   <li className="nav-drop-li">My Accounts</li>
                   <li className="nav-drop-li">My Settings</li>
                   <li className="nav-drop-li">
-                    <button className="nav-drop-btn">Log Out</button>
+                    <button className="nav-drop-btn" onClick={() => {logout(() => navigate("/")); toggle()}}>Log Out</button>
                   </li>
                 </ul>
               </li>
@@ -219,7 +222,7 @@ const Nav = () => {
                   <li className="nav-drop-li">Accounts</li>
                   <li className="nav-drop-li">Settings</li>
                   <li className="nav-drop-li">
-                    <button className="nav-drop-btn">Log Out</button>
+                    <button className="nav-drop-btn" onClick={() => {toggle(); logout(() => navigate("/")); }} >Log Out</button>
                   </li>
                 </ul>
               </li>
@@ -249,7 +252,7 @@ const Nav = () => {
                     <button className="nav-drop-btn">Make Available</button>
                   </li>
                   <li className="nav-drop-li">
-                    <button className="nav-drop-btn">Log Out</button>
+                    <button className="nav-drop-btn" onClick={() => {logout(() => navigate("/"))}}>Log Out</button>
                   </li>
                 </ul>
               </li>

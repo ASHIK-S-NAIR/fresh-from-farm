@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { login, authenticate} from "../auth";
+import { login, authenticate } from "../auth";
 import { AuthContext } from "../context/Context";
 
 const Login = () => {
@@ -16,19 +16,19 @@ const Login = () => {
     setValues({ ...values, [name]: event.target.value });
   };
 
-  const onSubmit = async (event) => {
-    await login({email, password})
-    .then((data) => {
-      console.log(`Data : ${data}`);
-      if(data.status >= 400){
-        console.log("error :" + data.status);
-      }else{
-        authenticate(data);
-        // setAuthActive(null);
+  const onSubmit =  async () => {
+    try {
+      const data = await login({ email, password });
+
+      if (data.error) {
+        return console.log(data.error);
       }
-    })
-   
-  }
+      authenticate(data);
+      setAuthActive(null);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <section className="login-section">
       <div className="black-background">
@@ -65,7 +65,9 @@ const Login = () => {
                   />
                 </div>
               </div>
-              <button className="popup-form-btn" onClick={() => onSubmit()}>Log In</button>
+              <button className="popup-form-btn" onClick={() => onSubmit()}>
+                Log In
+              </button>
             </div>
           </div>
         </div>

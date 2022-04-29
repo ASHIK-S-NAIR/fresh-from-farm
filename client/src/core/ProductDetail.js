@@ -25,26 +25,28 @@ const ProductDetail = () => {
 
   useEffect(() => {
     loadProduct(productId);
-  }, [product]);
+  }, []);
   return (
     <section className="productDetail">
       <div className="wrap productDetail-wrap">
         <div className="productDetail-img-sec">
           <div className="productDetail-img-container">
-          <div
-            className={`productDetail-category-sec ${
-              product.pCategory === "vegetable" ? "color-green" : "color-orange"
-            }`}
-          >
-            <p className="productDetail-category">
-              {product.pCategory === "vegetable" ? "Veg" : "Fruit"}
-            </p>
-          </div>
-          <img
-            src={`${API}/product/photo/${productId}`}
-            alt=""
-            className="productDetail-img"
-          />
+            <div
+              className={`productDetail-category-sec ${
+                product.pCategory === "vegetable"
+                  ? "color-green"
+                  : "color-orange"
+              }`}
+            >
+              <p className="productDetail-category">
+                {product.pCategory === "vegetable" ? "Veg" : "Fruit"}
+              </p>
+            </div>
+            <img
+              src={`${API}/product/photo/${productId}`}
+              alt=""
+              className="productDetail-img"
+            />
           </div>
         </div>
         <div className="productDetail-info">
