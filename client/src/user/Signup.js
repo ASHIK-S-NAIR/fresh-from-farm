@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { signup } from "../../../server/controllers/auth";
 import { AuthContext } from "../context/Context";
 
 const Signup = () => {
@@ -30,6 +31,16 @@ const Signup = () => {
       houseName,
       streetName
     }
+  }
+
+  try {
+    const data = await signup({name, email, phone, password, address});
+
+    if(data.error){
+      return console.log(data.error)
+    }
+  } catch (error) {
+    
   }
 
   return (
