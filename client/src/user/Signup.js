@@ -44,6 +44,18 @@ const Signup = () => {
       return console.log("Please fill all the fields")
     }
 
+    if(!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))){
+      return console.log("Please enter an email address")
+    }
+
+    if(phoneNumber.length !== 10){
+      return console.log("Please enter a valid phone Number");
+    }
+
+    if(password.length < 6){
+      return console.log("Password must have atleast 8 characters")
+    }
+
     if (!(password === confirmPassword)) {
       return console.log("Password does not match");
     }
