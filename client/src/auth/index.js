@@ -1,5 +1,21 @@
 import { API } from "../backend";
 
+export const signup = async ({name, email, phoneNumber, password, address}) => {
+  try{
+    const result = await fetch(`${API}/signup`, {
+      method: "POST",
+      body: JSON.stringify({name, email, phoneNumber, password, address}),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    
+    return result.json();
+  }catch(error){
+    console.log(error);
+  }
+}
+
 export const login = async ({ email, password }) => {
   try {
     const result = await fetch(`${API}/login`, {
@@ -18,7 +34,6 @@ export const login = async ({ email, password }) => {
 };
 
 export const logout = async (next) => {
-  console.log("reached here");
   try {
     if (typeof window !== "undefined") {
       localStorage.removeItem("jwt");

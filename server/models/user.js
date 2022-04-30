@@ -27,7 +27,7 @@ const userSchema = new Schema(
       houseName: {
         type: String,
       },
-      street: {
+      streetName: {
         type: String,
       },
     },

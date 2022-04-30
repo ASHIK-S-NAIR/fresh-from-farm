@@ -3,14 +3,16 @@ const jwt = require("jsonwebtoken");
 const expressJWT = require("express-jwt");
 
 exports.signup = async (req, res) => {
+  const {name, email, phoneNumber, password, address} = req.body;
   try {
-    const user = await User.create(req.body);
+    const user = await User.create({name, email, phoneNumber, password, address});
     await user.save();
     user.encry_password = undefined;
     user.createdAt = undefined;
     user.updatedAt = undefined;
     return res.json(user);
   } catch (error) {
+    console.log(error);
     return res.status(400).json({
       message: "Failed to create a user in DB",
     });
@@ -18,51 +20,10 @@ exports.signup = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  // try {
-  //   if (!req.body.email) {
-  //     return res.status(400).json({
-  //       message: "Email not found",
-  //     });
-  //   }
-
-  //   const user = await User.findOne({ email: req.body.email });
-
-  //   if (!user) {
-  //     return res.status(400).json({
-  //       error: "User with this email not found",
-  //     });
-  //   }
-
-  //   if (!req.body.password) {
-  //     return res.status(400).json({
-  //       error: "Password not found",
-  //     });
-  //   }
-
-  //   if (!user.authenticate(req.body.password)) {
-  //     return res.status(400).json({
-  //       error: "Email and password does not match",
-  //     });
-  //   }
-
-  //   const token = jwt.sign({ _id: user._id }, process.env.SECRET);
-  //   res.cookie("token", token, { expire: new Date() + 9999 });
-
-  //   const {_id, name, email, role} = user;
-
-  //   return res.json({ token, user: { _id, name, email, role } });
-  // } catch (error) {
-  //   console.log(error.message);
-  //   return res.status(400).json({
-  //     error: "Failed to Login In",
-  //   });
-  // }
-
-  try {
   const { email, password } = req.body;
+  try {
 
   const user = await User.findOne({ email })
-
   if (!user) {
     return res.status(400).json({
       error: "Invalid email or password",
