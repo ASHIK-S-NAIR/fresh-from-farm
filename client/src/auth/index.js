@@ -29,7 +29,6 @@ export const login = async ({ email, password }) => {
     return result.json();
   } catch (error) {
     console.log(error);
-    // return error;
   }
 };
 

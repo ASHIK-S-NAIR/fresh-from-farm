@@ -13,6 +13,9 @@ const Signup = () => {
     confirmPassword: "",
     houseName: "",
     streetName: "",
+    error: "",
+    loading: "",
+    success: false,
   });
 
   const {
@@ -23,13 +26,19 @@ const Signup = () => {
     confirmPassword,
     houseName,
     streetName,
+    error,
+    loading,
+    success,
   } = values;
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
   };
 
-  const onSubmit = async () => {
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    setValues({ ...values, loading: "loading" });
+
     if (
       !(
         name &&
@@ -41,23 +50,53 @@ const Signup = () => {
         streetName
       )
     ) {
-      return console.log("Please fill all the fields")
+      console.log("Please fill all the fields");
+      return setValues({
+        ...values,
+        loading: "",
+        success: false,
+        error: "Fill all the fields",
+      });
     }
 
-    if(!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))){
-      return console.log("Please enter an email address")
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      console.log("Please enter a valid email address");
+      return setValues({
+        ...values,
+        loading: "",
+        success: false,
+        error: "Enter valid email",
+      });
     }
 
-    if(phoneNumber.length !== 10){
-      return console.log("Please enter a valid phone Number");
+    if (phoneNumber.length !== 10) {
+      console.log("Please enter a valid phone Number");
+      return setValues({
+        ...values,
+        loading: "",
+        success: false,
+        error: "Enter valid phone Number",
+      });
     }
 
-    if(password.length < 6){
-      return console.log("Password must have atleast 8 characters")
+    if (password.length < 6) {
+      console.log("Password must have atleast 6 characters");
+      return setValues({
+        ...values,
+        loading: "",
+        success: false,
+        error: "password must be at least 6 characters",
+      });
     }
 
     if (!(password === confirmPassword)) {
-      return console.log("Password does not match");
+      console.log("Password confirmation does not match");
+      return setValues({
+        ...values,
+        loading: "",
+        success: false,
+        error: "Password confirmation does not match",
+      });
     }
 
     const address = {
@@ -69,17 +108,65 @@ const Signup = () => {
       var data = await signup({ name, email, phoneNumber, password, address });
 
       if (data.error) {
-        return console.log(data.error);
+        console.log(data.error);
+        return setValues({
+          ...values,
+          loading: "",
+          success: false,
+          error: data.error,
+        });
       }
       data = await login({ email, password });
       if (data.error) {
-        return console.log(data.error);
+        console.log(data.error);
+        return setValues({
+          ...values,
+          loading: "",
+          success: false,
+          error: data.error,
+        });
       }
       authenticate(data);
       setAuthActive(null);
+      console.log("success");
+      return setValues({
+        name: "",
+        email: "",
+        phoneNumber: "",
+        password: "",
+        confirmPassword: "",
+        houseName: "",
+        streetName: "",
+        success: true,
+        error: "",
+        loading: "",
+      });
     } catch (error) {
       console.log(error);
+      return setValues({
+        ...values,
+        loading: "",
+        success: false,
+        error: error,
+      });
     }
+  };
+
+  const errorMessage = () => {
+    return (
+      <div className="errorMessage-sec">
+        <div
+          className="errorMessage-cross-sec"
+          onClick={() => setValues({ ...values, error: "" })}
+        >
+          <div className="errorMessage-cross-one"></div>
+          <div className="errorMessage-cross-two"></div>
+        </div>
+        <div className="errorMessage-msg-sec">
+          <p className="errorMessage-msg">{error}</p>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -120,7 +207,7 @@ const Signup = () => {
                 <div className="popup-form-group">
                   <label className="popup-form-label">Phone</label>
                   <input
-                    type="text"
+                    type="number"
                     className="popup-form-input"
                     value={phoneNumber}
                     onChange={handleChange("phoneNumber")}
@@ -170,12 +257,13 @@ const Signup = () => {
                   </div>
                 </div>
               </div>
-              <button className="popup-form-btn" onClick={() => onSubmit()}>
+              <button className="popup-form-btn" onClick={onSubmit}>
                 Sign Up
               </button>
             </div>
           </div>
         </div>
+        {error && errorMessage()}
       </div>
     </section>
   );

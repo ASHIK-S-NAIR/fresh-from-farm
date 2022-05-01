@@ -145,6 +145,9 @@ const Nav = () => {
           )}
         </div>
       </div>
+
+      {/* nav-mobile section starts */}
+
       <div className="wrap nav-wrap-mobile">
         <Link className="nav-logo" to="/">
           fresh from farm
@@ -153,7 +156,7 @@ const Nav = () => {
           {!isAuthenticated() && (
             <ul className="nav-ul">
               <li className="nav-li">
-                <button className="nav-btn">Sign Up</button>
+                <button className="nav-btn" onClick={() => setAuthActive('signup')}>Sign Up</button>
               </li>
               <li className="nav-li nav-border">
                 <button className="nav-btn" onClick={() => setAuthActive('login')}>Log In</button>
@@ -260,6 +263,9 @@ const Nav = () => {
           )}
         </div>
       </div>
+
+      {/* nav-mobile section ends */}
+
 
       <AuthContext.Provider value={{setAuthActive}}>
       {authActive === "signup" && <Signup />}

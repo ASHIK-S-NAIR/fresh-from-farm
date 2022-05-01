@@ -142,12 +142,11 @@ a{
     width: 100vw;
     height: 100vh;
     background-color: rgba(0,0,0,0.42);
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: -1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -252,7 +251,55 @@ a{
     margin-top: 1em;
 }
 
-/* main green 325233 */
+.errorMessage-sec{
+    z-index: 1000;
+    width: auto;
+    height: auto;
+    background-color: rgb(242, 18, 18);
+    position: absolute;
+    right: 0;
+    top: 2em;
+    display: flex;
+    column-gap: 0.8em;
+    padding: 1em 0.8em;
+    border-radius: 5px;
+    box-shadow: 0px, 4px, 15px, 10px rgba(0,0,0,0.1);
+    margin-right: 1em;
+}
+
+.errorMessage-cross-sec{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    width: auto;
+    height: auto;
+    cursor: pointer;
+}
+
+.errorMessage-cross-one,
+.errorMessage-cross-two{
+    background-color: #ffffff;
+    width: 0.8em;
+    height: 2px;
+    border-radius: 1em;
+}
+
+.errorMessage-cross-one{
+    transform: translateY(0.4em) rotate(45deg);
+
+}
+
+.errorMessage-cross-two{
+    transform: translateY(-0.43em) rotate(-45deg);
+}
+
+.errorMessage-msg{
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 200;
+}
+
 
 /* nav section ends */
 
