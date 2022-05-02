@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext} from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/Context";
 import { isAuthenticated, logout } from "../auth/index";
+import { AuthContext } from "../context/Context";
 import Signup from "../user/Signup";
 import Login from "../user/Login";
 
@@ -9,7 +9,8 @@ import Login from "../user/Login";
 const Nav = () => {
   const [active, setActive] = useState(false);
   const [toggled, setToggled] = useState(false);
-  const [authActive, setAuthActive] = useState(null);
+
+  const { authActive, setAuthActive } = useContext(AuthContext);
 
   const showDropDown = () => {
     setActive(true);
@@ -267,10 +268,9 @@ const Nav = () => {
       {/* nav-mobile section ends */}
 
 
-      <AuthContext.Provider value={{setAuthActive}}>
+      
       {authActive === "signup" && <Signup />}
       {authActive === "login" && <Login />}
-      </AuthContext.Provider>
     </section>
   );
 };

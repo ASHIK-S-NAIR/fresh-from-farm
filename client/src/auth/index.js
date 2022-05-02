@@ -43,7 +43,6 @@ export const logout = async (next) => {
       method: "GET",
     });
 
-    console.log(result);
   } catch (error) {
     console.log(error);
   }
