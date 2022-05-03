@@ -1,28 +1,45 @@
-import React, {useState, useEffect} from "react";
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
 import Accounts from "./Accounts";
+import Orders from "./Orders";
+import Settings from "./Settings";
 
 const CustomerBoard = () => {
-    // const [tabActive, setTabActive] = useState(null);
+  const { currentTab } = useParams();
+  const [tabActive, setTabActive] = useState(currentTab);
 
-
-
-    useEffect(() => {
-        setTabActive(currentTab)
-    }, [])
+  useEffect(() => {
+    setTabActive(currentTab);
+  }, [currentTab]);
 
   return (
     <section className="userBoard-section">
-      <div className="userBoard-left">
-        <div className="userBoard-user-detail"></div>
-        <ul className="userBoard-left-ul">
-          <li className="userBoard-left-li">My Orders</li>
-          <li className="userBoard-left-li">My Account</li>
-          <li className="userBoard-left-li">My Settings</li>
-        </ul>
-      </div>
-      <div className="userBoard-right">
-        {tabActive= "Account" && <Accounts />}
+      <div className="wrap userBoard-wrap">
+        <div className="userBoard-left">
+          <div className="userBoard-user-detail">
+            <h1 className="userBoard-user-detail-icon">Image</h1>
+            <div className="userBoard-user-detail-info">
+              <p className="userBoard-user-detail-greetings">Hello</p>
+              <h3 className="userBoard-user-detail-name">Ashik</h3>
+            </div>
+          </div>
+          <ul className="userBoard-left-ul">
+            <li className="userBoard-left-li">
+              <Link to="/customerboard/orders" className="userBoard-left-link" > My Orders</Link>
+            </li>
+            <li className="userBoard-left-li active">
+              <Link to="/customerboard/accounts" className="userBoard-left-link active" > My Account</Link>
+            </li>
+            <li className="userBoard-left-li">
+              <Link to="/customerboard/settings" className="userBoard-left-link"> My Settings</Link>
+            </li>
+          </ul>
+        </div>
+        <div className="userBoard-right">
+          {tabActive == "accounts" && <Accounts />}
+          {tabActive == "orders" && <Orders />}
+          {tabActive == "settings" && <Settings />}
+        </div>
       </div>
     </section>
   );

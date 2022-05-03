@@ -21,7 +21,7 @@ const Routes = () => {
           <Route path="/product/:productId" element={<ProductDetail />} />
           <Route path="*" element={<p>There is nothing here 404!</p>} />
           <Route
-            path="/customerboard"
+            path="/customerboard/:currentTab"
             element={
               <CustomerRoutes>
                 <CustomerBoard />

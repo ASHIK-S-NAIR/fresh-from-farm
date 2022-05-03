@@ -77,9 +77,9 @@ const Nav = () => {
                 </button>
                 {active && (
                   <ul className="nav-drop-ul" onMouseOver={showDropDown}>
-                    <li className="nav-drop-li">My Orders</li>
-                    <li className="nav-drop-li">My Accounts</li>
-                    <li className="nav-drop-li">My Settings</li>
+                    <li className="nav-drop-li"><Link to="/customerboard/orders"> My Orders</Link></li>
+                    <li className="nav-drop-li"><Link to="/customerboard/accounts"> My Account</Link></li>
+                    <li className="nav-drop-li"><Link to="/customerboard/settings"> My Settings</Link></li>
                     <li className="nav-drop-li">
                       <button className="nav-drop-btn" onClick={() => {logout(() => navigate("/"))}}>Log Out</button>
                     </li>
