@@ -231,6 +231,11 @@ a {
   font-size: 0.9rem;
 }
 
+.pop-form-value{
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
 .popup-form-sec-group-header {
   font-size: 0.875rem;
   color: var(--primary-color);
@@ -528,7 +533,7 @@ a {
 .userBoard-wrap {
   display: grid;
   height: 100%;
-  grid-template-columns: 22% 78%;
+  grid-template-columns: 23% 77%;
   column-gap: 2em;
   /* border: 10px solid mediumorchid; */
 }
@@ -549,8 +554,9 @@ a {
   display: flex;
   align-items: center;
   justify-content: left;
-  height: 7em;
+  height: 6.5em;
   padding-left: 1.7em;
+  margin-bottom: 1em;
 }
 
 .userBoard-user-detail-greetings {
@@ -574,36 +580,110 @@ a {
 
 .userBoard-left-li {
   width: 100%;
-  height: 3.5em;
-  /* background-color: orange; */
-  display: grid;
-  align-items: center;
-  padding-left: 1.5em;
-  /* border: 1px solid red; */
-  border-radius: 0 50px 50px 0;
-}
-
-.userBoard-left-li.active{
-    background-color: #d3e4e5;
 }
 
 .userBoard-left-link {
   width: 100%;
-  height: 1em;
   font-size: 0.938rem;
   color: var(--primary-color);
   font-weight: 700;
 }
 
-.userBoard-left-link.active{
-    color: #2A5B77;
+.userBoard-left-tag{
+  width: 100%;
+  height: 3.5em;
+  display: grid;
+  align-items: center;
+  border-radius: 5px;
+  padding-left: 1.5em;
+}
+
+.userBoard-left-tag.active{
+  background-color: #d3e4e5;
+  color: #2A5B77;
 }
 
 .userBoard-right {
   /* background-color: blue; */
   height: 100%;
   width: 100%;
-  border: 1px solid red;
+  padding-left: 0.8em;
+  padding-top: 1.5em;
+  /* border: 1px solid red; */
+}
+
+.userBoard-right-header{
+  font-size: 1.563rem;
+  font-weight: 500;
+  margin-bottom: 1.5em;
+  color: var(--primary-color);
+}
+
+.userBoard-right-subSec{
+  margin-bottom: 3em;
+  width: 70%;
+}
+
+.userBoard-right-subHead{
+  margin-bottom: 1.3em;
+  display: flex;
+}
+
+.userBoard-subHeader{
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  margin-right: 2em;
+}
+
+.userBoard-right-double-group{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.userBoard-right-single-group,
+.userBoard-right-double-group{
+  margin-bottom: 1.5em;
+}
+
+.userBoard-right-group{
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+}
+
+.userBoard-right-label{
+  font-size: 0.938rem;
+  font-weight: 400;
+  color: var(--primary-color);
+  margin-bottom: 0.3em;
+}
+
+.userBoard-right-value{
+  font-size: 0.938rem;
+  font-weight: 600;
+}
+
+.userBoard-right-input{
+  width: 22em;
+  height: 2em;
+  border: 1px solid var(--primary-color);
+  border-radius: 5px;
+  font-size: 1rem;
+  padding-left: 0.8em;
+  font-weight: 600;
+  margin-top: 0.3em;
+}
+
+.userBoard-right-btn{
+  background-color: #000000;
+  color: #ffffff;
+  border-radius: 5px;
+  width: 8em;
+  height: 3em;
+  font-size: 1rem;
+  margin-top: 1.5em;
 }
 
 /* CustomerBoard section ends */

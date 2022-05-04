@@ -25,13 +25,26 @@ const CustomerBoard = () => {
           </div>
           <ul className="userBoard-left-ul">
             <li className="userBoard-left-li">
-              <Link to="/customerboard/orders" className="userBoard-left-link" > My Orders</Link>
-            </li>
-            <li className="userBoard-left-li active">
-              <Link to="/customerboard/accounts" className="userBoard-left-link active" > My Account</Link>
+              <Link to="/customerboard/orders" className="userBoard-left-link">
+                {" "}
+                <div className={`userBoard-left-tag ${tabActive === 'orders' ? 'active' : ""}`}>My Orders</div>{" "}
+              </Link>
             </li>
             <li className="userBoard-left-li">
-              <Link to="/customerboard/settings" className="userBoard-left-link"> My Settings</Link>
+              <Link
+                to="/customerboard/accounts"
+                className="userBoard-left-link"
+              >
+                <div className={`userBoard-left-tag ${tabActive === 'accounts' ? 'active' : ""}`}>My Accounts</div>
+              </Link>
+            </li>
+            <li className="userBoard-left-li">
+              <Link
+                to="/customerboard/settings"
+                className="userBoard-left-link"
+              >
+                <div className={`userBoard-left-tag ${tabActive === 'settings' ? 'active' : ""}`}>My Settings</div>
+              </Link>
             </li>
           </ul>
         </div>
