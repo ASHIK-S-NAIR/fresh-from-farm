@@ -2,7 +2,7 @@ import React from "react";
 
 const Orders = () => {
   return (
-    <section className="accounts-section">
+    <section className="userBoard-right-section accounts-section">
       <h1 className="userBoard-right-header">Orders</h1>
       <div className="userBoard-right-subSec">
         <div className="userBoard-right-subHead">

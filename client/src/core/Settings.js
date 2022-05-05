@@ -1,8 +1,11 @@
 import React from "react";
 
-const Settings = () => {
+const Settings = ({userValues}) => {
+
+  const {name, email, phoneNumber, houseName, streetName} = userValues;
+
   return (
-    <section className="userBoard-right accounts-section">
+    <section className="userBoard-right-section accounts-section">
       <h1 className="userBoard-right-header">Settings</h1>
       <div className="userBoard-right-subSec">
         <div className="userBoard-right-subHead">

@@ -1,28 +1,25 @@
-import React, { useState, useContext, useEffect } from "react";
-import { isAuthenticated } from "../auth";
+import React, { useState, useContext } from "react";
+import { signup, login, authenticate } from "../auth";
 import { AccountsContext } from "../context/Context";
-import { updateUser } from "../user";
 
 const EditPersonalInformation = ({userValues}) => {
   const { setAccountsActive } = useContext(AccountsContext);
 
   const [values, setValues] = useState({
-    name: userValues.name,
-    phoneNumber: userValues.phoneNumber,
+    houseName: userValues.houseName,
+    streetName: userValues.streetName,
     error: "",
     loading: "",
     success: false,
   });
 
   const {
-    name,
-    phoneNumber,
+    houseName,
+    streetName,
     error,
     loading,
     success,
   } = values;
-
-  const {user, token} =isAuthenticated();
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
@@ -34,8 +31,8 @@ const EditPersonalInformation = ({userValues}) => {
 
     if (
       !(
-        (name &&
-        phoneNumber)
+        houseName &&
+        streetName
       )
     ) {
       console.log("Please fill all the fields");
@@ -47,26 +44,53 @@ const EditPersonalInformation = ({userValues}) => {
       });
     }
 
-    if(name === userValues.name && phoneNumber === userValues.phoneNumber){
-      return setValues({
-        ...values,
-        loading: "",
-        success: false,
-        error: "No Change",
-      });
-    }
+    // if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+    //   console.log("Please enter a valid email address");
+    //   return setValues({
+    //     ...values,
+    //     loading: "",
+    //     success: false,
+    //     error: "Enter valid email",
+    //   });
+    // }
 
-    if (phoneNumber.length !== 10) {
-      return setValues({
-        ...values,
-        loading: "",
-        success: false,
-        error: "Enter valid phone Number",
-      });
-    }
+    // if (phoneNumber.length !== 10) {
+    //   console.log("Please enter a valid phone Number");
+    //   return setValues({
+    //     ...values,
+    //     loading: "",
+    //     success: false,
+    //     error: "Enter valid phone Number",
+    //   });
+    // }
+
+    // if (password.length < 6) {
+    //   console.log("Password must have atleast 6 characters");
+    //   return setValues({
+    //     ...values,
+    //     loading: "",
+    //     success: false,
+    //     error: "password must be at least 6 characters",
+    //   });
+    // }
+
+    // if (!(password === confirmPassword)) {
+    //   console.log("Password confirmation does not match");
+    //   return setValues({
+    //     ...values,
+    //     loading: "",
+    //     success: false,
+    //     error: "Password confirmation does not match",
+    //   });
+    // }
+
+    // const address = {
+    //   houseName,
+    //   streetName,
+    // };
 
     try {
-      var data = await updateUser({ name, phoneNumber }, user._id, token);
+      var data = await signup({ houseName, streetName });
 
       if (data.error) {
         console.log(data.error);
@@ -77,10 +101,22 @@ const EditPersonalInformation = ({userValues}) => {
           error: data.error,
         });
       }
-      setAccountsActive(null);
+      // data = await login({ email, password });
+      // if (data.error) {
+      //   console.log(data.error);
+      //   return setValues({
+      //     ...values,
+      //     loading: "",
+      //     success: false,
+      //     error: data.error,
+      //   });
+      // }
+      authenticate(data);
+      // setAuthActive(null);
+      console.log("success");
       return setValues({
-        name: "",
-        phoneNumber: "",
+        houseName,
+        streetName,
         success: true,
         error: "",
         loading: "",
@@ -113,14 +149,13 @@ const EditPersonalInformation = ({userValues}) => {
     );
   };
 
-
   return (
     <section className="signup-section">
       <div className="black-background">
         <div className="popup-big-sec">
           <div className="popup-group">
             <div className="popup-head-sec">
-              <h1 className="popup-header">Edit Personal Information</h1>
+              <h1 className="popup-header">Edit Address</h1>
               <div className="cross-sec" onClick={() => setAccountsActive(null)}>
                 <div className="cross-one"></div>
                 <div className="cross-two"></div>
@@ -136,23 +171,23 @@ const EditPersonalInformation = ({userValues}) => {
               </div>
               <div className="popup-form-single-group">
                 <div className="popup-form-group">
-                  <label className="popup-form-label">Name</label>
+                  <label className="popup-form-label">House Name</label>
                   <input
                     type="text"
                     className="popup-form-input"
-                    value={name}
-                    onChange={handleChange("name")}
+                    value={houseName}
+                    onChange={handleChange("houseName")}
                   />
                 </div>
               </div>
               <div className="popup-form-single-group">
               <div className="popup-form-group">
-                  <label className="popup-form-label">Phone</label>
+                  <label className="popup-form-label">Street Name</label>
                   <input
-                    type="number"
+                    type="text"
                     className="popup-form-input"
-                    value={phoneNumber}
-                    onChange={handleChange("phoneNumber")}
+                    value={streetName}
+                    onChange={handleChange("streetName")}
                   />
                 </div>
               </div>
