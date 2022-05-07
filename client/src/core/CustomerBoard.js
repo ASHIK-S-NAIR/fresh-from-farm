@@ -7,7 +7,7 @@ import Orders from "./Orders";
 import Settings from "./Settings";
 
 const CustomerBoard = () => {
-  const { currentTab } = useParams();
+  const { currentTab, userId } = useParams();
   const [tabActive, setTabActive] = useState(currentTab);
   const [values, setValues] = useState({
     name: "",
@@ -17,12 +17,12 @@ const CustomerBoard = () => {
     streetName: "",
   });
 
-  const {name, email, phoneNumber, houseName, streetName} = values;
+  const { name } = values;
   const { token, user } = isAuthenticated();
 
-  const loadUserDetails = async () => {
+  const preLoad = async (userId, token) => {
     try {
-      const userDetails = await getUser(user._id, token);
+      const userDetails = await getUser(userId, token);
 
       return setValues({
         ...values,
@@ -32,7 +32,6 @@ const CustomerBoard = () => {
         houseName: userDetails.address.houseName,
         streetName: userDetails.address.streetName,
       });
-
     } catch (error) {
       console.log(error);
     }
@@ -40,11 +39,10 @@ const CustomerBoard = () => {
 
   useEffect(() => {
     setTabActive(currentTab);
-    loadUserDetails();
+    preLoad(userId, token);
   }, [currentTab]);
 
   return (
-
     <section className="userBoard-section">
       <div className="wrap userBoard-wrap">
         <div className="userBoard-left">
@@ -57,7 +55,10 @@ const CustomerBoard = () => {
           </div>
           <ul className="userBoard-left-ul">
             <li className="userBoard-left-li">
-              <Link to="/customerboard/orders" className="userBoard-left-link">
+              <Link
+                to={`/customerboard/orders/${user._id}`}
+                className="userBoard-left-link"
+              >
                 {" "}
                 <div
                   className={`userBoard-left-tag ${
@@ -70,7 +71,7 @@ const CustomerBoard = () => {
             </li>
             <li className="userBoard-left-li">
               <Link
-                to="/customerboard/accounts"
+                to={`/customerboard/accounts/${user._id}`}
                 className="userBoard-left-link"
               >
                 <div
@@ -84,7 +85,7 @@ const CustomerBoard = () => {
             </li>
             <li className="userBoard-left-li">
               <Link
-                to="/customerboard/settings"
+                to={`/customerboard/settings/${user._id}`}
                 className="userBoard-left-link"
               >
                 <div
@@ -99,9 +100,9 @@ const CustomerBoard = () => {
           </ul>
         </div>
         <div className="userBoard-right">
-          {tabActive == "accounts" && <Accounts userValues={values}  />}
-          {tabActive == "orders" && <Orders userValues={values} />}
-          {tabActive == "settings" && <Settings userValues={values} />}
+          {tabActive === "accounts" && <Accounts userValues={values} />}
+          {tabActive === "orders" && <Orders userValues={values} />}
+          {tabActive === "settings" && <Settings userValues={values} />}
         </div>
       </div>
     </section>

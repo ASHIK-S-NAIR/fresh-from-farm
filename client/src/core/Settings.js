@@ -1,8 +1,123 @@
-import React from "react";
+import React, { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { isAuthenticated, logout } from "../auth";
+import { changePassword } from "../user";
 
-const Settings = ({userValues}) => {
+const Settings = () => {
+  const { userId } = useParams();
 
-  const {name, email, phoneNumber, houseName, streetName} = userValues;
+  const { user, token } = isAuthenticated();
+
+  const navigate = useNavigate();
+
+  const [values, setValues] = useState({
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+    error: "",
+    loading: "",
+    success: false,
+  });
+
+  const { oldPassword, newPassword, confirmPassword, error, loading, success } =
+    values;
+
+  const handleChange = (name) => (event) => {
+    setValues({ ...values, [name]: event.target.value });
+  };
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    setValues({ ...values, loading: "loading" });
+
+    if (!(oldPassword && newPassword && confirmPassword)) {
+      return setValues({
+        ...values,
+        loading: "",
+        success: false,
+        error: "Fill all the fields",
+      });
+    }
+
+    if (
+      oldPassword.length < 6 ||
+      newPassword.length < 6 ||
+      confirmPassword < 6
+    ) {
+      console.log("Password must have atleast 6 characters");
+      return setValues({
+        ...values,
+        loading: "",
+        success: false,
+        error: "password must be at least 6 characters",
+      });
+    }
+
+    if (!(newPassword === confirmPassword)) {
+      return setValues({
+        ...values,
+        loading: "",
+        success: false,
+        error: "Password confirmation does not match",
+      });
+    }
+
+    try {
+      var data = await changePassword(userId, token, {
+        oldPassword,
+        newPassword,
+      });
+
+      if (data.error) {
+        console.log(data.error);
+        return setValues({
+          ...values,
+          loading: "",
+          success: false,
+          error: data.error,
+        });
+      }
+
+      console.log("Success");
+      setValues({ ...values, success: true, loading: "", error: "" });
+      logout(() => navigate("/"));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const errorMessage = () => {
+    return (
+      <div className="errorMessage-sec">
+        <div
+          className="errorMessage-cross-sec"
+          onClick={() => setValues({ ...values, error: "" })}
+        >
+          <div className="errorMessage-cross-one"></div>
+          <div className="errorMessage-cross-two"></div>
+        </div>
+        <div className="errorMessage-msg-sec">
+          <p className="errorMessage-msg">{error}</p>
+        </div>
+      </div>
+    );
+  };
+  const successMessage = () => {
+    return (
+      <div className="errorMessage-sec">
+        <div
+          className="errorMessage-cross-sec"
+          onClick={() => setValues({ ...values, success: false })}
+        >
+          <div className="errorMessage-cross-one"></div>
+          <div className="errorMessage-cross-two"></div>
+        </div>
+        <div className="errorMessage-msg-sec">
+          <p className="errorMessage-msg">{error}</p>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <section className="userBoard-right-section accounts-section">
@@ -15,24 +130,43 @@ const Settings = ({userValues}) => {
           <div className="userBoard-right-single-group">
             <div className="userBoard-right-group">
               <label className="userBoard-right-label">Old Password</label>
-             <input type="password" className="userBoard-right-input" />
+              <input
+                type="password"
+                className="userBoard-right-input"
+                onChange={handleChange("oldPassword")}
+                value={oldPassword}
+              />
             </div>
           </div>
           <div className="userBoard-right-single-group">
             <div className="userBoard-right-group">
               <label className="userBoard-right-label">New Password</label>
-             <input type="password" className="userBoard-right-input" />
+              <input
+                type="password"
+                className="userBoard-right-input"
+                onChange={handleChange("newPassword")}
+                value={newPassword}
+              />
             </div>
           </div>
           <div className="userBoard-right-single-group">
             <div className="userBoard-right-group">
               <label className="userBoard-right-label">Confirm Password</label>
-             <input type="password" className="userBoard-right-input" />
+              <input
+                type="password"
+                className="userBoard-right-input"
+                onChange={handleChange("confirmPassword")}
+                value={confirmPassword}
+              />
             </div>
           </div>
-          <button className="userBoard-right-btn">Change</button>
+          <button className="userBoard-right-btn" onClick={onSubmit}>
+            Change
+          </button>
         </div>
       </div>
+      {error && errorMessage()}
+      {success && successMessage()}
     </section>
   );
 };

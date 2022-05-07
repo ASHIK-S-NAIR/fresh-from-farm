@@ -1,28 +1,57 @@
 import React, { useState, useContext, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { isAuthenticated } from "../auth";
 import { AccountsContext } from "../context/Context";
-import { updateUser } from "../user";
+import { updateUser, getUser } from "../user";
 
-const EditPersonalInformation = ({userValues}) => {
+const EditPersonalInformation = () => {
+  const { userId } = useParams();
+
   const { setAccountsActive } = useContext(AccountsContext);
 
   const [values, setValues] = useState({
-    name: userValues.name,
-    phoneNumber: userValues.phoneNumber,
+    email: "",
+    name: "",
+    phoneNumber: "",
     error: "",
     loading: "",
     success: false,
   });
 
-  const {
-    name,
-    phoneNumber,
-    error,
-    loading,
-    success,
-  } = values;
+  var preLoadValues = {
+    name: "",
+    phoneNumber: "",
+  };
 
-  const {user, token} =isAuthenticated();
+  const { email, name, phoneNumber, error, loading, success } = values;
+
+  const { user, token } = isAuthenticated();
+
+  const preLoad = async (userId, token) => {
+    try {
+      const userDetails = await getUser(userId, token);
+
+      preLoadValues = {
+        name: userDetails.name,
+        phoneNumber: userDetails.phoneNumber
+      }
+
+      return setValues({
+        ...values,
+        name: userDetails.name,
+        email: userDetails.email,
+        phoneNumber: userDetails.phoneNumber,
+        // houseName: userDetails.address.houseName,
+        // streetName: userDetails.address.streetName,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    preLoad(userId, token);
+  }, []);
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
@@ -32,12 +61,7 @@ const EditPersonalInformation = ({userValues}) => {
     event.preventDefault();
     setValues({ ...values, loading: "loading" });
 
-    if (
-      !(
-        (name &&
-        phoneNumber)
-      )
-    ) {
+    if (!(name && phoneNumber)) {
       console.log("Please fill all the fields");
       return setValues({
         ...values,
@@ -47,7 +71,10 @@ const EditPersonalInformation = ({userValues}) => {
       });
     }
 
-    if(name === userValues.name && phoneNumber === userValues.phoneNumber){
+    if (
+      name === preLoadValues.name &&
+      phoneNumber === preLoadValues.phoneNumber
+    ) {
       return setValues({
         ...values,
         loading: "",
@@ -66,7 +93,7 @@ const EditPersonalInformation = ({userValues}) => {
     }
 
     try {
-      var data = await updateUser({ name, phoneNumber }, user._id, token);
+      var data = await updateUser({ name, phoneNumber }, userId, token);
 
       if (data.error) {
         console.log(data.error);
@@ -77,14 +104,10 @@ const EditPersonalInformation = ({userValues}) => {
           error: data.error,
         });
       }
-      setAccountsActive(null);
-      return setValues({
-        name: "",
-        phoneNumber: "",
-        success: true,
-        error: "",
-        loading: "",
-      });
+
+
+      return setAccountsActive(null);
+
     } catch (error) {
       console.log(error);
       return setValues({
@@ -113,7 +136,6 @@ const EditPersonalInformation = ({userValues}) => {
     );
   };
 
-
   return (
     <section className="signup-section">
       <div className="black-background">
@@ -121,7 +143,10 @@ const EditPersonalInformation = ({userValues}) => {
           <div className="popup-group">
             <div className="popup-head-sec">
               <h1 className="popup-header">Edit Personal Information</h1>
-              <div className="cross-sec" onClick={() => setAccountsActive(null)}>
+              <div
+                className="cross-sec"
+                onClick={() => setAccountsActive(null)}
+              >
                 <div className="cross-one"></div>
                 <div className="cross-two"></div>
               </div>
@@ -131,7 +156,7 @@ const EditPersonalInformation = ({userValues}) => {
               <div className="popup-form-single-group">
                 <div className="popup-form-group">
                   <label className="popup-form-label">Email</label>
-                  <p className="popup-form-value">customer@email.com</p>
+                  <p className="popup-form-value">{email}</p>
                 </div>
               </div>
               <div className="popup-form-single-group">
@@ -146,7 +171,7 @@ const EditPersonalInformation = ({userValues}) => {
                 </div>
               </div>
               <div className="popup-form-single-group">
-              <div className="popup-form-group">
+                <div className="popup-form-group">
                   <label className="popup-form-label">Phone</label>
                   <input
                     type="number"

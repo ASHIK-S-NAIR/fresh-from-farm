@@ -1,25 +1,55 @@
-import React, { useState, useContext } from "react";
-import { signup, login, authenticate } from "../auth";
+import React, { useState, useContext, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { isAuthenticated } from "../auth";
 import { AccountsContext } from "../context/Context";
+import { updateUser, getUser } from "../user";
 
-const EditPersonalInformation = ({userValues}) => {
+const EditAddress = () => {
+  const { userId } = useParams();
+
   const { setAccountsActive } = useContext(AccountsContext);
 
   const [values, setValues] = useState({
-    houseName: userValues.houseName,
-    streetName: userValues.streetName,
+    email: "",
+    houseName: "",
+    streetName: "",
     error: "",
     loading: "",
     success: false,
   });
 
-  const {
-    houseName,
-    streetName,
-    error,
-    loading,
-    success,
-  } = values;
+  var preLoadValues = {
+    houseName: "",
+    streetName: "",
+  };
+
+  const { email, houseName, streetName, error, loading, success } = values;
+
+  const { user, token } = isAuthenticated();
+
+  const preLoad = async (userId, token) => {
+    try {
+      const userDetails = await getUser(userId, token);
+
+      preLoadValues = {
+        houseName: userDetails.address.houseName,
+        streetName: userDetails.address.streetName
+      }
+
+      return setValues({
+        ...values,
+        houseName: userDetails.address.houseName,
+        email: userDetails.email,
+        streetName: userDetails.address.streetName
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    preLoad(userId, token);
+  }, []);
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
@@ -29,12 +59,7 @@ const EditPersonalInformation = ({userValues}) => {
     event.preventDefault();
     setValues({ ...values, loading: "loading" });
 
-    if (
-      !(
-        houseName &&
-        streetName
-      )
-    ) {
+    if (!(houseName && streetName)) {
       console.log("Please fill all the fields");
       return setValues({
         ...values,
@@ -44,53 +69,25 @@ const EditPersonalInformation = ({userValues}) => {
       });
     }
 
-    // if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-    //   console.log("Please enter a valid email address");
-    //   return setValues({
-    //     ...values,
-    //     loading: "",
-    //     success: false,
-    //     error: "Enter valid email",
-    //   });
-    // }
+    if (
+      houseName === preLoadValues.houseName &&
+      streetName === preLoadValues.streetName
+    ) {
+      return setValues({
+        ...values,
+        loading: "",
+        success: false,
+        error: "No Change",
+      });
+    }
 
-    // if (phoneNumber.length !== 10) {
-    //   console.log("Please enter a valid phone Number");
-    //   return setValues({
-    //     ...values,
-    //     loading: "",
-    //     success: false,
-    //     error: "Enter valid phone Number",
-    //   });
-    // }
-
-    // if (password.length < 6) {
-    //   console.log("Password must have atleast 6 characters");
-    //   return setValues({
-    //     ...values,
-    //     loading: "",
-    //     success: false,
-    //     error: "password must be at least 6 characters",
-    //   });
-    // }
-
-    // if (!(password === confirmPassword)) {
-    //   console.log("Password confirmation does not match");
-    //   return setValues({
-    //     ...values,
-    //     loading: "",
-    //     success: false,
-    //     error: "Password confirmation does not match",
-    //   });
-    // }
-
-    // const address = {
-    //   houseName,
-    //   streetName,
-    // };
+    const address = {
+      houseName: houseName,
+      streetName: streetName
+    }
 
     try {
-      var data = await signup({ houseName, streetName });
+      var data = await updateUser({address}, userId, token);
 
       if (data.error) {
         console.log(data.error);
@@ -101,26 +98,10 @@ const EditPersonalInformation = ({userValues}) => {
           error: data.error,
         });
       }
-      // data = await login({ email, password });
-      // if (data.error) {
-      //   console.log(data.error);
-      //   return setValues({
-      //     ...values,
-      //     loading: "",
-      //     success: false,
-      //     error: data.error,
-      //   });
-      // }
-      authenticate(data);
-      // setAuthActive(null);
-      console.log("success");
-      return setValues({
-        houseName,
-        streetName,
-        success: true,
-        error: "",
-        loading: "",
-      });
+
+
+      return setAccountsActive(null);
+      
     } catch (error) {
       console.log(error);
       return setValues({
@@ -156,7 +137,10 @@ const EditPersonalInformation = ({userValues}) => {
           <div className="popup-group">
             <div className="popup-head-sec">
               <h1 className="popup-header">Edit Address</h1>
-              <div className="cross-sec" onClick={() => setAccountsActive(null)}>
+              <div
+                className="cross-sec"
+                onClick={() => setAccountsActive(null)}
+              >
                 <div className="cross-one"></div>
                 <div className="cross-two"></div>
               </div>
@@ -166,7 +150,7 @@ const EditPersonalInformation = ({userValues}) => {
               <div className="popup-form-single-group">
                 <div className="popup-form-group">
                   <label className="popup-form-label">Email</label>
-                  <p className="popup-form-value">customer@email.com</p>
+                  <p className="popup-form-value">{email}</p>
                 </div>
               </div>
               <div className="popup-form-single-group">
@@ -181,7 +165,7 @@ const EditPersonalInformation = ({userValues}) => {
                 </div>
               </div>
               <div className="popup-form-single-group">
-              <div className="popup-form-group">
+                <div className="popup-form-group">
                   <label className="popup-form-label">Street Name</label>
                   <input
                     type="text"
@@ -203,4 +187,4 @@ const EditPersonalInformation = ({userValues}) => {
   );
 };
 
-export default EditPersonalInformation;
+export default EditAddress;

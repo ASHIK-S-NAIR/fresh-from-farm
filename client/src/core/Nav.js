@@ -12,6 +12,8 @@ const Nav = () => {
 
   const { authActive, setAuthActive } = useContext(AuthContext);
 
+  const {user, token} = isAuthenticated();
+
   const showDropDown = () => {
     setActive(true);
   };
@@ -77,9 +79,9 @@ const Nav = () => {
                 </button>
                 {active && (
                   <ul className="nav-drop-ul" onMouseOver={showDropDown}>
-                    <li className="nav-drop-li"><Link to="/customerboard/orders"> My Orders</Link></li>
-                    <li className="nav-drop-li"><Link to="/customerboard/accounts"> My Account</Link></li>
-                    <li className="nav-drop-li"><Link to="/customerboard/settings"> My Settings</Link></li>
+                    <li className="nav-drop-li"><Link to={`/customerboard/orders/${user._id}`}> My Orders</Link></li>
+                    <li className="nav-drop-li"><Link to={`/customerboard/accounts/${user._id}`}> My Account</Link></li>
+                    <li className="nav-drop-li"><Link to={`/customerboard/settings/${user._id}`}> My Settings</Link></li>
                     <li className="nav-drop-li">
                       <button className="nav-drop-btn" onClick={() => {logout(() => navigate("/"))}}>Log Out</button>
                     </li>

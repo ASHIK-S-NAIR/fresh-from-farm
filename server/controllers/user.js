@@ -1,3 +1,4 @@
+const user = require("../models/user");
 const User = require("../models/user");
 
 // getUserById- Middleware
@@ -63,7 +64,7 @@ exports.addToUserCart = async (req, res) => {
 
       await User.findByIdAndUpdate(
         { _id: req.profile._id },
-        { $set: {cart} },
+        { $set: { cart } },
         { new: true, useFindAndModify: false }
       );
 
@@ -79,7 +80,7 @@ exports.addToUserCart = async (req, res) => {
 
     await User.findByIdAndUpdate(
       { _id: req.profile._id },
-      { $set: {cart} },
+      { $set: { cart } },
       { new: true, useFindAndModify: false }
     );
 
@@ -100,28 +101,27 @@ exports.updateFromUserCart = async (req, res) => {
 
     cart = response.cart;
 
-    cart.map(cartItem => {
-      if(cartItem.product == req.body.productId){
-        cartItem.quantity = req.body.quantity
+    cart.map((cartItem) => {
+      if (cartItem.product == req.body.productId) {
+        cartItem.quantity = req.body.quantity;
       }
-    })
+    });
 
     await User.findByIdAndUpdate(
       { _id: req.profile._id },
-      { $set: {cart} },
+      { $set: { cart } },
       { new: true, useFindAndModify: false }
     );
-    
+
     return res.json({
       message: "Successfully updated from cart",
     });
-    
   } catch (error) {
     return res.status(400).json({
       message: "Updating from cart failed",
     });
   }
-}
+};
 
 // deleteFromUserCart
 exports.deleteFromUserCart = async (req, res) => {
@@ -130,24 +130,23 @@ exports.deleteFromUserCart = async (req, res) => {
 
     cart = response.cart;
 
-    cart = cart.filter(cartItem => cartItem.product != req.body.productId);
+    cart = cart.filter((cartItem) => cartItem.product != req.body.productId);
 
     await User.findByIdAndUpdate(
       { _id: req.profile._id },
-      { $set: {cart} },
+      { $set: { cart } },
       { new: true, useFindAndModify: false }
     );
 
     return res.json({
       message: "Successfully deleted from cart",
     });
-
   } catch (error) {
     return res.status(400).json({
       message: "Deleting from cart failed",
     });
   }
-}
+};
 
 // getUser
 exports.getUser = (req, res) => {
@@ -186,6 +185,50 @@ exports.updateUser = async (req, res) => {
   } catch (error) {
     return res.status(400).json({
       message: "User updation failed",
+    });
+  }
+};
+
+// changePassword
+exports.changePassword = async (req, res) => {
+
+  const { oldPassword, newPassword } = req.body;
+
+  try {
+    const user = await User.findOne({ email: req.profile.email });
+
+    if (!user) {
+      return res.status(400).json({
+        error: "Invalid email or password",
+      });
+    }
+
+    if (!(await user.authenticate(oldPassword))) {
+      return res.status(400).json({
+        error: "Invalid old Password",
+      });
+    }
+
+    const updatedPassordEncry = await user.securePassword(newPassword);
+    if (updatedPassordEncry) {
+      const userDetail = await User.findByIdAndUpdate(
+        { _id: req.profile._id },
+        { $set: { encry_password: updatedPassordEncry } },
+        { new: true, useFindAndModify: false }
+      );
+      await userDetail.save();
+      return res.json({
+        message: "Password updation successfull",
+      });
+    }
+
+    return res.status(400).json({
+      error: "Password updation failed",
+    });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(400).json({
+      error: "Invalid request",
     });
   }
 };

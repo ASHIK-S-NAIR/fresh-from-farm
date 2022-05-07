@@ -128,7 +128,7 @@ const Signup = () => {
       }
       authenticate(data);
       setAuthActive(null);
-      console.log("success");
+      
       return setValues({
         name: "",
         email: "",

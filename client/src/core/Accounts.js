@@ -1,13 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AccountsContext } from "../context/Context";
 import EditIcon from "../icons/Edit.svg";
 import EditPersonalInformation from "./EditPersonalInformation";
 import EditAddress from "./EditAddress";
+import { getUser } from "../user";
+import { isAuthenticated } from "../auth";
+import { useParams } from "react-router-dom";
 
-const Accounts = ({userValues}) => {
+const Accounts = () => {
+
+  const {userId} = useParams();
+
   const [accountsActive, setAccountsActive] = useState(null);
+  const [values, setValues] = useState({
+    name: "",
+    email: "",
+    phoneNumber: "",
+    houseName: "",
+    streetName: ""
+  })
 
-  const {name, email, phoneNumber, houseName, streetName} = userValues;
+  const {name, email, phoneNumber, houseName, streetName} = values;
+
+  const {user, token} = isAuthenticated();
+
+  const preLoad = async (userId, token) => {
+    try {
+      const userDetails = await getUser(userId, token);
+
+      return setValues({
+        ...values,
+        name: userDetails.name,
+        email: userDetails.email,
+        phoneNumber: userDetails.phoneNumber,
+        houseName: userDetails.address.houseName,
+        streetName: userDetails.address.streetName,
+      });
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    preLoad(userId, token);
+  }, [accountsActive])
 
   return (
     <section className="userBoard-right-section accounts-section">
@@ -21,14 +58,14 @@ const Accounts = ({userValues}) => {
           <div className="userBoard-right-subInner">
             <div className="userBoard-right-single-group">
               <div className="userBoard-right-group">
-                <label className="userBoard-right-label">Name</label>
-                <p className="userBoard-right-value">{name}</p>
+                <label className="userBoard-right-label">Email</label>
+                <p className="userBoard-right-value">{email}</p>
               </div>
             </div>
             <div className="userBoard-right-double-group">
               <div className="userBoard-right-group">
-                <label className="userBoard-right-label">Email</label>
-                <p className="userBoard-right-value">{email}</p>
+                <label className="userBoard-right-label">Name</label>
+                <p className="userBoard-right-value">{name}</p>
               </div>
               <div className="userBoard-right-group">
                 <label className="userBoard-right-label">Phone</label>
@@ -56,8 +93,8 @@ const Accounts = ({userValues}) => {
           </div>
         </div>
 
-        {accountsActive === "editpersonalinformation" && <EditPersonalInformation userValues= {userValues} />}
-        {accountsActive === "editaddress" && <EditAddress userValues= {userValues} />}
+        {accountsActive === "editpersonalinformation" && <EditPersonalInformation />}
+        {accountsActive === "editaddress" && <EditAddress />}
       </AccountsContext.Provider>
     </section>
   );
