@@ -1,123 +1,194 @@
 const Order = require("../models/order");
 const User = require("../models/user");
+const crypto = require("crypto");
 
 // getOrderById - Middleware
-exports.getOrderById = async(req, res, next, id) => {
-    try{
-        const order = await Order.findById({_id: id}).populate("Ouser Oproducts.product");
-        req.order = order;
-        next();       
-    }catch(error){
-        return res.status(400).josn({
-            message: "failed to get id from DB"
-        })
-    }
-}
+exports.getOrderById = async (req, res, next, id) => {
+  try {
+    const order = await Order.findById({ _id: id }).populate(
+      "Ouser Oproducts.product"
+    );
+    req.order = order;
+    next();
+  } catch (error) {
+    return res.status(400).josn({
+      message: "failed to get id from DB",
+    });
+  }
+};
 
 // createOrder
 exports.createOrder = async (req, res) => {
   try {
-    const response = await User.findById({ _id: req.profile._id }, "cart").populate('cart.product');
+    const response = await User.findById(
+      { _id: req.profile._id },
+      "cart"
+    ).populate("cart.product");
     cart = response.cart;
 
     var totalPrice = 0;
-    
-    cart.map(cartItem => {
-        totalPrice = totalPrice + (cartItem.product.pPrice * cartItem.quantity)
-    })
+
+    cart.map((cartItem) => {
+      totalPrice = totalPrice + cartItem.product.pPrice * cartItem.quantity;
+    });
 
     const order = await Order.create({
-        Ouser: req.profile._id,
-        Oproducts: cart,
-        OtotalPrice: totalPrice,
-        Oaddress: req.body.address
+      Ouser: req.profile._id,
+      Oproducts: cart,
+      OtotalPrice: totalPrice,
+      Oaddress: req.body.address,
+      Ostatus: "Not Confirmed",
+      OpaymentMode: req.body.paymentMode,
+      OpaymentStatus: "Pending",
     });
 
     order.save();
 
     await User.findByIdAndUpdate(
-        { _id: req.profile._id },
-        { $set: {cart: []} },
-        { new: true, useFindAndModify: false }
-      );
+      { _id: req.profile._id },
+      { $set: { cart: [] } },
+      { new: true, useFindAndModify: false }
+    );
 
-
-    const Ordersresponse = await User.findById({_id: req.profile._id}, "orders");
+    const Ordersresponse = await User.findById(
+      { _id: req.profile._id },
+      "orders"
+    );
 
     const orders = Ordersresponse.orders;
 
     orders.push(order._id);
 
     await User.findByIdAndUpdate(
-      {_id: req.profile._id},
-      {$set: {orders}},
-      {new: true, useFindAndModify: false});
-
+      { _id: req.profile._id },
+      { $set: { orders } },
+      { new: true, useFindAndModify: false }
+    );
 
     return res.json({
-        message: "created order succesfully"
-    })
+      message: "created order succesfully",
+    });
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
     return res.status(400).json({
       message: "Failed to create order in DB",
     });
   }
 };
 
+// plcae orders at razor pay
+exports.razorPayOrder = async (req, res) => {
+  try {
+    var instance = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_KEY_SECRET,
+    });
+
+    const totalPrice = 0;
+    const cart = req.body.cart;
+
+    cart.map((cartItem) => {
+      totalPrice = totalPrice + cartItem.product.pPrice * cartItem.quantity;
+    });
+
+    const options = {
+      // amount: totalPrice * 100,
+      amount: totalPrice * 100,
+      currency: "INR",
+      receipt:  Date.now(),
+    };
+
+    instance.orders.create(options, (error, order) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Something Went Wrong" });
+      }
+      res.status(200).json({ data: order });
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+// payment verfiy
+exports.paymentVerify = async (req, res) => {
+  try {
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
+      req.body;
+    const sign = razorpay_order_id + "|" + razorpay_payment_id;
+    const expectedSign = crypto
+      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+      .update(sign.toString())
+      .digest("hex");
+
+    if (razorpay_signature === expectedSign) {
+      await Order.findByIdAndUpdate(
+        { _id: req.order._id },
+        { $set: { Ostatus: "Ordered", OpaymentStatus: "Paid", OpaymentId: razorpay_payment_id, OrazorPayOrderId: razorpay_order_id } },
+        { new: true, useFindAndModify: false }
+      );
+      return res.status(200).json({ message: "Payment verified successfully" });
+    } else {
+      return res.status(400).json({ message: "invalid signature sent!" });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
 // getOrder
 exports.getOrder = (req, res) => {
-    req.order.Ouser.encry_password = undefined;
-    req.order.Ouser.salt = undefined;
-    req.order.Ouser.createdAt = undefined;
-    req.order.Ouser.updatedAt = undefined;
-    return res.json(req.order);
-}
+  req.order.Ouser.encry_password = undefined;
+  req.order.Ouser.salt = undefined;
+  req.order.Ouser.createdAt = undefined;
+  req.order.Ouser.updatedAt = undefined;
+  return res.json(req.order);
+};
 
 // getAllOrders
 exports.getAllOrders = async (req, res) => {
-  try{
-
+  try {
     const user = await Order.find();
 
-    return res.json(user)
-
-  }catch(error){
+    return res.json(user);
+  } catch (error) {
     return res.status(400).json({
-      message: "No orders found in DB"
-    })
+      message: "No orders found in DB",
+    });
   }
-}
+};
 
 // deleteOrder
 exports.deleteOrder = async (req, res) => {
-  try{
+  try {
     await Order.deleteOne(req.order._id);
     return res.json({
-      message: "Order deletion successfull"
-    })
-  }catch(error){
+      message: "Order deletion successfull",
+    });
+  } catch (error) {
     return res.status(400).json({
-      message: "Deleting order failed"
-    })
+      message: "Deleting order failed",
+    });
   }
-}
+};
 
 // updateOrderStatus
 exports.updateOrderStatus = async (req, res) => {
-  try{
+  try {
     await Order.findByIdAndUpdate(
-      {_id: req.order._id},
-      {$set: {Ostatus: req.body.status}},
-      {new: true, useFindAndModify: false}
-    )
+      { _id: req.order._id },
+      { $set: { Ostatus: req.body.status } },
+      { new: true, useFindAndModify: false }
+    );
 
     res.json({
-      message: "Order updated successfully"
-    })
-  }catch(error){
+      message: "Order updated successfully",
+    });
+  } catch (error) {
     return res.json({
-      message: "Updating order failed"
-    })
+      message: "Updating order failed",
+    });
   }
-}
+};

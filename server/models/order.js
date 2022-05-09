@@ -4,7 +4,8 @@ const Schema= mongoose.Schema;
 const orderSchema = new Schema({
     Ouser: {
         type: Schema.Types.ObjectId,
-        ref: "User"
+        ref: "User",
+        required: true
     },
     Oproducts: [
         {
@@ -20,8 +21,8 @@ const orderSchema = new Schema({
     OtotalPrice: Number,
     Ostatus: {
         type: String,
-        enum: ['Ordered', 'Processing', 'Picking Up', 'Out For Delivery', 'Order Completed' ],
-        default: 'Ordered'
+        enum: ['Not Confirmed', 'Ordered', 'Processing', 'Picking Up', 'Out For Delivery', 'Order Completed', 'Canceled' ],
+        default: 'Not Confirmed'
     },
     OemployeeId: {
         type: Schema.Types.ObjectId,
@@ -34,6 +35,20 @@ const orderSchema = new Schema({
         street: {
             type: String
         }
+    },
+    OpaymentId: {
+        type: String
+    },
+    OrazorPayOrderId: {
+        type: String
+    },
+    OpaymentMode: {
+        type: String,
+        enum: ['COD', 'RayzorPay']
+    },
+    OpaymentStatus: {
+        type: String,
+        enum: ['Pending, Paid']
     }
 }, {timestamps: true})
 
