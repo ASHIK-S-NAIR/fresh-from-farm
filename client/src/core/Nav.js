@@ -1,10 +1,9 @@
-import React, { useState, useContext} from "react";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { isAuthenticated, logout } from "../auth/index";
 import { AuthContext } from "../context/Context";
 import Signup from "../user/Signup";
 import Login from "../user/Login";
-
 
 const Nav = () => {
   const [active, setActive] = useState(false);
@@ -12,7 +11,7 @@ const Nav = () => {
 
   const { authActive, setAuthActive } = useContext(AuthContext);
 
-  const {user, token} = isAuthenticated();
+  const { user, token } = isAuthenticated();
 
   const showDropDown = () => {
     setActive(true);
@@ -54,10 +53,20 @@ const Nav = () => {
           {!isAuthenticated() && (
             <ul className="nav-ul">
               <li className="nav-li">
-                <button className="nav-btn" onClick={() => setAuthActive('signup')}>Sign Up</button>
+                <button
+                  className="nav-btn"
+                  onClick={() => setAuthActive("signup")}
+                >
+                  Sign Up
+                </button>
               </li>
               <li className="nav-li nav-border">
-                <button className="nav-btn" onClick={() => setAuthActive('login')}>Log In</button>
+                <button
+                  className="nav-btn"
+                  onClick={() => setAuthActive("login")}
+                >
+                  Log In
+                </button>
               </li>
             </ul>
           )}
@@ -65,7 +74,9 @@ const Nav = () => {
           {isAuthenticated() && isAuthenticated().user.role === 0 && (
             <ul className="nav-ul">
               <li className="nav-li">
-                <button className="nav-btn">Cart</button>
+                <Link to={`/cart/${user._id}`}>
+                  <button className="nav-btn">Cart</button>
+                </Link>
               </li>
               <li
                 className="nav-li nav-border"
@@ -79,11 +90,33 @@ const Nav = () => {
                 </button>
                 {active && (
                   <ul className="nav-drop-ul" onMouseOver={showDropDown}>
-                    <li className="nav-drop-li"><Link to={`/customerboard/orders/${user._id}`}> My Orders</Link></li>
-                    <li className="nav-drop-li"><Link to={`/customerboard/accounts/${user._id}`}> My Account</Link></li>
-                    <li className="nav-drop-li"><Link to={`/customerboard/settings/${user._id}`}> My Settings</Link></li>
                     <li className="nav-drop-li">
-                      <button className="nav-drop-btn" onClick={() => {logout(() => navigate("/"))}}>Log Out</button>
+                      <Link to={`/customerboard/orders/${user._id}`}>
+                        {" "}
+                        My Orders
+                      </Link>
+                    </li>
+                    <li className="nav-drop-li">
+                      <Link to={`/customerboard/accounts/${user._id}`}>
+                        {" "}
+                        My Account
+                      </Link>
+                    </li>
+                    <li className="nav-drop-li">
+                      <Link to={`/customerboard/settings/${user._id}`}>
+                        {" "}
+                        My Settings
+                      </Link>
+                    </li>
+                    <li className="nav-drop-li">
+                      <button
+                        className="nav-drop-btn"
+                        onClick={() => {
+                          logout(() => navigate("/"));
+                        }}
+                      >
+                        Log Out
+                      </button>
                     </li>
                   </ul>
                 )}
@@ -109,7 +142,14 @@ const Nav = () => {
                     <li className="nav-drop-li">Accounts</li>
                     <li className="nav-drop-li">Settings</li>
                     <li className="nav-drop-li">
-                      <button className="nav-drop-btn" onClick={() => {logout(() => navigate("/"))}}>Log Out</button>
+                      <button
+                        className="nav-drop-btn"
+                        onClick={() => {
+                          logout(() => navigate("/"));
+                        }}
+                      >
+                        Log Out
+                      </button>
                     </li>
                   </ul>
                 )}
@@ -139,7 +179,14 @@ const Nav = () => {
                       <button className="nav-drop-btn">Make Available</button>
                     </li>
                     <li className="nav-drop-li">
-                      <button className="nav-drop-btn" onClick={() => {logout(() => navigate("/"))}} >Log Out</button>
+                      <button
+                        className="nav-drop-btn"
+                        onClick={() => {
+                          logout(() => navigate("/"));
+                        }}
+                      >
+                        Log Out
+                      </button>
                     </li>
                   </ul>
                 )}
@@ -159,10 +206,20 @@ const Nav = () => {
           {!isAuthenticated() && (
             <ul className="nav-ul">
               <li className="nav-li">
-                <button className="nav-btn" onClick={() => setAuthActive('signup')}>Sign Up</button>
+                <button
+                  className="nav-btn"
+                  onClick={() => setAuthActive("signup")}
+                >
+                  Sign Up
+                </button>
               </li>
               <li className="nav-li nav-border">
-                <button className="nav-btn" onClick={() => setAuthActive('login')}>Log In</button>
+                <button
+                  className="nav-btn"
+                  onClick={() => setAuthActive("login")}
+                >
+                  Log In
+                </button>
               </li>
               <li className="nav-li">
                 <div
@@ -198,11 +255,25 @@ const Nav = () => {
                 <ul className={`nav-drop-ul ${toggled ? "active" : ""}`}>
                   <li className="nav-drop-li">Shop</li>
                   <li className="nav-drop-li">Contact Us</li>
+                  <li className="nav-drop-li">
+                    <Link to={`/cart/${user._id}`}>
+                      <button className="nav-btn">Cart</button>
+                    </Link>
+                  </li>
+
                   <li className="nav-drop-li">My Orders</li>
                   <li className="nav-drop-li">My Accounts</li>
                   <li className="nav-drop-li">My Settings</li>
                   <li className="nav-drop-li">
-                    <button className="nav-drop-btn" onClick={() => {logout(() => navigate("/")); toggle()}}>Log Out</button>
+                    <button
+                      className="nav-drop-btn"
+                      onClick={() => {
+                        logout(() => navigate("/"));
+                        toggle();
+                      }}
+                    >
+                      Log Out
+                    </button>
                   </li>
                 </ul>
               </li>
@@ -228,7 +299,15 @@ const Nav = () => {
                   <li className="nav-drop-li">Accounts</li>
                   <li className="nav-drop-li">Settings</li>
                   <li className="nav-drop-li">
-                    <button className="nav-drop-btn" onClick={() => {toggle(); logout(() => navigate("/")); }} >Log Out</button>
+                    <button
+                      className="nav-drop-btn"
+                      onClick={() => {
+                        toggle();
+                        logout(() => navigate("/"));
+                      }}
+                    >
+                      Log Out
+                    </button>
                   </li>
                 </ul>
               </li>
@@ -258,7 +337,14 @@ const Nav = () => {
                     <button className="nav-drop-btn">Make Available</button>
                   </li>
                   <li className="nav-drop-li">
-                    <button className="nav-drop-btn" onClick={() => {logout(() => navigate("/"))}}>Log Out</button>
+                    <button
+                      className="nav-drop-btn"
+                      onClick={() => {
+                        logout(() => navigate("/"));
+                      }}
+                    >
+                      Log Out
+                    </button>
                   </li>
                 </ul>
               </li>
@@ -269,8 +355,6 @@ const Nav = () => {
 
       {/* nav-mobile section ends */}
 
-
-      
       {authActive === "signup" && <Signup />}
       {authActive === "login" && <Login />}
     </section>

@@ -9,6 +9,7 @@ import AdminRoutes from "./auth/AdminRoutes";
 import EmployeeRoutes from "./auth/EmployeeRoutes";
 import CustomerRoutes from "./auth/CustomerRoutes";
 import CustomerBoard from "./core/CustomerBoard";
+import Cart from "./core/Cart";
 
 const Routes = () => {
   const [authActive, setAuthActive] = useState(null);
@@ -25,6 +26,14 @@ const Routes = () => {
             element={
               <CustomerRoutes>
                 <CustomerBoard />
+              </CustomerRoutes>
+            }
+          />
+          <Route
+            path="/cart/:userId"
+            element={
+              <CustomerRoutes>
+                <Cart />
               </CustomerRoutes>
             }
           />

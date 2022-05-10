@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { API } from "../backend";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   getProduct,
   getAllCategoryProducts,
 } from "./helper/productDetailHelper";
+import { isAuthenticated } from "../auth/index";
+import { getUser, updateUser } from "../user";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState({});
   const [products, setProducts] = useState([]);
+  const [quantity, setQuantity] = useState("1");
+
+  const { user, token } = isAuthenticated();
 
   const { productId } = useParams();
+
+  const navigate = useNavigate();
 
   const loadProduct = async (productId) => {
     try {
@@ -23,11 +30,41 @@ const ProductDetail = () => {
     }
   };
 
+  const handleAddToCart = async (productId, quantity) => {
+    var cart = [];
+    try {
+      const userDetails = await getUser(user._id, token);
+      cart = userDetails.cart;
+      console.log(typeof cart);
+    } catch (error) {
+      console.log(error);
+    }
+
+    console.log(productId);
+    console.log(quantity);
+
+    cart.push({
+      product: productId,
+      quantity,
+    });
+
+    console.log("Cart", cart);
+
+    try {
+      var data = await updateUser({ cart }, user._id, token);
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        navigate(`/cart/${user._id}`);
+      }
+    } catch (error) {}
+  };
+
   useEffect(() => {
     loadProduct(productId);
   }, []);
   return (
-    <section className="productDetail">
+    <section className="productDetail productDetail-section">
       <div className="wrap productDetail-wrap">
         <div className="productDetail-img-sec">
           <div className="productDetail-img-container">
@@ -58,10 +95,20 @@ const ProductDetail = () => {
           <h3 className="productDetail-stock">{product.pStock}kg in stock</h3>
           <div className="productDetail-quantity-sec">
             <p className="productDetail-quantity-p">QTY:</p>{" "}
-            <input type="text" className="productDetail-quantity" />
+            <input
+              type="text"
+              className="productDetail-quantity"
+              onChange={(e) => setQuantity(e.target.value)}
+              value={quantity}
+            />
             <p className="productDetail-quantity-p">Kg</p>
           </div>
-          <button className="productDetail-btn">Add to Cart</button>
+          <button
+            className="productDetail-btn"
+            onClick={() => handleAddToCart(product._id, quantity)}
+          >
+            Add to Cart
+          </button>
         </div>
       </div>
 
