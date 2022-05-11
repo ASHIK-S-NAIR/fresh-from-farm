@@ -1,4 +1,3 @@
-const user = require("../models/user");
 const User = require("../models/user");
 
 // getUserById- Middleware
@@ -158,6 +157,33 @@ exports.getUser = (req, res) => {
   return res.json(req.profile);
 };
 
+// getUserCart
+exports.getUserCart = async (req, res) => {
+  try {
+    var response = await User.findById(
+      { _id: req.profile._id },
+      { cart: 1, _id: 0 }
+    ).populate("cart.product");
+    // console.log(typeof response);
+    // response = response.cart.map((cartItem) => {
+    //   delete cartItem.product["pImg"];
+    //   return cartItem;
+    // });
+
+    for(i =0;  i<response.cart.length; i++){
+      // console.log(response.cart[i].product.pName);
+      delete response.cart[i].product.pImg
+    }
+    // console.log(response);
+    res.json(response);
+  } catch (error) {
+    console.log(error.message);
+    return res.status(400).json({
+      message: "Fetching cart failed",
+    });
+  }
+};
+
 // getAllUsers
 exports.getAllUsers = async (req, res) => {
   try {
@@ -191,7 +217,6 @@ exports.updateUser = async (req, res) => {
 
 // changePassword
 exports.changePassword = async (req, res) => {
-
   const { oldPassword, newPassword } = req.body;
 
   try {
