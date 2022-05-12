@@ -139,8 +139,18 @@ const Nav = () => {
                 {active && (
                   <ul className="nav-drop-ul" onMouseOver={showDropDown}>
                     <li className="nav-drop-li">Admin Panel</li>
-                    <li className="nav-drop-li">Accounts</li>
-                    <li className="nav-drop-li">Settings</li>
+                    <li className="nav-drop-li">
+                      <Link to={`/adminboard/accounts/${user._id}`}>
+                        {" "}
+                        Account
+                      </Link>
+                    </li>
+                    <li className="nav-drop-li">
+                      <Link to={`/adminboard/settings/${user._id}`}>
+                        {" "}
+                        Settings
+                      </Link>
+                    </li>
                     <li className="nav-drop-li">
                       <button
                         className="nav-drop-btn"
@@ -173,8 +183,18 @@ const Nav = () => {
                   <ul className="nav-drop-ul" onMouseOver={showDropDown}>
                     <li className="nav-drop-li">Dashboard</li>
                     <li className="nav-drop-li">Deliveries</li>
-                    <li className="nav-drop-li">Accounts</li>
-                    <li className="nav-drop-li">Settings</li>
+                    <li className="nav-drop-li">
+                      <Link to={`/employeeboard/accounts/${user._id}`}>
+                        {" "}
+                        Account
+                      </Link>
+                    </li>
+                    <li className="nav-drop-li">
+                      <Link to={`/employeeboard/settings/${user._id}`}>
+                        {" "}
+                        Settings
+                      </Link>
+                    </li>
                     <li className="nav-drop-li">
                       <button className="nav-drop-btn">Make Available</button>
                     </li>
@@ -261,9 +281,24 @@ const Nav = () => {
                     </Link>
                   </li>
 
-                  <li className="nav-drop-li">My Orders</li>
-                  <li className="nav-drop-li">My Accounts</li>
-                  <li className="nav-drop-li">My Settings</li>
+                  <li className="nav-drop-li">
+                    <Link to={`/customerboard/orders/${user._id}`}>
+                      {" "}
+                      My Orders
+                    </Link>
+                  </li>
+                  <li className="nav-drop-li">
+                    <Link to={`/customerboard/accounts/${user._id}`}>
+                      {" "}
+                      My Account
+                    </Link>
+                  </li>
+                  <li className="nav-drop-li">
+                    <Link to={`/customerboard/settings/${user._id}`}>
+                      {" "}
+                      My Settings
+                    </Link>
+                  </li>
                   <li className="nav-drop-li">
                     <button
                       className="nav-drop-btn"
@@ -296,8 +331,18 @@ const Nav = () => {
                   <li className="nav-drop-li">Shop</li>
                   <li className="nav-drop-li">Contact Us</li>
                   <li className="nav-drop-li">Admin Panel</li>
-                  <li className="nav-drop-li">Accounts</li>
-                  <li className="nav-drop-li">Settings</li>
+                  <li className="nav-drop-li">
+                    <Link to={`/adminboard/accounts/${user._id}`}>
+                      {" "}
+                      Account
+                    </Link>
+                  </li>
+                  <li className="nav-drop-li">
+                    <Link to={`/adminboard/settings/${user._id}`}>
+                      {" "}
+                      Settings
+                    </Link>
+                  </li>
                   <li className="nav-drop-li">
                     <button
                       className="nav-drop-btn"
@@ -331,8 +376,18 @@ const Nav = () => {
                   <li className="nav-drop-li">Contact Us</li>
                   <li className="nav-drop-li">Dashboard</li>
                   <li className="nav-drop-li">Deliveries</li>
-                  <li className="nav-drop-li">Accounts</li>
-                  <li className="nav-drop-li">Settings</li>
+                  <li className="nav-drop-li">
+                    <Link to={`/employeeboard/accounts/${user._id}`}>
+                      {" "}
+                      Account
+                    </Link>
+                  </li>
+                  <li className="nav-drop-li">
+                    <Link to={`/employeeboard/settings/${user._id}`}>
+                      {" "}
+                      Settings
+                    </Link>
+                  </li>
                   <li className="nav-drop-li">
                     <button className="nav-drop-btn">Make Available</button>
                   </li>

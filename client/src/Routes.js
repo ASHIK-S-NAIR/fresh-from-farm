@@ -9,7 +9,11 @@ import AdminRoutes from "./auth/AdminRoutes";
 import EmployeeRoutes from "./auth/EmployeeRoutes";
 import CustomerRoutes from "./auth/CustomerRoutes";
 import CustomerBoard from "./core/CustomerBoard";
+import EmployeeBoard from "./core/EmployeeBoard.";
+import AdminBoard from "./core/AdminBoard";
+
 import Cart from "./core/Cart";
+import { CartPayment } from "./core/CartPayment";
 
 const Routes = () => {
   const [authActive, setAuthActive] = useState(null);
@@ -27,6 +31,30 @@ const Routes = () => {
               <CustomerRoutes>
                 <CustomerBoard />
               </CustomerRoutes>
+            }
+          />
+          <Route
+            path="/cart/payment/:userId"
+            element={
+              <CustomerRoutes>
+                <CartPayment />
+              </CustomerRoutes>
+            }
+          />
+          <Route
+            path="/employeeboard/:currentTab/:userId"
+            element={
+              <EmployeeRoutes>
+                <EmployeeBoard />
+              </EmployeeRoutes>
+            }
+          />
+          <Route
+            path="/adminboard/:currentTab/:userId"
+            element={
+              <AdminRoutes>
+                <AdminBoard />
+              </AdminRoutes>
             }
           />
           <Route

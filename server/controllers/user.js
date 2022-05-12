@@ -37,7 +37,7 @@ exports.addToUserCart = async (req, res) => {
 
     cart = response.cart;
 
-    if (cart.length == 0) {
+    if (cart.length === 0) {
       cart.push({ product: req.body.productId, quantity: req.body.quantity });
       await User.findByIdAndUpdate(
         { _id: req.profile._id },
@@ -162,18 +162,10 @@ exports.getUserCart = async (req, res) => {
   try {
     var response = await User.findById(
       { _id: req.profile._id },
-      { cart: 1, _id: 0 }
+      { cart: 1 }
     ).populate("cart.product");
-    // console.log(typeof response);
-    // response = response.cart.map((cartItem) => {
-    //   delete cartItem.product["pImg"];
-    //   return cartItem;
-    // });
+    // var cart = response.cart;
 
-    for(i =0;  i<response.cart.length; i++){
-      // console.log(response.cart[i].product.pName);
-      delete response.cart[i].product.pImg
-    }
     // console.log(response);
     res.json(response);
   } catch (error) {

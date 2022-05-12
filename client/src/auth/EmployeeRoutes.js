@@ -4,7 +4,7 @@ import {isAuthenticated} from "./index";
 
 const EmployeeRoutes = ({children}) => {
   if(!(isAuthenticated() && isAuthenticated().user.role === 1)){
-      return <Navigate to= "/login" />
+      return <Navigate to= {-1} />
   }
 
   return children

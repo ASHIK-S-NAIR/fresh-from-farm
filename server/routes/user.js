@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const {getUserById, getUser, getAllUsers, updateUser, deleteUser, addToUserCart,  updateFromUserCart, deleteFromUserCart, changePassword, getUserCart} = require("../controllers/user");
+const {getUserById, getUser, getAllUsers, updateUser, deleteUser, addToUserCart,  updateFromUserCart, deleteFromUserCart, changePassword, getUserCart, updateQuantity} = require("../controllers/user");
 const {isSignedIn, isAuthenticated, isAdmin} = require("../controllers/auth");
 
 // params
@@ -29,11 +29,15 @@ router.delete("/user/:userId", isSignedIn, isAuthenticated, deleteUser);
 // addtousercart
 router.post("/user/addtocart/:userId", isSignedIn, isAuthenticated, addToUserCart);
 
+// updateusercart
+// router.put("/user/cart/:userId", isSignedIn, isAuthenticated, updateQuantity)
+
 // updateFromUserCart
 router.post("/user/updatecart/:userId", isSignedIn, isAuthenticated, updateFromUserCart);
 
 // deleteFromUserCart
 router.post("/user/deletecart/:userId", isSignedIn, isAuthenticated, deleteFromUserCart);
+
 
 
 module.exports = router;

@@ -6,7 +6,7 @@ import {
   getAllCategoryProducts,
 } from "./helper/productDetailHelper";
 import { isAuthenticated } from "../auth/index";
-import { getUser, updateUser } from "../user";
+import { addToUserCart, getUser, updateUser } from "../user";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState({});
@@ -30,39 +30,52 @@ const ProductDetail = () => {
     }
   };
 
+  // const handleAddToCart = async (productId, quantity) => {
+  //   var cart = [];
+  //   try {
+  //     const userDetails = await getUser(user._id, token);
+  //     cart = userDetails.cart;
+  //     console.log(typeof cart);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+
+  //   console.log(productId);
+  //   console.log(quantity);
+
+  //   cart.push({
+  //     product: productId,
+  //     quantity,
+  //   });
+
+  //   console.log("Cart", cart);
+
+  //   try {
+  //     var data = await updateUser({ cart }, user._id, token);
+  //     if (data.error) {
+  //       console.log(data.error);
+  //     } else {
+  //       navigate(`/cart/${user._id}`);
+  //     }
+  //   } catch (error) {}
+  // };
+
   const handleAddToCart = async (productId, quantity) => {
-    var cart = [];
     try {
-      const userDetails = await getUser(user._id, token);
-      cart = userDetails.cart;
-      console.log(typeof cart);
-    } catch (error) {
-      console.log(error);
-    }
-
-    console.log(productId);
-    console.log(quantity);
-
-    cart.push({
-      product: productId,
-      quantity,
-    });
-
-    console.log("Cart", cart);
-
-    try {
-      var data = await updateUser({ cart }, user._id, token);
+      var data = await addToUserCart(user._id, token, { productId, quantity });
       if (data.error) {
-        console.log(data.error);
+        console.log(data.error)
       } else {
         navigate(`/cart/${user._id}`);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
     loadProduct(productId);
-  }, []);
+  }, [productId]);
   return (
     <section className="productDetail productDetail-section">
       <div className="wrap productDetail-wrap">
