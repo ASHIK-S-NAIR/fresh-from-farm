@@ -26,6 +26,14 @@ exports.createOrder = async (req, res) => {
     ).populate("cart.product");
     cart = response.cart;
 
+    const {shippingAddress, paymentMode } = req.body;
+
+    if(!(shippingAddress || paymentMode || cart)){
+      return res.status(400).json({
+        message: "Invalid Order request"
+      })
+    }
+
     var totalPrice = 0;
 
     cart.map((cartItem) => {
@@ -36,7 +44,7 @@ exports.createOrder = async (req, res) => {
       Ouser: req.profile._id,
       Oproducts: cart,
       OtotalPrice: totalPrice,
-      Oaddress: req.body.address,
+      Oaddress: req.body.shippingAddress,
       Ostatus: "Not Confirmed",
       OpaymentMode: req.body.paymentMode,
       OpaymentStatus: "Pending",
@@ -50,12 +58,12 @@ exports.createOrder = async (req, res) => {
       { new: true, useFindAndModify: false }
     );
 
-    const Ordersresponse = await User.findById(
+    const OrdersResponse = await User.findById(
       { _id: req.profile._id },
       "orders"
     );
 
-    const orders = Ordersresponse.orders;
+    const orders = OrdersResponse.orders;
 
     orders.push(order._id);
 
@@ -84,7 +92,7 @@ exports.razorPayOrder = async (req, res) => {
       key_secret: process.env.RAZORPAY_KEY_SECRET,
     });
 
-    const totalPrice = 0;
+    var totalPrice = 0;
     const cart = req.body.cart;
 
     cart.map((cartItem) => {
