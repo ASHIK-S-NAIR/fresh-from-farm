@@ -1,18 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { API } from "../backend";
 import Trash from "../icons/Trash.svg";
+import { getProduct } from "./helper/productDetailHelper";
 
 const CartItem = ({ cartItem, updateQuantity, deleteProduct }) => {
+  // console.log("cartitem",cartItem)
+  const [product, setProduct] = useState();
   const [quantity, setQuantity] = useState(cartItem.quantity);
-  //   console.log("cartItem",cartItem.product._id);
 
-  //  const handleChange = (e) => {
-  //      return setQuantity(e.target.value);
-  //  }
+  useEffect(async () => {
+    alert("Off to shore")
+    try {
+      const data = await getProduct(cartItem.product);
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        return setProduct(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   useEffect(() => {
     //   console.log("Hello kuttukare")
-    updateQuantity(cartItem.product._id, quantity);
+    updateQuantity(product._id, quantity);
   }, [quantity]);
 
   const clickbait = () => {
@@ -24,24 +36,20 @@ const CartItem = ({ cartItem, updateQuantity, deleteProduct }) => {
       <div className="cartItem-item-left">
         <div className="cartItem-item-img-sec">
           <img
-            src={`${API}/product/photo/${cartItem.product._id}`}
+            src={`${API}/product/photo/${product._id}`}
             alt=""
             className="cartItem-item-img"
           />
         </div>
         <div className="cartItem-item-info">
-          <h2 className="cartItem-item-productName">
-            {cartItem.product.pName}
-          </h2>
+          <h2 className="cartItem-item-productName">{product.pName}</h2>
           <div
             className={`cartItem-item-category-sec ${
-              cartItem.product.pCategory === "vegetable"
-                ? "color-green"
-                : "color-orange"
+              product.pCategory === "vegetable" ? "color-green" : "color-orange"
             }`}
           >
             <p className="cartItem-item-category">
-              {cartItem.product.pCategory === "vegetable" ? "Veg" : "Fruit"}
+              {product.pCategory === "vegetable" ? "Veg" : "Fruit"}
             </p>
           </div>
         </div>
@@ -60,12 +68,12 @@ const CartItem = ({ cartItem, updateQuantity, deleteProduct }) => {
             src={Trash}
             alt=""
             className="cartItem-item-delete-icon"
-            onClick={() => deleteProduct(cartItem.product._id)}
+            onClick={() => deleteProduct(product._id)}
           />
         </div>
       </div>
       <div className="cartItem-item-right">
-        <h2 className="cartItem-item-price">{`${cartItem.product.pPrice}/Kg`}</h2>
+        <h2 className="cartItem-item-price">{`${product.pPrice}/Kg`}</h2>
       </div>
     </div>
   );

@@ -3,9 +3,9 @@ import { Link, useParams } from "react-router-dom";
 import { isAuthenticated } from "../auth";
 import {
   deleteFromCart,
+  getUser,
   getUserCart,
   updateFromUserCart,
-  updateQuantity,
 } from "../user";
 import CartItem from "./CartItem";
 
@@ -14,12 +14,18 @@ const Cart = () => {
   const [subTotal_items, setSubTotal_items] = useState(0);
   const [subTotal_value, setSubTotal_value] = useState(0);
   const [shippingAddress_state, setShippingAddress_state] = useState("default");
+  const [shippingAddress, setShippingAddress] = useState({
+    shippingAddress_houseName: " ",
+    shippingAddress_streetName: " ",
+  });
 
   const { userId } = useParams();
 
   const { user, token } = isAuthenticated();
 
-  const preLoad = async (userId, token) => {
+  const {shippingAddress_houseName, shippingAddress_streetName} = shippingAddress;
+
+  const preLoadCart = async (userId, token) => {
     try {
       const data = await getUserCart(userId, token);
       return setCart(data.cart);
@@ -28,9 +34,27 @@ const Cart = () => {
     }
   };
 
+  const preLoadShippingAddress = async (userId, token) => {
+    try {
+      const data = await getUser(userId, token);
+      return setShippingAddress({
+        ...shippingAddress,
+        shippingAddress_houseName: data.address.houseName,
+        shippingAddress_streetName: data.address.streetName,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    preLoad(userId, token);
+    preLoadCart(userId, token);
   }, []);
+
+  useEffect(() => {
+    preLoadShippingAddress(userId, token);
+  }, [])
+
 
   useEffect(() => {
     var total = 0;
@@ -56,7 +80,7 @@ const Cart = () => {
       if (data.error) {
         console.log(data.error);
       } else {
-        return preLoad(userId, token);
+        return preLoadCart(userId, token);
       }
     } catch (error) {
       console.log(error);
@@ -69,12 +93,16 @@ const Cart = () => {
       if (data.error) {
         console.log(data.error);
       } else {
-        return preLoad(userId, token);
+        return preLoadCart(userId, token);
       }
     } catch (error) {
       console.log(error);
     }
   };
+
+  const handleChange = (name) => (e) => {
+    setShippingAddress({...shippingAddress, [name] : e.target.value})
+  }
 
   return (
     <section className="cart-section">
@@ -116,10 +144,10 @@ const Cart = () => {
                 <div className="cart-shippingAddress-default-sec">
                   <div className="cart-shippingAddress-default-address-sec">
                     <p className="cart-shippingAddress-default-address cart-shippingAddress-default-HouseName">
-                      House Name
+                      {shippingAddress_houseName}
                     </p>
                     <p className="cart-shippingAddress-default-address cart-shippingAddress-default-StreetName">
-                      Street Name
+                      {shippingAddress_streetName}
                     </p>
                   </div>
                   <button
@@ -128,7 +156,7 @@ const Cart = () => {
                   >
                     Edit
                   </button>
-                  <Link to={`/cart/payment/${userId}`}>
+                  <Link to={`/cart/payment/${userId}`} state={shippingAddress}>
                     <button className="cart-shippingAddress-cta-btn">
                       Deliver to this Address
                     </button>
@@ -151,6 +179,8 @@ const Cart = () => {
                       <input
                         type="text"
                         className="cart-shippingAddress-edit-address-input"
+                        value={shippingAddress_houseName || " "}
+                        onChange = {handleChange('shippingAddress_houseName')}
                       />
                     </div>
                     <div className="cart-shippingAddress-edit-address-sec">
@@ -160,10 +190,12 @@ const Cart = () => {
                       <input
                         type="text"
                         className="cart-shippingAddress-edit-address-input"
+                        value={shippingAddress_streetName || " "}
+                        onChange = {handleChange('shippingAddress_streetName')}
                       />
                     </div>
                   </form>
-                  <Link to={`/cart/payment/${userId}`}>
+                  <Link to={`/cart/payment/${userId}`} state={{shippingAddress}}>
                     <button className="cart-shippingAddress-cta-btn">
                       Deliver to this Address
                     </button>

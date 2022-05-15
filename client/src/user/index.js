@@ -71,22 +71,6 @@ export const getUserCart = async (userId, token) => {
   }
 };
 
-// export const updateQuantity = async(userId, token, productId, quantity) => {
-//   try {
-//       const result = await fetch(`${API}/user/cart/${userId}`, {
-//         method: "PUT",
-//         headers: {
-//           "Content-Type": "application/json",
-//           Accept: "application/json",
-//           Authorization: `Bearer ${token}`
-//         },
-//         body: JSON.stringify({productId, quantity})
-//       })
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
-
 export const addToUserCart = (userId, token, { productId, quantity }) => {
   try {
     const result = fetch(`${API}/user/addtocart/${userId}`, {
@@ -119,7 +103,7 @@ export const updateFromUserCart = (userId, token, { productId, quantity }) => {
 
     return result;
   } catch (error) {
-      return error;
+    return error;
   }
 };
 
@@ -132,11 +116,74 @@ export const deleteFromCart = (userId, token, productId) => {
         Accept: "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ productId}),
+      body: JSON.stringify({ productId }),
     }).then((res) => res.json());
 
     return result;
   } catch (error) {
-      return error;
+    return error;
   }
 };
+
+export const createOrder = (userId, token, { shippingAddress, paymentMode }) => {
+  try {
+    const result = fetch(`${API}/order/create/${userId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ shippingAddress, paymentMode }),
+    }).then((res) => res.json());
+
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// export const updateOrder = (userId, token, {}) => {
+//   try {
+    
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+
+export const razorPayOrder = async (userId, token, total) => {
+  try {
+    const result = await fetch(`${API}/order/razorPayOrder/${userId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ total }),
+    }).then((res) => res.json());
+
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+  
+}
+
+export const paymentVerify = async (userId, token, response) => {
+  try {
+    const result = await fetch(`${API}/order/verify/${userId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(response),
+    }).then((res) => res.json());
+
+    return result
+  } catch (error) {
+    console.log(error);
+  }
+}

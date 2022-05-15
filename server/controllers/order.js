@@ -1,6 +1,7 @@
 const Order = require("../models/order");
 const User = require("../models/user");
 const crypto = require("crypto");
+const Razorpay = require("razorpay");
 
 // getOrderById - Middleware
 exports.getOrderById = async (req, res, next, id) => {
@@ -26,12 +27,12 @@ exports.createOrder = async (req, res) => {
     ).populate("cart.product");
     cart = response.cart;
 
-    const {shippingAddress, paymentMode } = req.body;
+    const { shippingAddress, paymentMode } = req.body;
 
-    if(!(shippingAddress || paymentMode || cart)){
+    if (!(shippingAddress || paymentMode || cart)) {
       return res.status(400).json({
-        message: "Invalid Order request"
-      })
+        message: "Invalid Order request",
+      });
     }
 
     var totalPrice = 0;
@@ -92,18 +93,22 @@ exports.razorPayOrder = async (req, res) => {
       key_secret: process.env.RAZORPAY_KEY_SECRET,
     });
 
-    var totalPrice = 0;
-    const cart = req.body.cart;
+    // var totalPrice = 0;
+  console.log("reached at razorPayOrder");
 
-    cart.map((cartItem) => {
-      totalPrice = totalPrice + cartItem.product.pPrice * cartItem.quantity;
-    });
+    // const cart = req.body.cart;
+
+    console.log(req.body)
+
+    // cart.map((cartItem) => {
+    //   totalPrice = totalPrice + cartItem.product.pPrice * cartItem.quantity;
+    // });
 
     const options = {
       // amount: totalPrice * 100,
-      amount: totalPrice * 100,
+      amount: req.body.total * 100,
       currency: "INR",
-      receipt:  Date.now(),
+      receipt: Date.now(),
     };
 
     instance.orders.create(options, (error, order) => {
@@ -133,7 +138,14 @@ exports.paymentVerify = async (req, res) => {
     if (razorpay_signature === expectedSign) {
       await Order.findByIdAndUpdate(
         { _id: req.order._id },
-        { $set: { Ostatus: "Ordered", OpaymentStatus: "Paid", OpaymentId: razorpay_payment_id, OrazorPayOrderId: razorpay_order_id } },
+        {
+          $set: {
+            Ostatus: "Ordered",
+            OpaymentStatus: "Paid",
+            OpaymentId: razorpay_payment_id,
+            OrazorPayOrderId: razorpay_order_id,
+          },
+        },
         { new: true, useFindAndModify: false }
       );
       return res.status(200).json({ message: "Payment verified successfully" });

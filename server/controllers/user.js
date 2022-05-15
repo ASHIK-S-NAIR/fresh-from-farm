@@ -166,7 +166,7 @@ exports.getUserCart = async (req, res) => {
     ).populate("cart.product");
     // var cart = response.cart;
 
-    // console.log(response);
+    console.log(response);
     res.json(response);
   } catch (error) {
     console.log(error.message);

@@ -44,11 +44,13 @@ const orderSchema = new Schema({
     },
     OpaymentMode: {
         type: String,
-        enum: ['COD', 'RayzorPay']
+        enum: ['CashOnDelivery', 'RazorPay'],
+        default: 'RazorPay'
     },
     OpaymentStatus: {
         type: String,
-        enum: ['Pending, Paid']
+        enum: ['Pending', 'Paid'],
+        default: 'Pending'
     }
 }, {timestamps: true})
 
