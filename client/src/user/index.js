@@ -160,8 +160,9 @@ export const razorPayOrder = async (userId, token, total) => {
         Accept: "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ total }),
-    }).then((res) => res.json());
+      body: JSON.stringify(total),
+    })
+    .then((res) => res.json());
 
     return result;
   } catch (error) {
@@ -180,7 +181,8 @@ export const paymentVerify = async (userId, token, response) => {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(response),
-    }).then((res) => res.json());
+    })
+    .then((res) => res.json());
 
     return result
   } catch (error) {

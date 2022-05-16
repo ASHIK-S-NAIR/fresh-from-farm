@@ -24,7 +24,7 @@ export const CartPayment = () => {
     paymentMode: "RazorPay",
     total: "",
     userDetails: "",
-    cart: "",
+    cart: [],
   });
 
   const { paymentMode, total, userDetails, cart } = values;
@@ -49,19 +49,9 @@ export const CartPayment = () => {
       if (data.error) {
         console.log(data.error);
       } else {
-        return setValues({ ...values, cart: data.cart });
+        // console.log(data.cart)
+        return setValues({ ...values, cart: data.cart});
       }
-      // cart = data.cart;
-
-      // const tempTotal = 0;
-      // cart.map(
-      //   (cartItem) =>
-      //     (tempTotal = tempTotal + cartItem.product.pPrice * cartItem.quantity)
-      // );
-
-      // console.log(total);
-
-      // return setTotal(tempTotal);
     } catch (error) {
       console.log(error);
     }
@@ -90,17 +80,13 @@ export const CartPayment = () => {
   }, []);
 
   useEffect(() => {
-    const tempTotal = 0;
+    var tempTotal = 0;
     cart.map(
       (cartItem) =>
         (tempTotal = tempTotal + cartItem.product.pPrice * cartItem.quantity)
     );
     setValues({ ...values, total: tempTotal });
   }, [cart]);
-
-  useEffect(() => {
-    console.log("PaymentMode", paymentMode);
-  }, [paymentMode]);
 
   // useEffect(() => {
   //   var total = 0;
@@ -244,7 +230,9 @@ export const CartPayment = () => {
                   id="RazorPay"
                   value="RazorPay"
                   checked={isRadioSelected("RazorPay")}
-                  onChange={(e) => setPaymentMode(e.target.value)}
+                  onChange={(e) =>
+                    setValues({ ...values, paymentMode: e.target.value })
+                  }
                 />
                 <label
                   htmlFor="RazorPay"
@@ -261,7 +249,9 @@ export const CartPayment = () => {
                   id="CashOnDelivery"
                   value="CashOnDelivery"
                   checked={isRadioSelected("CashOnDelivery")}
-                  onChange={(e) => setPaymentMode(e.target.value)}
+                  onChange={(e) =>
+                    setValues({ ...values, paymentMode: e.target.value })
+                  }
                 />
                 <label
                   htmlFor="CashOnDelivery"

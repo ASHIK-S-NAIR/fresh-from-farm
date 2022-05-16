@@ -8,6 +8,7 @@ import {
   updateFromUserCart,
 } from "../user";
 import CartItem from "./CartItem";
+// import { getProduct } from "./helper/productDetailHelper";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
@@ -23,7 +24,8 @@ const Cart = () => {
 
   const { user, token } = isAuthenticated();
 
-  const {shippingAddress_houseName, shippingAddress_streetName} = shippingAddress;
+  const { shippingAddress_houseName, shippingAddress_streetName } =
+    shippingAddress;
 
   const preLoadCart = async (userId, token) => {
     try {
@@ -37,11 +39,15 @@ const Cart = () => {
   const preLoadShippingAddress = async (userId, token) => {
     try {
       const data = await getUser(userId, token);
-      return setShippingAddress({
-        ...shippingAddress,
-        shippingAddress_houseName: data.address.houseName,
-        shippingAddress_streetName: data.address.streetName,
-      });
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        return setShippingAddress({
+          ...shippingAddress,
+          shippingAddress_houseName: data.address.houseName,
+          shippingAddress_streetName: data.address.streetName,
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -49,27 +55,28 @@ const Cart = () => {
 
   useEffect(() => {
     preLoadCart(userId, token);
-  }, []);
+  }, [userId, token]);
 
   useEffect(() => {
     preLoadShippingAddress(userId, token);
-  }, [])
+  }, []);
 
+  const loadSubTotal_value = async () => {
+    var total = 0;
+    cart.map((cartItem) => {   
+          return (total = total + cartItem.product.pPrice * cartItem.quantity);  
+        });
+
+    return setSubTotal_value(total);
+  }
 
   useEffect(() => {
-    var total = 0;
-    cart.map(
-      (cartItem) =>
-        (total = total + cartItem.product.pPrice * cartItem.quantity)
-    );
-    setSubTotal_value(total);
-  }, [cart]);
+    loadSubTotal_value()
+  }, [cart])
 
   useEffect(() => {
     setSubTotal_items(cart.length);
-  });
-
-  // console.log("Cart",cart);
+  }, [cart]);
 
   const updateQuantity = async (productId, quantity) => {
     try {
@@ -101,8 +108,8 @@ const Cart = () => {
   };
 
   const handleChange = (name) => (e) => {
-    setShippingAddress({...shippingAddress, [name] : e.target.value})
-  }
+    setShippingAddress({ ...shippingAddress, [name]: e.target.value });
+  };
 
   return (
     <section className="cart-section">
@@ -180,7 +187,7 @@ const Cart = () => {
                         type="text"
                         className="cart-shippingAddress-edit-address-input"
                         value={shippingAddress_houseName || " "}
-                        onChange = {handleChange('shippingAddress_houseName')}
+                        onChange={handleChange("shippingAddress_houseName")}
                       />
                     </div>
                     <div className="cart-shippingAddress-edit-address-sec">
@@ -191,11 +198,14 @@ const Cart = () => {
                         type="text"
                         className="cart-shippingAddress-edit-address-input"
                         value={shippingAddress_streetName || " "}
-                        onChange = {handleChange('shippingAddress_streetName')}
+                        onChange={handleChange("shippingAddress_streetName")}
                       />
                     </div>
                   </form>
-                  <Link to={`/cart/payment/${userId}`} state={{shippingAddress}}>
+                  <Link
+                    to={`/cart/payment/${userId}`}
+                    state={{ shippingAddress }}
+                  >
                     <button className="cart-shippingAddress-cta-btn">
                       Deliver to this Address
                     </button>
