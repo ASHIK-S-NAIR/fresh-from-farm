@@ -27,9 +27,9 @@ router.delete("/order/:orderId/:userId", isSignedIn, isAuthenticated, isAdmin, d
 router.put("/order/:orderId/:userId", isSignedIn, isAuthenticated, isAdmin, updateOrderStatus);
 
 // razorPayOrder
-router.post("/order/razorPayOrder/:userId", isSignedIn, isAuthenticated, razorPayOrder);
+router.post("/order/razorpayorder", razorPayOrder);
 
 // payment Verify
-router.post("/order/verify/:userId", isSignedIn, isAuthenticated, paymentVerify);
+router.post("/order/verify", paymentVerify);
 
 module.exports = router;

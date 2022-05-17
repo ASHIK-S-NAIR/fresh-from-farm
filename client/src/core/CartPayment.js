@@ -131,7 +131,7 @@ export const CartPayment = () => {
         try {
           // const verifyUrl = "http://localhost:8000/verify";
           // const {data} = await axios.post(verifyUrl, response);
-          const data = paymentVerify(userId, token, response);
+          const data = await paymentVerify( response);
           if (data.error) {
             return console.log(data.error);
           }
@@ -153,7 +153,7 @@ export const CartPayment = () => {
       //  const orderUrl = "http://localhost:8000/orders";
       //  const {data} = await axios.post(orderUrl, {amount: book.price});
       console.log(total);
-      const data = razorPayOrder(userId, token, total);
+      const data = await razorPayOrder(total);
       if (data.error) {
         return console.log(data.error);
       } else {
@@ -161,7 +161,7 @@ export const CartPayment = () => {
         initPayment(data.data);
       }
     } catch (error) {
-      console.log();
+      console.log(error);
     }
   };
   return (

@@ -151,14 +151,14 @@ export const createOrder = (userId, token, { shippingAddress, paymentMode }) => 
 //   }
 // }
 
-export const razorPayOrder = async (userId, token, total) => {
+export const razorPayOrder = async ( total) => {
   try {
-    const result = await fetch(`${API}/order/razorPayOrder/${userId}`, {
+    const result = await fetch(`${API}/order/razorpayorder}`, {
       method: "POST",
+      mode: 'no-cors',
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
+        Accept: "application/json"
       },
       body: JSON.stringify(total),
     })
@@ -171,14 +171,14 @@ export const razorPayOrder = async (userId, token, total) => {
   
 }
 
-export const paymentVerify = async (userId, token, response) => {
+export const paymentVerify = async (response) => {
   try {
-    const result = await fetch(`${API}/order/verify/${userId}`, {
+    const result = await fetch(`${API}/order/verify`, {
       method: "POST",
+      mode: 'no-cors',
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
+        Accept: "application/json"
       },
       body: JSON.stringify(response),
     })
