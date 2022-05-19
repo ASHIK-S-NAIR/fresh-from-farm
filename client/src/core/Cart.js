@@ -120,7 +120,7 @@ const Cart = () => {
         <div className="cart-subsection">
           <div className="cartDetail-sec">
             <div className="cartDetail-sec-hr"></div>
-            {cart &&
+            {cart.length !== 0 &&
               cart.map((cartItem, index) => {
                 return (
                   <CartItem

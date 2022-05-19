@@ -5,6 +5,9 @@ import Trash from "../icons/Trash.svg";
 const CartItem = ({ cartItem, updateQuantity, deleteProduct }) => {
   const [quantity, setQuantity] = useState(cartItem.quantity);
 
+  // console.log("CartItem product id",cartItem.product._id);
+  // alert("CartItem product id",cartItem.product._id);
+
   useEffect(() => {
     updateQuantity(cartItem.product._id, quantity);
   }, [quantity]);
