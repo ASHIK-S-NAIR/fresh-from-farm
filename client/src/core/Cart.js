@@ -63,16 +63,16 @@ const Cart = () => {
 
   const loadSubTotal_value = async () => {
     var total = 0;
-    cart.map((cartItem) => {   
-          return (total = total + cartItem.product.pPrice * cartItem.quantity);  
-        });
+    cart.map((cartItem) => {
+      return (total = total + cartItem.product.pPrice * cartItem.quantity);
+    });
 
     return setSubTotal_value(total);
-  }
+  };
 
   useEffect(() => {
-    loadSubTotal_value()
-  }, [cart])
+    loadSubTotal_value();
+  }, [cart]);
 
   useEffect(() => {
     setSubTotal_items(cart.length);
@@ -120,15 +120,17 @@ const Cart = () => {
         <div className="cart-subsection">
           <div className="cartDetail-sec">
             <div className="cartDetail-sec-hr"></div>
-            {cart.length !== 0 &&
+            {cart &&
               cart.map((cartItem, index) => {
                 return (
-                  <CartItem
-                    cartItem={cartItem}
-                    key={index}
-                    updateQuantity={updateQuantity}
-                    deleteProduct={deleteProduct}
-                  />
+                  cartItem.product._id && (
+                    <CartItem
+                      cartItem={cartItem}
+                      key={index}
+                      updateQuantity={updateQuantity}
+                      deleteProduct={deleteProduct}
+                    />
+                  )
                 );
               })}
             <div className="cart-subTotal-sec">
