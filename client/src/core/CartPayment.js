@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { isAuthenticated } from "../auth";
-// import { API } from "../backend";
 import {
   getUserCart,
   createOrder,
@@ -15,19 +14,16 @@ export const CartPayment = () => {
 
   const location = useLocation();
   const shippingAddress = location.state;
-  // console.log(state);
-
-  // const [paymentMode, setPaymentMode] = useState("RazorPay");
-  // const [total, setTotal] = useState(0);
-  // const [userDetails, setUserDetails] = useState();
   const [values, setValues] = useState({
     paymentMode: "RazorPay",
-    total: "",
+    total: 10,
     userDetails: "",
-    cart: [],
   });
 
-  const { paymentMode, total, userDetails, cart } = values;
+  var cart = [];
+  var order = '';
+
+  const { paymentMode, total, userDetails } = values;
 
   const { user, token } = isAuthenticated();
 
@@ -39,18 +35,21 @@ export const CartPayment = () => {
     }
   };
 
-  // var cart = [];
-  // var userDetails;
-  // var total = 0;
-
   const preLoadCart = async (userId, token) => {
     try {
       const data = await getUserCart(userId, token);
       if (data.error) {
         console.log(data.error);
       } else {
-        // console.log(data.cart)
-        return setValues({ ...values, cart: data.cart});
+        cart = data.cart;
+        console.log(cart);
+        var tempTotal = 0;
+        cart.map(
+          (cartItem) =>
+            (tempTotal =
+              tempTotal + cartItem.product.pPrice * cartItem.quantity)
+        );
+        setValues({ ...values, total: tempTotal });
       }
     } catch (error) {
       console.log(error);
@@ -79,24 +78,6 @@ export const CartPayment = () => {
     preLoadUser(userId, token);
   }, []);
 
-  useEffect(() => {
-    var tempTotal = 0;
-    cart.map(
-      (cartItem) =>
-        (tempTotal = tempTotal + cartItem.product.pPrice * cartItem.quantity)
-    );
-    setValues({ ...values, total: tempTotal });
-  }, [cart]);
-
-  // useEffect(() => {
-  //   var total = 0;
-  //   cart.map(
-  //     (cartItem) =>
-  //       (total = total + cartItem.product.pPrice * cartItem.quantity)
-  //   );
-  //   console.log("total", total)
-  // }, [cart])
-
   const handleOrder = async (userId, token) => {
     try {
       const data = await createOrder(userId, token, {
@@ -106,9 +87,24 @@ export const CartPayment = () => {
       if (data.error) {
         console.log(data.error);
       } else {
+        order= data.order;
         if (paymentMode === "RazorPay") {
-          await handlePayment();
+          await handlePayment(total);
         }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handlePayment = async (total) => {
+    try {
+      const data = await razorPayOrder({total});
+      if (data.error) {
+        return console.log(data.error);
+      } else {
+        console.log(data);
+        initPayment(data.data);
       }
     } catch (error) {
       console.log(error);
@@ -129,9 +125,7 @@ export const CartPayment = () => {
       },
       handler: async (response) => {
         try {
-          // const verifyUrl = "http://localhost:8000/verify";
-          // const {data} = await axios.post(verifyUrl, response);
-          const data = await paymentVerify( response);
+          const data = await paymentVerify({response,order});
           if (data.error) {
             return console.log(data.error);
           }
@@ -148,22 +142,6 @@ export const CartPayment = () => {
     rzp1.open();
   };
 
-  const handlePayment = async () => {
-    try {
-      //  const orderUrl = "http://localhost:8000/orders";
-      //  const {data} = await axios.post(orderUrl, {amount: book.price});
-      console.log(total);
-      const data = await razorPayOrder(total);
-      if (data.error) {
-        return console.log(data.error);
-      } else {
-        console.log(data);
-        initPayment(data.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
   return (
     <section className="cardPayment-section">
       <div className="wrap cardPayment-wrap">

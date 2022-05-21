@@ -30,36 +30,6 @@ const ProductDetail = () => {
     }
   };
 
-  // const handleAddToCart = async (productId, quantity) => {
-  //   var cart = [];
-  //   try {
-  //     const userDetails = await getUser(user._id, token);
-  //     cart = userDetails.cart;
-  //     console.log(typeof cart);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-
-  //   console.log(productId);
-  //   console.log(quantity);
-
-  //   cart.push({
-  //     product: productId,
-  //     quantity,
-  //   });
-
-  //   console.log("Cart", cart);
-
-  //   try {
-  //     var data = await updateUser({ cart }, user._id, token);
-  //     if (data.error) {
-  //       console.log(data.error);
-  //     } else {
-  //       navigate(`/cart/${user._id}`);
-  //     }
-  //   } catch (error) {}
-  // };
-
   const handleAddToCart = async (productId, quantity) => {
     try {
       var data = await addToUserCart(user._id, token, { productId, quantity });

@@ -1,37 +1,71 @@
 import React, { useState, useEffect } from "react";
 import { API } from "../backend";
 import Trash from "../icons/Trash.svg";
+import { getProduct } from "./helper/productDetailHelper";
 
-const CartItem = ({ cartItem, updateQuantity, deleteProduct }) => {
-  const [quantity, setQuantity] = useState(cartItem.quantity);
+const CartItem = ({
+  cartItemProductId,
+  cartItemQuantity,
+  updateQuantity,
+  deleteProduct,
+}) => {
+  // console.log("cartProductDetails ", cartProductDetails);
+  const [product, setProduct] = useState({
+    _id: "",
+    pName: "",
+    pPrice: "",
+    pCategory: "",
+  });
+  const [quantity, setQuantity] = useState(cartItemQuantity);
 
-  // console.log("CartItem product id",cartItem.product._id);
-  // alert("CartItem product id",cartItem.product._id);
+  const { _id, pName, pPrice, pCategory } = product;
+
+  const getProductDetails = async (productId) => {
+    try {
+      const data = await getProduct(productId);
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        return setProduct({
+          ...product,
+          _id: data._id,
+          pName: data.pName,
+          pPrice: data.pPrice,
+          pCategory: data.pCategory,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    updateQuantity(cartItem.product._id, quantity);
-  }, [quantity]);
+    getProductDetails(cartItemProductId);
+  }, []);
 
+  useEffect(() => {
+    updateQuantity(product._id, quantity);
+  }, [quantity]);
 
   return (
     <div className="cartItem-item">
       <div className="cartItem-item-left">
         <div className="cartItem-item-img-sec">
           <img
-            src={`${API}/product/photo/${cartItem.product._id}`}
+            src={`${API}/product/photo/${_id}`}
             alt=""
             className="cartItem-item-img"
           />
         </div>
         <div className="cartItem-item-info">
-          <h2 className="cartItem-item-productName">{cartItem.product.pName}</h2>
+          <h2 className="cartItem-item-productName">{pName}</h2>
           <div
             className={`cartItem-item-category-sec ${
-              cartItem.product.pCategory === "vegetable" ? "color-green" : "color-orange"
+              pCategory === "vegetable" ? "color-green" : "color-orange"
             }`}
           >
             <p className="cartItem-item-category">
-              {cartItem.product.pCategory === "vegetable" ? "Veg" : "Fruit"}
+              {pCategory === "vegetable" ? "Veg" : "Fruit"}
             </p>
           </div>
         </div>
@@ -50,12 +84,12 @@ const CartItem = ({ cartItem, updateQuantity, deleteProduct }) => {
             src={Trash}
             alt=""
             className="cartItem-item-delete-icon"
-            onClick={() => deleteProduct(cartItem.product._id)}
+            onClick={() => deleteProduct(_id)}
           />
         </div>
       </div>
       <div className="cartItem-item-right">
-        <h2 className="cartItem-item-price">{`${cartItem.product.pPrice}/Kg`}</h2>
+        <h2 className="cartItem-item-price">{`${pPrice}/Kg`}</h2>
       </div>
     </div>
   );

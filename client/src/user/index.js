@@ -71,7 +71,7 @@ export const getUserCart = async (userId, token) => {
   }
 };
 
-export const addToUserCart = (userId, token, { productId, quantity }) => {
+export const addToUserCart = (userId, token, body) => {
   try {
     const result = fetch(`${API}/user/addtocart/${userId}`, {
       method: "POST",
@@ -80,7 +80,7 @@ export const addToUserCart = (userId, token, { productId, quantity }) => {
         Accept: "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ productId, quantity }),
+      body: JSON.stringify(body),
     }).then((res) => res.json());
 
     return result;
@@ -125,7 +125,11 @@ export const deleteFromCart = (userId, token, productId) => {
   }
 };
 
-export const createOrder = (userId, token, { shippingAddress, paymentMode }) => {
+export const createOrder = (
+  userId,
+  token,
+  { shippingAddress, paymentMode }
+) => {
   try {
     const result = fetch(`${API}/order/create/${userId}`, {
       method: "POST",
@@ -143,49 +147,37 @@ export const createOrder = (userId, token, { shippingAddress, paymentMode }) => 
   }
 };
 
-// export const updateOrder = (userId, token, {}) => {
-//   try {
-    
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
-
-export const razorPayOrder = async ( total) => {
+export const razorPayOrder = async (body) => {
   try {
-    const result = await fetch(`${API}/order/razorpayorder}`, {
+    const result = await fetch(`${API}/order/razorpayorder`, {
       method: "POST",
-      mode: 'no-cors',
+      // mode: "no-cors",
       headers: {
+        Accept: "application/json",
         "Content-Type": "application/json",
-        Accept: "application/json"
       },
-      body: JSON.stringify(total),
-    })
-    .then((res) => res.json());
+      body: JSON.stringify(body),
+    }).then((res) => res.json());
 
     return result;
   } catch (error) {
     console.log(error);
   }
-  
-}
+};
 
-export const paymentVerify = async (response) => {
+export const paymentVerify = async (body) => {
   try {
     const result = await fetch(`${API}/order/verify`, {
       method: "POST",
-      mode: 'no-cors',
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json"
+        Accept: "application/json",
       },
-      body: JSON.stringify(response),
-    })
-    .then((res) => res.json());
+      body: JSON.stringify(body),
+    }).then((res) => res.json());
 
-    return result
+    return result;
   } catch (error) {
     console.log(error);
   }
-}
+};

@@ -8,7 +8,7 @@ import {
   updateFromUserCart,
 } from "../user";
 import CartItem from "./CartItem";
-// import { getProduct } from "./helper/productDetailHelper";
+import { getProduct } from "./helper/productDetailHelper";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
@@ -19,6 +19,7 @@ const Cart = () => {
     shippingAddress_houseName: " ",
     shippingAddress_streetName: " ",
   });
+  const [productDetails, setProductDetails] = useState();
 
   const { userId } = useParams();
 
@@ -30,6 +31,7 @@ const Cart = () => {
   const preLoadCart = async (userId, token) => {
     try {
       const data = await getUserCart(userId, token);
+      // console.log("cart", data);
       return setCart(data.cart);
     } catch (error) {
       console.log(error);
@@ -123,14 +125,13 @@ const Cart = () => {
             {cart &&
               cart.map((cartItem, index) => {
                 return (
-                  cartItem.product._id && (
-                    <CartItem
-                      cartItem={cartItem}
-                      key={index}
-                      updateQuantity={updateQuantity}
-                      deleteProduct={deleteProduct}
-                    />
-                  )
+                  <CartItem
+                    cartItemProductId={cartItem.product._id}
+                    cartItemQuantity={cartItem.quantity}
+                    key={index}
+                    updateQuantity={updateQuantity}
+                    deleteProduct={deleteProduct}
+                  />
                 );
               })}
             <div className="cart-subTotal-sec">

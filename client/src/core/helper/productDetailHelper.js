@@ -3,17 +3,17 @@ const axios = require("axios");
 
 // getProduct
 export const getProduct = async (productId) => {
- try {
-   const response = await fetch(`${API}/product/${productId}`, {
-     method: "GET",
-     headers: {
-       Accept: "application/json",
-     }
-   }).then((res) => res.json())
-   return response;
- } catch (error) {
-   console.log(error);
- }
+  try {
+    const data = await fetch(`${API}/product/${productId}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    }).then((res) => res.json());
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const getAllCategoryProducts = async (productId) => {

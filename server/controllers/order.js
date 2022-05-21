@@ -74,9 +74,7 @@ exports.createOrder = async (req, res) => {
       { new: true, useFindAndModify: false }
     );
 
-    return res.json({
-      message: "created order succesfully",
-    });
+    return res.json({ order, message: "created order succesfully" });
   } catch (error) {
     console.log(error.message);
     return res.status(400).json({
@@ -94,15 +92,11 @@ exports.razorPayOrder = async (req, res) => {
     });
 
     // var totalPrice = 0;
-  console.log("reached at razorPayOrder");
+    console.log("reached at razorPayOrder");
 
     // const cart = req.body.cart;
 
-    console.log(req.body)
-
-    // cart.map((cartItem) => {
-    //   totalPrice = totalPrice + cartItem.product.pPrice * cartItem.quantity;
-    // });
+    console.log("Req body", req.body);
 
     const options = {
       // amount: totalPrice * 100,
@@ -119,7 +113,7 @@ exports.razorPayOrder = async (req, res) => {
       res.status(200).json({ data: order });
     });
   } catch (error) {
-    console.log(error);
+    console.log("Error Message", error.message);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -128,7 +122,7 @@ exports.razorPayOrder = async (req, res) => {
 exports.paymentVerify = async (req, res) => {
   try {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
-      req.body;
+      req.body.response;
     const sign = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSign = crypto
       .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
@@ -137,7 +131,7 @@ exports.paymentVerify = async (req, res) => {
 
     if (razorpay_signature === expectedSign) {
       await Order.findByIdAndUpdate(
-        { _id: req.order._id },
+        { _id: req.body.order._id },
         {
           $set: {
             Ostatus: "Ordered",
