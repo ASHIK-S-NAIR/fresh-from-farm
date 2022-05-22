@@ -1,15 +1,20 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { isAuthenticated, logout } from "../auth/index";
 import { AuthContext } from "../context/Context";
 import Signup from "../user/Signup";
 import Login from "../user/Login";
+import cart from "../icons/cart.svg";
+import { getUserCart } from "../user/index";
 
 const Nav = () => {
   const [active, setActive] = useState(false);
   const [toggled, setToggled] = useState(false);
+  const [cartCount, setCartCount] = useState();
 
   const { authActive, setAuthActive } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   const { user, token } = isAuthenticated();
 
@@ -25,7 +30,19 @@ const Nav = () => {
     setToggled(!toggled);
   };
 
-  const navigate = useNavigate();
+  const getCartCount = async (user, token) => {
+    const data = await getUserCart(user._id, token);
+    if (data.error) {
+      console.log(data.error);
+    } else {
+      console.log(data.cart.length);
+      return setCartCount(data.cart.length);
+    }
+  };
+
+  useEffect(() => {
+    getCartCount(user, token);
+  }, []);
 
   return (
     <section className="nav-section">
@@ -75,7 +92,10 @@ const Nav = () => {
             <ul className="nav-ul">
               <li className="nav-li">
                 <Link to={`/cart/${user._id}`}>
-                  <button className="nav-btn">Cart</button>
+                  <div className="nav-cart-icon-sec">
+                    <div className="nav-cart-icon-value">{cartCount}</div>
+                    <img src={cart} alt="" className="nav-cart-icon" />
+                  </div>
                 </Link>
               </li>
               <li

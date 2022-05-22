@@ -28,6 +28,7 @@ exports.createOrder = async (req, res) => {
     cart = response.cart;
 
     const { shippingAddress, paymentMode } = req.body;
+    console.log("Order Controller ShippingAddress", shippingAddress);
 
     if (!(shippingAddress || paymentMode || cart)) {
       return res.status(400).json({
@@ -45,9 +46,12 @@ exports.createOrder = async (req, res) => {
       Ouser: req.profile._id,
       Oproducts: cart,
       OtotalPrice: totalPrice,
-      Oaddress: req.body.shippingAddress,
+      Oaddress: {
+        houseName: shippingAddress.houseName,
+        streetName: shippingAddress.streetName
+      },
       Ostatus: "Not Confirmed",
-      OpaymentMode: req.body.paymentMode,
+      OpaymentMode: paymentMode,
       OpaymentStatus: "Pending",
     });
 
@@ -188,12 +192,12 @@ exports.deleteOrder = async (req, res) => {
   }
 };
 
-// updateOrderStatus
-exports.updateOrderStatus = async (req, res) => {
+// updateOrder
+exports.updateOrder = async (req, res) => {
   try {
     await Order.findByIdAndUpdate(
       { _id: req.order._id },
-      { $set: { Ostatus: req.body.status } },
+      { $set: req.body },
       { new: true, useFindAndModify: false }
     );
 

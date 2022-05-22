@@ -6,7 +6,7 @@ import {
   getAllCategoryProducts,
 } from "./helper/productDetailHelper";
 import { isAuthenticated } from "../auth/index";
-import { addToUserCart, getUser, updateUser } from "../user";
+import { addToUserCart } from "../user";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState({});
@@ -22,9 +22,17 @@ const ProductDetail = () => {
   const loadProduct = async (productId) => {
     try {
       const productData = await getProduct(productId);
-      const productsData = await getAllCategoryProducts(productId);
 
-      return setProduct(productData), setProducts(productsData);
+      return setProduct(productData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const loadProducts = async (productsData) => {
+    try {
+      const productsData = await getAllCategoryProducts(productId);
+      return setProducts(productsData);
     } catch (error) {
       console.log(error);
     }
@@ -34,7 +42,7 @@ const ProductDetail = () => {
     try {
       var data = await addToUserCart(user._id, token, { productId, quantity });
       if (data.error) {
-        console.log(data.error)
+        console.log(data.error);
       } else {
         navigate(`/cart/${user._id}`);
       }
@@ -46,6 +54,10 @@ const ProductDetail = () => {
   useEffect(() => {
     loadProduct(productId);
   }, [productId]);
+
+  useEffect(() => {
+    loadProducts(productId);
+  }, []);
   return (
     <section className="productDetail productDetail-section">
       <div className="wrap productDetail-wrap">
@@ -114,6 +126,7 @@ const ProductDetail = () => {
                 <img
                   src={`${API}/product/photo/${product._id}`}
                   className="product-img"
+                  alt="product img"
                 />
                 <div className="product-info">
                   <h2 className="product-name">{product.pName}</h2>

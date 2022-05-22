@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { isAuthenticated } from "../auth";
 import {
   getUserCart,
@@ -7,11 +7,13 @@ import {
   getUser,
   razorPayOrder,
   paymentVerify,
+  updateOrderConfirmation,
 } from "../user";
 
 export const CartPayment = () => {
   const { userId } = useParams();
 
+  const naviagte = useNavigate();
   const location = useLocation();
   const shippingAddress = location.state;
   const [values, setValues] = useState({
@@ -21,7 +23,7 @@ export const CartPayment = () => {
   });
 
   var cart = [];
-  var order = '';
+  var order = "";
 
   const { paymentMode, total, userDetails } = values;
 
@@ -87,9 +89,21 @@ export const CartPayment = () => {
       if (data.error) {
         console.log(data.error);
       } else {
-        order= data.order;
+        order = data.order;
         if (paymentMode === "RazorPay") {
           await handlePayment(total);
+        } else {
+          try {
+            const data = await updateOrderConfirmation(userId, token, order._id, {
+              Ostatus: "Ordered",
+            });
+            if (data.error) {
+              return console.log(data.error);
+            } else {
+              console.log(data);
+              naviagte(`/thankyou/${order._id}`);
+            }
+          } catch (error) {}
         }
       }
     } catch (error) {
@@ -99,7 +113,7 @@ export const CartPayment = () => {
 
   const handlePayment = async (total) => {
     try {
-      const data = await razorPayOrder({total});
+      const data = await razorPayOrder({ total });
       if (data.error) {
         return console.log(data.error);
       } else {
@@ -125,11 +139,12 @@ export const CartPayment = () => {
       },
       handler: async (response) => {
         try {
-          const data = await paymentVerify({response,order});
+          const data = await paymentVerify({ response, order });
           if (data.error) {
             return console.log(data.error);
           }
           console.log(data);
+          naviagte(`/thankyou/${order._id}`);
         } catch (error) {
           console.log(error);
         }

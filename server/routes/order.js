@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const {getOrderById, createOrder, getOrder, getAllOrders, deleteOrder, updateOrderStatus, razorPayOrder, paymentVerify} = require('../controllers/order');
+const {getOrderById, createOrder, getOrder, getAllOrders, deleteOrder, updateOrder, razorPayOrder, paymentVerify} = require('../controllers/order');
 const {getUserById} = require('../controllers/user');
 const {isSignedIn, isAuthenticated, isAdmin} = require("../controllers/auth");
 const {updateStock} = require("../controllers/product");
@@ -24,7 +24,10 @@ router.get("/orders/:userId", isSignedIn, isAuthenticated, isAdmin, getAllOrders
 router.delete("/order/:orderId/:userId", isSignedIn, isAuthenticated, isAdmin, deleteOrder);
 
 // updateOrder
-router.put("/order/:orderId/:userId", isSignedIn, isAuthenticated, isAdmin, updateOrderStatus);
+router.put("/order/:orderId/:userId", isSignedIn, isAuthenticated, isAdmin, updateOrder);
+
+// updateOrderConfirmation
+router.put("/order/orderconfirmation/:orderId/:userId", isSignedIn, isAuthenticated, updateOrder);
 
 // razorPayOrder
 router.post("/order/razorpayorder", razorPayOrder);

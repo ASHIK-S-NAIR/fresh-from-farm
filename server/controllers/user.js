@@ -37,11 +37,20 @@ exports.addToUserCart = async (req, res) => {
 
     cart = response.cart;
 
+    const { productId, quantity } = req.body;
+
     if (cart.length === 0) {
-      cart.push({ product: req.body.productId, quantity: req.body.quantity });
+      cart.push({ product: productId, quantity: quantity });
       await User.findByIdAndUpdate(
         { _id: req.profile._id },
-        { $set: { cart: cart } },
+        {
+          $set: {
+            cart: {
+              product: productId,
+              quantity: quantity,
+            },
+          },
+        },
         { new: true, useFindAndModify: false }
       );
       return res.json({
@@ -49,15 +58,13 @@ exports.addToUserCart = async (req, res) => {
       });
     }
 
-    const cartItem = cart.find(
-      (cartItem) => cartItem.product == req.body.productId
-    );
+    const cartItem = cart.find((cartItem) => cartItem.product === productId);
 
     if (cartItem) {
       cart.map((cartItem) => {
-        if (cartItem.product == req.body.productId) {
+        if (cartItem.product === productId) {
           cartItem.quantity =
-            parseInt(cartItem.quantity) + parseInt(req.body.quantity);
+            parseInt(cartItem.quantity) + parseInt(quantity);
         }
       });
 
@@ -73,8 +80,8 @@ exports.addToUserCart = async (req, res) => {
     }
 
     cart.push({
-      product: req.body.productId,
-      quantity: req.body.quantity,
+      product: productId,
+      quantity: quantity,
     });
 
     await User.findByIdAndUpdate(

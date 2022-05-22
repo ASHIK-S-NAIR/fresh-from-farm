@@ -32,7 +32,7 @@ const orderSchema = new Schema({
         houseName: {
             type: String 
         },
-        street: {
+        streetName: {
             type: String
         }
     },

@@ -14,6 +14,7 @@ import AdminBoard from "./core/AdminBoard";
 
 import Cart from "./core/Cart";
 import { CartPayment } from "./core/CartPayment";
+import ThankYou from "./core/ThankYou";
 
 const Routes = () => {
   const [authActive, setAuthActive] = useState(null);
@@ -62,6 +63,14 @@ const Routes = () => {
             element={
               <CustomerRoutes>
                 <Cart />
+              </CustomerRoutes>
+            }
+          />
+          <Route
+            path="/thankyou/:orderId"
+            element={
+              <CustomerRoutes>
+                <ThankYou />
               </CustomerRoutes>
             }
           />
