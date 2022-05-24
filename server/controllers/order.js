@@ -12,7 +12,7 @@ exports.getOrderById = async (req, res, next, id) => {
     req.order = order;
     next();
   } catch (error) {
-    return res.status(400).josn({
+    return res.status(400).json({
       message: "failed to get id from DB",
     });
   }
@@ -28,7 +28,7 @@ exports.createOrder = async (req, res) => {
     cart = response.cart;
 
     const { shippingAddress, paymentMode } = req.body;
-    console.log("Order Controller ShippingAddress", shippingAddress);
+    // console.log("Order Controller ShippingAddress", shippingAddress);
 
     if (!(shippingAddress || paymentMode || cart)) {
       return res.status(400).json({
@@ -36,24 +36,32 @@ exports.createOrder = async (req, res) => {
       });
     }
 
+    // console.log(
+    //   `Order Controller ShippingAddress , ${shippingAddress_houseName} ${shippingAddress_streetName}`
+    // );
+
     var totalPrice = 0;
 
     cart.map((cartItem) => {
       totalPrice = totalPrice + cartItem.product.pPrice * cartItem.quantity;
     });
 
+    // console.log("Order Controller ShippingAddress", shippingAddress);
+
     const order = await Order.create({
       Ouser: req.profile._id,
       Oproducts: cart,
       OtotalPrice: totalPrice,
       Oaddress: {
-        houseName: shippingAddress.houseName,
-        streetName: shippingAddress.streetName
+        houseName: shippingAddress.shippingAddress_houseName,
+        streetName: shippingAddress.shippingAddress_streetName,
       },
       Ostatus: "Not Confirmed",
       OpaymentMode: paymentMode,
       OpaymentStatus: "Pending",
     });
+
+    // console.log(order);
 
     order.save();
 

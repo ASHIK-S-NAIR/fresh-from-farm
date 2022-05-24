@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const Order = require("../models/order");
 
 // getUserById- Middleware
 exports.getUserById = async (req, res, next, id) => {
@@ -63,8 +64,7 @@ exports.addToUserCart = async (req, res) => {
     if (cartItem) {
       cart.map((cartItem) => {
         if (cartItem.product === productId) {
-          cartItem.quantity =
-            parseInt(cartItem.quantity) + parseInt(quantity);
+          cartItem.quantity = parseInt(cartItem.quantity) + parseInt(quantity);
         }
       });
 
@@ -265,6 +265,27 @@ exports.deleteUser = async (req, res) => {
   } catch (error) {
     return res.status(400).json({
       message: "User deletion failed",
+    });
+  }
+};
+
+// getUserOrders
+exports.getUserOrders = async (req, res) => {
+  try {
+    const orders = await Order.find({ Ouser: req.profile._id });
+    // console.log("orders", orders);
+
+    if (!orders) {
+      return res.status(400).json({
+        message: "No orders for this user",
+      });
+    }
+
+    return res.json(orders);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      message: "Order retriving failed",
     });
   }
 };
