@@ -8,7 +8,7 @@ import {
   updateFromUserCart,
 } from "../user";
 import CartItem from "./CartItem";
-import { getProduct } from "./helper/productDetailHelper";
+// import { getProduct } from "./helper/productDetailHelper";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);

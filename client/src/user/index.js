@@ -130,7 +130,7 @@ export const createOrder = (
   token,
   { shippingAddress, paymentMode }
 ) => {
-  console.log("Index shippingAddress",shippingAddress);
+  console.log("Index shippingAddress", shippingAddress);
   try {
     const result = fetch(`${API}/order/create/${userId}`, {
       method: "POST",
@@ -186,19 +186,38 @@ export const paymentVerify = async (body) => {
 export const updateOrderConfirmation = async (userId, token, orderId, body) => {
   try {
     // const result = await fetch(`${API}/order/${orderId}/${userId}`, {
-    const result = await fetch(`${API}/order/orderconfirmation/${orderId}/${userId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify(body)
-    }).then(res =>  res.json())
+    const result = await fetch(
+      `${API}/order/orderconfirmation/${orderId}/${userId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(body),
+      }
+    ).then((res) => res.json());
 
     return result;
   } catch (error) {
     console.log(error);
   }
-}
+};
 
+export const getUserOrders = async (userId, token) => {
+  try {
+    const result = await fetch(`${API}/orders/user/${userId}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((res) => res.json());
+
+    return result;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
