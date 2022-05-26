@@ -65,6 +65,7 @@ a {
   top: 0;
   left: 0;
   right: 0;
+  box-shadow: 0px 1px 20px 20px rgba(0,0,0,0.08);
 }
 
 .nav-wrap-mobile {
@@ -186,6 +187,16 @@ a {
 
 .popup-big-sec {
   width: 36.25em;
+  height: auto;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px, 4px, 15px, 10px rgba(0, 0, 0, 0.1);
+  padding: 2.5em 2.5em;
+  margin-top: 5em;
+}
+
+.popup-small-sec{
+  width: 32.188em;
   height: auto;
   background-color: #fff;
   border-radius: 10px;
@@ -1147,11 +1158,11 @@ tr {
   cursor: pointer;
 }
 .userBoard-right-customer-order-table-body-tr:nth-child(odd){
-  background-color: #d8eced;
+  background-color: #e9f7f7;
 }
 
 .userBoard-right-customer-order-table-body-tr:hover{
-  background-color: #ced2d2;
+  background-color: #d9d8d8;
 }
 
 .userBoard-right-customer-order-table-head-value {
@@ -1183,6 +1194,47 @@ tr {
   padding-bottom: 1em;
 }
 
-/* 0.6875 */
+.userBoard-right-customer-order-table-body-div{
+  padding: 0.5em 1em;
+  width: fit-content;
+  font-weight: 600;
+  border-radius: 5px;
+  box-shadow: inset 1px 1px 1px 1px rgba(0,0,0,0.1);
+}
+
+.userBoard-right-customer-order-table-body-div.Not-Confirmed{
+  background-color: #EFF8BC;
+  color: #434401;
+}
+
+.userBoard-right-customer-order-table-body-div.Ordered{
+  background-color: #DCE7F9;
+  color: #1124CE;
+}
+
+.userBoard-right-customer-order-table-body-div.Processing{
+background-color: #FCEFD6;
+color: #8E3E04;
+}
+
+.userBoard-right-customer-order-table-body-div.Picking-Up{
+  background-color: #FED7FA;
+  color: #520354;
+}
+
+.userBoard-right-customer-order-table-body-div.Out-For-Delivery{
+  background-color: #D8FEDC;
+color: #02530A;
+}
+
+.userBoard-right-customer-order-table-body-div.Delivered{
+  background-color: #fff;
+  color: #000000;
+}
+
+.userBoard-right-customer-order-table-body-div.Cancelled{
+  background-color: #FEDBDB;
+color: #710303;
+}
 
 /* order section ends */

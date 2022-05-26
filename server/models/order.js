@@ -21,8 +21,8 @@ const orderSchema = new Schema({
     OtotalPrice: Number,
     Ostatus: {
         type: String,
-        enum: ['Not Confirmed', 'Ordered', 'Processing', 'Picking Up', 'Out For Delivery', 'Order Completed', 'Canceled' ],
-        default: 'Not Confirmed'
+        enum: ['Not-Confirmed', 'Ordered', 'Processing', 'Picking-Up', 'Out-For-Delivery', 'Delivered', 'Cancelled' ],
+        default: 'Not-Confirmed'
     },
     OemployeeId: {
         type: Schema.Types.ObjectId,

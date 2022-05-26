@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter, Routes as Router, Route } from "react-router-dom";
 import { AuthContext } from "./context/Context";
-import API from "./backend";
+// import API from "./backend";
 import Nav from "./core/Nav";
 import ProductDetail from "./core/ProductDetail";
 import Shop from "./core/Shop";

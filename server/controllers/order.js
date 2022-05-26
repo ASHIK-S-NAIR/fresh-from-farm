@@ -56,7 +56,7 @@ exports.createOrder = async (req, res) => {
         houseName: shippingAddress.shippingAddress_houseName,
         streetName: shippingAddress.shippingAddress_streetName,
       },
-      Ostatus: "Not Confirmed",
+      Ostatus: "Not-Confirmed",
       OpaymentMode: paymentMode,
       OpaymentStatus: "Pending",
     });
