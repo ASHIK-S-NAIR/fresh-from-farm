@@ -44,8 +44,15 @@ const OrderDetails = ({ orderActive, setOrderActive, order }) => {
                   loadProduct(product.product).then((productDetail) => {
                     return (
                       <tr key={index}>
-                          {console.log("productName",productDetail.pName)}
-                        <td className="popup-table-body-value">
+                        {console.log("productName", productDetail.pName)}
+                        <td>ashik</td>
+                        <td>ashik</td>
+                        <td>ashik</td>
+                        <td>ashik</td>
+                        <td>ashik</td>
+                        <td>ashik</td>
+
+                        {/* <td className="popup-table-body-value">
                           {productDetail.pName}
                         </td>
                         <td className="popup-table-body-value">
@@ -59,7 +66,7 @@ const OrderDetails = ({ orderActive, setOrderActive, order }) => {
                         </td>
                         <td className="popup-table-body-value">
                           {productDetail.pPrice * product.quantity}
-                        </td>
+                        </td> */}
                       </tr>
                     );
                   });
