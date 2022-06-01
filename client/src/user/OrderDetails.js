@@ -1,20 +1,31 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { getProduct } from "../core/helper/productDetailHelper";
 
 const OrderDetails = ({ orderActive, setOrderActive, order }) => {
-  const loadProduct = async (productId) => {
+  const [productDetails, setProductDetails] = useState([]);
+  console.log("productDetails", productDetails);
+  const loadProductDetails = async (order) => {
+    order.Oproducts.map((product) => {
+      return loadProduct(product);
+    });
+  };
+
+  const loadProduct = async (product) => {
     try {
-      const data = await getProduct(productId);
+      const data = await getProduct(product.product);
       if (data.error) {
         return console.log(data.error);
       } else {
-        console.log(data);
-        return data;
+        return setProductDetails([...productDetails, data]);
       }
     } catch (error) {
-      return console.log(error);
+      console.log(error);
     }
   };
+
+  useEffect(() => {
+    loadProductDetails(order);
+  }, []);
 
   return (
     <section className="orderDetails-section">
@@ -39,38 +50,35 @@ const OrderDetails = ({ orderActive, setOrderActive, order }) => {
                 </tr>
               </thead>
               <tbody className="popup-table-body-sec">
-                {order.Oproducts.map((product, index) => {
-                  console.log("productId", product.product);
-                  loadProduct(product.product).then((productDetail) => {
-                    return (
-                      <tr key={index}>
-                        {console.log("productName", productDetail.pName)}
-                        <td>ashik</td>
-                        <td>ashik</td>
-                        <td>ashik</td>
-                        <td>ashik</td>
-                        <td>ashik</td>
-                        <td>ashik</td>
-
-                        {/* <td className="popup-table-body-value">
-                          {productDetail.pName}
-                        </td>
-                        <td className="popup-table-body-value">
-                          {productDetail.pCategory}
-                        </td>
-                        <td className="popup-table-body-value">
-                          {product.quantity}
-                        </td>
-                        <td className="popup-table-body-value">
-                          {productDetail.pPrice}
-                        </td>
-                        <td className="popup-table-body-value">
-                          {productDetail.pPrice * product.quantity}
-                        </td> */}
-                      </tr>
-                    );
-                  });
-                })}
+                {productDetails &&
+                  order.Oproducts.map((product) => {
+                    return productDetails.map((productDetail, index) => {
+                      if (productDetail._id === product.product) {
+                        console.log("got it");
+                        return (
+                          <tr key={index}>
+                            <td className="popup-table-body-value">
+                              {productDetail.pName}
+                            </td>
+                            <td className="popup-table-body-value">
+                              {productDetail.pCategory}
+                            </td>
+                            <td className="popup-table-body-value">
+                              {product.quantity}
+                            </td>
+                            <td className="popup-table-body-value">
+                              {productDetail.pPrice}
+                            </td>
+                            <td className="popup-table-body-value">
+                              {productDetail.pPrice * product.quantity}
+                            </td>
+                          </tr>
+                        );
+                      } else {
+                        return "";
+                      }
+                    });
+                  })}
               </tbody>
             </table>
           </div>
