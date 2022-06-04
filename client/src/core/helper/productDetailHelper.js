@@ -4,13 +4,13 @@ const axios = require("axios");
 // getProduct
 export const getProduct = async (productId) => {
   try {
-    const data = await fetch(`${API}/product/${productId}`, {
+    const result = await fetch(`${API}/product/${productId}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
       },
     }).then((res) => res.json());
-    return data;
+    return result;
   } catch (error) {
     console.log(error);
   }

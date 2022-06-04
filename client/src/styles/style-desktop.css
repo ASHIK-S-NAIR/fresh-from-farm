@@ -602,6 +602,11 @@ a {
   margin-bottom: 1em;
 }
 
+.userBoard-user-detail-image{
+  height: 3.5em;
+  margin-right: 0.6em;
+}
+
 .userBoard-user-detail-greetings {
   font-size: 0.8rem;
   font-weight: 200;

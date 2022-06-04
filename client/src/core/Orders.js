@@ -4,6 +4,8 @@ import { isAuthenticated } from "../auth";
 import { getUserOrders } from "../user";
 import moment from "moment";
 import OrderDetails from "../user/OrderDetails";
+// import { getProduct } from "./helper/productDetailHelper";
+
 // import { CustomerOrderContext } from "../context/Context";
 // import { getProduct } from "./helper/productDetailHelper";
 
@@ -15,6 +17,8 @@ const Orders = () => {
   const [orders, setOrders] = useState();
   const [orderActive, setOrderActive] = useState(null);
   const [order, setOrder] = useState();
+  // const [productDetails, setProductDetails] = useState([]);
+  // var productDetails = [];
 
   const { user, token } = isAuthenticated();
 
@@ -29,11 +33,43 @@ const Orders = () => {
     } catch (error) {}
   };
 
+  // console.log("productDetails", productDetails);
+
+  // const tempProductDetails = [];
+
+  // const loadProductDetails = async (order) => {
+  //   await order.Oproducts.map((product) => {
+  //     return loadProduct(product);
+  //   });
+  //   console.log("tempProductDetails", tempProductDetails);
+  //   return setProductDetails(tempProductDetails);
+  //   // return tempProductDetails;
+  // };
+
+  // const loadProduct = async (product) => {
+  //   try {
+  //     const data = await getProduct(product.product);
+  //     if (data.error) {
+  //       return console.log(data.error);
+  //     } else {
+  //       // return setProductDetails([...productDetails, data]);
+  //       console.log("data", data);
+  //       // return setProductDetails([...productDetails, data]);
+  //       return tempProductDetails.push(data);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   useEffect(() => {
     getUserOrderDetails(userId, token);
   }, []);
 
-  const handlePreview = (order) => {
+  const handlePreview = async (order) => {
+    // productDetails = await loadProductDetails(order)
+    // console.log("Order order", order);
+    // console.log("Order productDetails", productDetails);
     return setOrderActive("orderDetails"), setOrder(order);
   };
 
@@ -151,11 +187,7 @@ const Orders = () => {
       </div>
 
       {orderActive === "orderDetails" && (
-        <OrderDetails
-          orderActive={orderActive}
-          setOrderActive={setOrderActive}
-          order={order}
-        />
+        <OrderDetails setOrderActive={setOrderActive} order={order} />
       )}
     </section>
   );
