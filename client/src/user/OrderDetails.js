@@ -1,77 +1,38 @@
 import React, { useState, useEffect } from "react";
-import { getProduct } from "../core/helper/productDetailHelper";
+import { getUser } from "./index";
+import { isAuthenticated } from "../auth";
 
 const OrderDetails = ({ setOrderActive, order }) => {
-  const [productDetails, setProductDetails] = useState([]);
-  // const [productDetails, setProductDetails] = useState();
-  // console.log("productDetails", productDetails);
+  const [userDetails, setUserDetails] = useState();
 
-  const tempProductDetails = [];
+  const { user, token } = isAuthenticated();
 
-  const loadProductDetail = (order) => {
-    order.Oproducts.map((product) => {
-      return getProduct(product.product).then((res) => {
-        tempProductDetails.push(res);
-      });
-    });
-
-    setProductDetails(tempProductDetails);
+  const loadUserDetails = (userId, token) => {
+    try {
+      const data = getUser(userId, token);
+      if (data.error) {
+        return console.log(data.error);
+      } else {
+        console.log("userDetails", data);
+        setUserDetails(data);
+      }
+    } catch (error) {
+      return console.log(error);
+    }
   };
 
   useEffect(() => {
-    loadProductDetail(order);
+    loadUserDetails(user._id, token);
   }, []);
-
-  useEffect(() => {
-    console.log("ProductDetails", productDetails)
-  }, [productDetails])
-
-  // const showTableData = (order) => {
-  //   order.Oproducts.map((product) => {
-  //     return productDetails.map((productDetail, index) => {
-  //       if (productDetail._id === product.product) {
-  //         console.log("got it");
-  //         return (
-  //           productDetails && (
-  //             <tr key={index}>
-  //               <td className="popup-table-body-value">
-  //                 {productDetail.pName}
-  //               </td>
-  //               <td className="popup-table-body-value">
-  //                 {productDetail.pCategory}
-  //               </td>
-  //               <td className="popup-table-body-value">{product.quantity}</td>
-  //               <td className="popup-table-body-value">
-  //                 {productDetail.pPrice}
-  //               </td>
-  //               <td className="popup-table-body-value">
-  //                 {productDetail.pPrice * product.quantity}
-  //               </td>
-  //             </tr>
-  //           )
-  //         );
-  //       } else {
-  //         return "";
-  //       }
-  //     });
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   loadProductDetails(order);
-  // }, []);
-
-  // productDetails && console.log("productDetails", productDetails);
-
   return (
     <section className="orderDetails-section">
       <div className="black-background">
         <div className="popup-big-sec">
           <div className="popup-group">
             <div className="popup-head-sec">
-              {console.log("order Maman")}
-              {console.log("order", order._id)}
-              <h1 className="popup-header">Order #{order._id}</h1>
+              <h1 className="popup-header orderDetails-popup-header">
+                Order #{order._id}
+              </h1>
               <div className="cross-sec" onClick={() => setOrderActive(null)}>
                 <div className="cross-one"></div>
                 <div className="cross-two"></div>
@@ -84,38 +45,72 @@ const OrderDetails = ({ setOrderActive, order }) => {
                   <th className="popup-table-head-value">Category</th>
                   <th className="popup-table-head-value">Quantity</th>
                   <th className="popup-table-head-value">Price</th>
-                  <th className="popup-table-head-value">Amount</th>
+                  <th className="popup-table-head-value popup-table-head-value-amount">
+                    Amount
+                  </th>
                 </tr>
               </thead>
               <tbody className="popup-table-body-sec">
-                {productDetails &&
-                  order.Oproducts.map(async (product) => {
-                    productDetails.map((productDetail) => {
-                      if (product.product === productDetail._id) {
-                        return (
-                          <tr>
-                            <td className="popup-table-body-value">
-                              {productDetail.pName}
-                            </td>
-                            <td className="popup-table-body-value">
-                              {productDetail.pCategory}
-                            </td>
-                            <td className="popup-table-body-value">
-                              {product.quantity}
-                            </td>
-                            <td className="popup-table-body-value">
-                              {productDetail.pPrice}
-                            </td>
-                            <td className="popup-table-body-value">
-                              {productDetail.pPrice * product.quantity}
-                            </td>
-                          </tr>
-                        );
-                      }
-                    });
-                  })}
+                {order.Oproducts.map((product, key) => {
+                  return (
+                    <tr index={key}>
+                      <td className="popup-table-body-value popup-table-body-value-name">
+                        {product.pName}
+                        <br />
+                        <span>{product.pDescription}</span>
+                      </td>
+                      <td className="popup-table-body-value">
+                        {product.pCategory}
+                      </td>
+                      <td className="popup-table-body-value">
+                        {product.pQuantity} Kg
+                      </td>
+                      <td className="popup-table-body-value">
+                        {product.pPrice}
+                      </td>
+                      <td className="popup-table-body-value popup-table-body-value-amount">
+                        {product.pAmount}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
+            <div className="popup-form-single-group orderDetails-total-sec">
+              <p className="popup-form-label">
+                <span> Total :</span> {order.OtotalPrice}
+              </p>
+            </div>
+            <div className="popup-form-double-group orderDetails-info-sec">
+              <div className="orderDetails-info-left">
+                <div className="orderDetails-info-subsec">
+                  <p className="popup-form-label">Order ID</p>
+                  {order._id}
+                </div>
+                <div className="orderDetails-info-subsec">
+                  <p className="popup-form-label">Order Status</p>
+                  {order.Ostatus}
+                </div>
+                <div className="orderDetails-info-subsec">
+                  <p className="popup-form-label">Payment Mode</p>
+                  {order.OpaymentMode}
+                </div>
+                <div className="orderDetails-info-subsec">
+                  <p className="popu?-form-label">Delivery By</p>
+                  {order.OemployeeId || "Not Assigned"}
+                </div>
+              </div>
+              <div className="orderDetails-info-right">
+                <div className="orderDetails-info-subsec">
+                  <p className="popup-form-label">Ordered By</p>
+                  {order._id}
+                </div>
+                <div className="orderDetails-info-subsec">
+                  <p className="popup-form-label">Delivery Address</p>
+                  {order.Oaddress}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

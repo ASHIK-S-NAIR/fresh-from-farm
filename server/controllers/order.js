@@ -41,16 +41,27 @@ exports.createOrder = async (req, res) => {
     // );
 
     var totalPrice = 0;
+    var Oproducts = [];
 
     cart.map((cartItem) => {
       totalPrice = totalPrice + cartItem.product.pPrice * cartItem.quantity;
+
+      Oproducts.push({
+        pId: cartItem.product._id,
+        pName: cartItem.product.pName,
+        pDescription: cartItem.product.pDescription,
+        pCategory: cartItem.product.pCategory,
+        pPrice: cartItem.product.pPrice,
+        pQuantity: cartItem.quantity,
+        pAmount: cartItem.product.pPrice * cartItem.quantity,
+      });
     });
 
     // console.log("Order Controller ShippingAddress", shippingAddress);
 
     const order = await Order.create({
       Ouser: req.profile._id,
-      Oproducts: cart,
+      Oproducts: Oproducts,
       OtotalPrice: totalPrice,
       Oaddress: {
         houseName: shippingAddress.shippingAddress_houseName,

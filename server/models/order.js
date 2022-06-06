@@ -9,11 +9,16 @@ const orderSchema = new Schema({
     },
     Oproducts: [
         {
-            product: {
+            pId: {
                 type: Schema.Types.ObjectId,
                 ref: "Product"
             },
-            quantity: {
+            pName: String,
+            pDescription: String,
+            pCategory: String,
+            pPrice: Number,
+            pAmount: Number,
+            pQuantity: {
                 type: Number
             }
         }

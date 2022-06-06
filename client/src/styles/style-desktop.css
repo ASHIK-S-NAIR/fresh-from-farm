@@ -65,7 +65,7 @@ a {
   top: 0;
   left: 0;
   right: 0;
-  box-shadow: 0px 1px 20px 20px rgba(0,0,0,0.08);
+  box-shadow: 0px 1px 20px 20px rgba(0, 0, 0, 0.08);
 }
 
 .nav-wrap-mobile {
@@ -195,7 +195,7 @@ a {
   margin-top: 5em;
 }
 
-.popup-small-sec{
+.popup-small-sec {
   width: 32.188em;
   height: auto;
   background-color: #fff;
@@ -215,6 +215,10 @@ a {
   font-size: 1.563rem;
   font-weight: 500;
   color: var(--primary-color);
+}
+
+.orderDetails-popup-header {
+  font-size: 1.2rem;
 }
 
 .cross-sec {
@@ -296,6 +300,72 @@ a {
   box-shadow: 0px, 4px, 15px, 10px rgba(0, 0, 0, 0.1);
   color: #fff;
   margin-top: 1em;
+}
+
+.popup-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.popup-table-head-sec {
+  border-bottom: 1px solid var(--primary-color);
+  margin-bottom: 2em;
+}
+
+.popup-table-head-value {
+  text-align: left;
+  font-size: 0.875rem;
+  color: var(--primary-color);
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+.popup-table-head-value-amount {
+  text-align: right;
+}
+
+.popup-table-body-sec tr {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.popup-table-body-sec tr:last-of-type {
+  border-color: transparent;
+}
+
+.popup-table-body-value {
+  font-size: 0.75rem;
+  text-align: left;
+  padding-top: 1.3em;
+  padding-bottom: 1.3em;
+  font-weight: 500;
+}
+
+.popup-table-body-value span {
+  font-size: 0.625rem;
+}
+
+.popup-table-body-value-name {
+  width: 45%;
+}
+
+.popup-table-body-value-amount {
+  text-align: right;
+}
+
+.orderDetails-total-sec {
+  text-align: right;
+  font-weight: 500;
+}
+
+.orderDetails-total-sec span {
+  margin-right: 3em;
+  font-weight: 800;
+  color: var(--primary-color);
+  font-style: 0.75rem;
+}
+
+.orderDetails-total-sec p {
+  font-weight: 500;
+  font-size: 0.825rem;
 }
 
 .errorMessage-sec {
@@ -602,7 +672,7 @@ a {
   margin-bottom: 1em;
 }
 
-.userBoard-user-detail-image{
+.userBoard-user-detail-image {
   height: 3.5em;
   margin-right: 0.6em;
 }
@@ -1151,22 +1221,16 @@ a {
 
 tr {
   width: 100%;
-  /* border: 1px solid blue; */
-  /* background-color: green; */
 }
 
-/* .userBoard-right-customer-order-table-body-sec{
-  margin-top: 0.5em;
-} */
-
-.userBoard-right-customer-order-table-body-tr{
+.userBoard-right-customer-order-table-body-tr {
   cursor: pointer;
 }
-.userBoard-right-customer-order-table-body-tr:nth-child(odd){
+.userBoard-right-customer-order-table-body-tr:nth-child(odd) {
   background-color: #e9f7f7;
 }
 
-.userBoard-right-customer-order-table-body-tr:hover{
+.userBoard-right-customer-order-table-body-tr:hover {
   background-color: #d9d8d8;
 }
 
@@ -1182,14 +1246,6 @@ tr {
 .userBoard-right-customer-order-table-body-sec {
   background-color: #fff;
 }
-/* 
-.userBoard-right-customer-order-table-body-sec:nth-child(odd){
-  background-color: red;
-}
-
-.userBoard-right-customer-order-table-body-sec:nth-child(even){
-  background-color: green;
-} */
 
 .userBoard-right-customer-order-table-body-value {
   font-weight: 500;
@@ -1199,47 +1255,47 @@ tr {
   padding-bottom: 1em;
 }
 
-.userBoard-right-customer-order-table-body-div{
+.userBoard-right-customer-order-table-body-div {
   padding: 0.5em 1em;
   width: fit-content;
   font-weight: 600;
   border-radius: 5px;
-  box-shadow: inset 1px 1px 1px 1px rgba(0,0,0,0.1);
+  box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
 }
 
-.userBoard-right-customer-order-table-body-div.Not-Confirmed{
-  background-color: #EFF8BC;
+.userBoard-right-customer-order-table-body-div.Not-Confirmed {
+  background-color: #eff8bc;
   color: #434401;
 }
 
-.userBoard-right-customer-order-table-body-div.Ordered{
-  background-color: #DCE7F9;
-  color: #1124CE;
+.userBoard-right-customer-order-table-body-div.Ordered {
+  background-color: #dce7f9;
+  color: #1124ce;
 }
 
-.userBoard-right-customer-order-table-body-div.Processing{
-background-color: #FCEFD6;
-color: #8E3E04;
+.userBoard-right-customer-order-table-body-div.Processing {
+  background-color: #fcefd6;
+  color: #8e3e04;
 }
 
-.userBoard-right-customer-order-table-body-div.Picking-Up{
-  background-color: #FED7FA;
+.userBoard-right-customer-order-table-body-div.Picking-Up {
+  background-color: #fed7fa;
   color: #520354;
 }
 
-.userBoard-right-customer-order-table-body-div.Out-For-Delivery{
-  background-color: #D8FEDC;
-color: #02530A;
+.userBoard-right-customer-order-table-body-div.Out-For-Delivery {
+  background-color: #d8fedc;
+  color: #02530a;
 }
 
-.userBoard-right-customer-order-table-body-div.Delivered{
+.userBoard-right-customer-order-table-body-div.Delivered {
   background-color: #fff;
   color: #000000;
 }
 
-.userBoard-right-customer-order-table-body-div.Cancelled{
-  background-color: #FEDBDB;
-color: #710303;
+.userBoard-right-customer-order-table-body-div.Cancelled {
+  background-color: #fedbdb;
+  color: #710303;
 }
 
 /* order section ends */
