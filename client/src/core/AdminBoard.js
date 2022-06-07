@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { isAuthenticated } from "../auth";
 import { getUser } from "../user";
 import Accounts from "./Accounts";
-import Orders from "./Orders";
+// import Orders from "./Orders";
 import Settings from "./Settings";
 
 const AdminBoard = () => {
@@ -85,9 +85,9 @@ const AdminBoard = () => {
           </ul>
         </div>
         <div className="userBoard-right">
-          {tabActive === "accounts" && <Accounts userValues={values} />}
+          {tabActive === "accounts" && <Accounts />}
           {/* {tabActive === "orders" && <Orders userValues={values} />} */}
-          {tabActive === "settings" && <Settings userValues={values} />}
+          {tabActive === "settings" && <Settings />}
         </div>
       </div>
     </section>

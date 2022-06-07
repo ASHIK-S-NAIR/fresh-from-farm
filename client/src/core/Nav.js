@@ -158,7 +158,11 @@ const Nav = () => {
                 </button>
                 {active && (
                   <ul className="nav-drop-ul" onMouseOver={showDropDown}>
-                    <li className="nav-drop-li">Admin Panel</li>
+                    <li className="nav-drop-li">
+                      <Link to={`/admindashpanel/dashboard/${user._id}`}>
+                        Admin Panel
+                      </Link>
+                    </li>
                     <li className="nav-drop-li">
                       <Link to={`/adminboard/accounts/${user._id}`}>
                         {" "}
@@ -350,7 +354,11 @@ const Nav = () => {
                 <ul className={`nav-drop-ul ${toggled ? "active" : ""}`}>
                   <li className="nav-drop-li">Shop</li>
                   <li className="nav-drop-li">Contact Us</li>
-                  <li className="nav-drop-li">Admin Panel</li>
+                  <li className="nav-drop-li">
+                    <Link to={`/admindashpanel/dashboard/${user._id}`}>
+                      Admin Panel
+                    </Link>
+                  </li>
                   <li className="nav-drop-li">
                     <Link to={`/adminboard/accounts/${user._id}`}>
                       {" "}

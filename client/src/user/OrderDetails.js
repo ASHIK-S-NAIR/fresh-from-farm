@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { getUser } from "./index";
 import { isAuthenticated } from "../auth";
+import Cross from "../icons/cross-black.svg";
 
 const OrderDetails = ({ setOrderActive, order }) => {
+  console.log("order", order);
   const [userDetails, setUserDetails] = useState();
 
   const { user, token } = isAuthenticated();
 
-  const loadUserDetails = (userId, token) => {
+  const loadUserDetails = async (userId, token) => {
     try {
-      const data = getUser(userId, token);
+      const data = await getUser(userId, token);
       if (data.error) {
         return console.log(data.error);
       } else {
-        console.log("userDetails", data);
-        setUserDetails(data);
+        return setUserDetails(data);
       }
     } catch (error) {
       return console.log(error);
@@ -34,8 +35,9 @@ const OrderDetails = ({ setOrderActive, order }) => {
                 Order #{order._id}
               </h1>
               <div className="cross-sec" onClick={() => setOrderActive(null)}>
-                <div className="cross-one"></div>
-                <div className="cross-two"></div>
+                {/* <div className="cross-one"></div>
+                <div className="cross-two"></div> */}
+                <img src={Cross} alt="" className="cross-img" />
               </div>
             </div>
             <table className="popup-table">
@@ -51,9 +53,9 @@ const OrderDetails = ({ setOrderActive, order }) => {
                 </tr>
               </thead>
               <tbody className="popup-table-body-sec">
-                {order.Oproducts.map((product, key) => {
+                {order.Oproducts.map((product, index) => {
                   return (
-                    <tr index={key}>
+                    <tr key={index}>
                       <td className="popup-table-body-value popup-table-body-value-name">
                         {product.pName}
                         <br />
@@ -81,36 +83,76 @@ const OrderDetails = ({ setOrderActive, order }) => {
                 <span> Total :</span> {order.OtotalPrice}
               </p>
             </div>
-            <div className="popup-form-double-group orderDetails-info-sec">
-              <div className="orderDetails-info-left">
-                <div className="orderDetails-info-subsec">
-                  <p className="popup-form-label">Order ID</p>
-                  {order._id}
+            {userDetails && (
+              <div className="popup-form-double-group orderDetails-info-sec">
+                <div className="orderDetails-info-left">
+                  <div className="orderDetails-info-subsec">
+                    <p className="popup-form-label orderDetails-info-label">
+                      Order ID
+                    </p>
+                    <p className="orderDetails-info-value">{order._id}</p>
+                  </div>
+                  <div className="orderDetails-info-subsec">
+                    <p className="popup-form-label orderDetails-info-label">
+                      Order Status
+                    </p>
+                    <p className="orderDetails-info-value"> {order.Ostatus}</p>
+                  </div>
+                  <div className="orderDetails-info-subsec">
+                    <p className="popup-form-label orderDetails-info-label">
+                      Payment Mode
+                    </p>
+                    <p className="orderDetails-info-value">
+                      {" "}
+                      {order.OpaymentMode}
+                    </p>
+                  </div>
+                  <div className="orderDetails-info-subsec">
+                    <p className="popup-form-label orderDetails-info-label">
+                      Delivery By
+                    </p>
+                    <p className="orderDetails-info-value">
+                      {" "}
+                      {order.OEmployeeId || "Not Assigned"}
+                    </p>
+                  </div>
                 </div>
-                <div className="orderDetails-info-subsec">
-                  <p className="popup-form-label">Order Status</p>
-                  {order.Ostatus}
-                </div>
-                <div className="orderDetails-info-subsec">
-                  <p className="popup-form-label">Payment Mode</p>
-                  {order.OpaymentMode}
-                </div>
-                <div className="orderDetails-info-subsec">
-                  <p className="popu?-form-label">Delivery By</p>
-                  {order.OemployeeId || "Not Assigned"}
+                <div className="orderDetails-info-right">
+                  <div className="orderDetails-info-subsec">
+                    <p className="popup-form-label orderDetails-info-label">
+                      Ordered By
+                    </p>
+                    <p className="orderDetails-info-value">
+                      {" "}
+                      {userDetails.name}
+                    </p>
+
+                    <p className="orderDetails-info-value">
+                      {" "}
+                      {userDetails.phoneNumber}
+                    </p>
+
+                    <p className="orderDetails-info-value">
+                      {" "}
+                      {userDetails.email}
+                    </p>
+                  </div>
+                  <div className="orderDetails-info-subsec">
+                    <p className="popup-form-label orderDetails-info-label">
+                      Delivery Address
+                    </p>
+                    <p className="orderDetails-info-value">
+                      {" "}
+                      {order.Oaddress.houseName}
+                    </p>
+                    <p className="orderDetails-info-value">
+                      {" "}
+                      {order.Oaddress.streetName}
+                    </p>
+                  </div>
                 </div>
               </div>
-              <div className="orderDetails-info-right">
-                <div className="orderDetails-info-subsec">
-                  <p className="popup-form-label">Ordered By</p>
-                  {order._id}
-                </div>
-                <div className="orderDetails-info-subsec">
-                  <p className="popup-form-label">Delivery Address</p>
-                  {order.Oaddress}
-                </div>
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

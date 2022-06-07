@@ -148,9 +148,6 @@ const Orders = () => {
                     onClick={() => handlePreview(order)}
                     className="userBoard-right-customer-order-table-body-tr"
                   >
-                    {/* <td className="userBoard-right-customer-order-table-body-value">
-                      {getProductsToString(order.Oproducts)}
-                    </td> */}
                     <td className="userBoard-right-customer-order-table-body-value">
                       {order._id}
                     </td>
