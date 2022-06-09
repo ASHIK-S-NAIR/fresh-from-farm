@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const {getOrderById, createOrder, getOrder, getAllOrders, deleteOrder, updateOrder, razorPayOrder, paymentVerify} = require('../controllers/order');
+const {getOrderById, createOrder, getOrder, getAllOrders, deleteOrder, updateOrder, razorPayOrder, paymentVerify, countOrders} = require('../controllers/order');
 const {getUserById, getUserOrders} = require('../controllers/user');
 const {isSignedIn, isAuthenticated, isAdmin} = require("../controllers/auth");
 const {updateStock} = require("../controllers/product");
@@ -18,7 +18,7 @@ router.post("/order/create/:userId", isSignedIn, isAuthenticated, updateStock, c
 router.get("/order/:orderId/:userId", isSignedIn, isAuthenticated, getOrder);
 
 // getAllOrders
-router.get("/orders/:userId", isSignedIn, isAuthenticated, isAdmin, getAllOrders);
+router.get("/orders/:status/:userId", isSignedIn, isAuthenticated, isAdmin, getAllOrders);
 
 // getUserOrders
 router.get("/orders/user/:userId", isSignedIn, isAuthenticated, getUserOrders);
@@ -31,6 +31,9 @@ router.put("/order/:orderId/:userId", isSignedIn, isAuthenticated, isAdmin, upda
 
 // updateOrderConfirmation
 router.put("/order/orderconfirmation/:orderId/:userId", isSignedIn, isAuthenticated, updateOrder);
+
+// countOrders
+router.get("/orders/countorders/:userId", isSignedIn, isAuthenticated, isAdmin, countOrders);
 
 // razorPayOrder
 router.post("/order/razorpayorder", razorPayOrder);

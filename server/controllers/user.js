@@ -273,8 +273,6 @@ exports.deleteUser = async (req, res) => {
 exports.getUserOrders = async (req, res) => {
   try {
     const orders = await Order.find({ Ouser: req.profile._id });
-    // console.log("orders", orders);
-
     if (!orders) {
       return res.status(400).json({
         message: "No orders for this user",
@@ -289,3 +287,13 @@ exports.getUserOrders = async (req, res) => {
     });
   }
 };
+
+// countCustomers
+exports.countCustomers = async(req, res) => {
+  try {
+    const count = await User.countDocuments({role : '0'});
+    return res.json(count);
+  } catch (error) {
+    return res.status(400).json("Failed to count customers")
+  }
+}

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const {getEmployeeUserById, getEmployeeById, createEmployee, getEmployee, getAllEmployees, updateEmployeeStatus, deleteEmployee} = require("../controllers/employee");
+const {getEmployeeUserById, getEmployeeById, createEmployee, getEmployee, getAllEmployees, updateEmployeeStatus, deleteEmployee, countEmployers} = require("../controllers/employee");
 const {isSignedIn, isAuthenticated, isEmployee, isAdmin} = require("../controllers/auth");
 const {getUserById, updateUserRole} = require("../controllers/user");
 
@@ -25,5 +25,8 @@ router.put("/employee/:employeeId/:userId", isSignedIn, isAuthenticated, isEmplo
 
 // deleteEmployee
 router.delete("/employee/:employeeId/:userId", isSignedIn, isAuthenticated, isAdmin, deleteEmployee);
+
+// countEmployee
+router.get("/employers/countemployers/:userId", isSignedIn, isAuthenticated, isAdmin, countEmployers);
 
 module.exports = router;

@@ -143,6 +143,17 @@ exports.updateStock = async (req, res, next) => {
   });
 };
 
+// countProducts
+exports.countProducts = async (req, res) => {
+  try {
+    const count = await Product.countDocuments();
+    return res.json(count);
+    
+  } catch (error) {
+    return res.status(400).json("Failed to count Products")
+  }
+}
+
 // middleware
 exports.photo = (req, res, next) => {
   if (req.product.pImg.data) {

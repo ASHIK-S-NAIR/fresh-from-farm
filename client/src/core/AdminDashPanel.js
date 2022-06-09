@@ -2,16 +2,21 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { isAuthenticated } from "../auth";
 import { getUser } from "../user";
-import Dashboard from "../icons/dashboard.svg";
-import DashboardActive from "../icons/dashboardActive.svg";
-import Cart from "../icons/cart.svg";
-import CartActive from "../icons/cart-active.svg";
-import Product from "../icons/product.svg";
-import ProductActive from "../icons/productActive.svg";
-import Employer from "../icons/employer.svg";
-import EmployerActive from "../icons/employerActive.svg";
-import Customer from "../icons/customer.svg";
-import CustomerActive from "../icons/customerActive.svg";
+import DashboardIcon from "../icons/dashboard.svg";
+import DashboardActiveIcon from "../icons/dashboardActive.svg";
+import CartIcon from "../icons/cart.svg";
+import CartActiveIcon from "../icons/cart-active.svg";
+import ProductIcon from "../icons/product.svg";
+import ProductActiveIcon from "../icons/productActive.svg";
+import EmployerIcon from "../icons/employer.svg";
+import EmployerActiveIcon from "../icons/employerActive.svg";
+import CustomerIcon from "../icons/customer.svg";
+import CustomerActiveIcon from "../icons/customerActive.svg";
+import Dashboard from "../admin/Dashboard";
+import Order from "../admin/Order";
+import Product from "../admin/Product";
+import Employer from "../admin/Employer";
+import Customer from "../admin/Customer";
 
 const AdminDashPanel = () => {
   const { currentTab, userId } = useParams();
@@ -57,7 +62,7 @@ const AdminDashPanel = () => {
                   {" "}
                   <img
                     src={
-                      tabActive === "dashboard" ? DashboardActive : Dashboard
+                      tabActive === "dashboard" ? DashboardActiveIcon : DashboardIcon
                     }
                     alt=""
                     className="adminDashPanel-left-img"
@@ -77,7 +82,7 @@ const AdminDashPanel = () => {
                   }`}
                 >
                   <img
-                    src={tabActive === "order" ? CartActive : Cart}
+                    src={tabActive === "order" ? CartActiveIcon : CartIcon}
                     alt=""
                     className="adminDashPanel-left-img"
                   />
@@ -96,7 +101,7 @@ const AdminDashPanel = () => {
                   }`}
                 >
                   <img
-                    src={tabActive === "product" ? ProductActive : Product}
+                    src={tabActive === "product" ? ProductActiveIcon : ProductIcon}
                     alt=""
                     className="adminDashPanel-left-img"
                   />
@@ -115,7 +120,7 @@ const AdminDashPanel = () => {
                   }`}
                 >
                   <img
-                    src={tabActive === "employer" ? EmployerActive : Employer}
+                    src={tabActive === "employer" ? EmployerActiveIcon : EmployerIcon}
                     alt=""
                     className="adminDashPanel-left-img"
                   />
@@ -134,7 +139,7 @@ const AdminDashPanel = () => {
                   }`}
                 >
                   <img
-                    src={tabActive === "customer" ? CustomerActive : Customer}
+                    src={tabActive === "customer" ? CustomerActiveIcon : CustomerIcon}
                     alt=""
                     className="adminDashPanel-left-img"
                   />
@@ -144,7 +149,13 @@ const AdminDashPanel = () => {
             </li>
           </ul>
         </div>
-        <div className="adminDashPanel-right"></div>
+        <div className="adminDashPanel-right">
+          {tabActive === 'dashboard' && <Dashboard />}
+          {tabActive === 'order' && <Order />}
+          {tabActive === 'product' && <Product />}
+          {tabActive === 'employer' && <Employer />}
+          {tabActive === 'customer' && <Customer />}
+        </div>
       </div>
     </section>
   );

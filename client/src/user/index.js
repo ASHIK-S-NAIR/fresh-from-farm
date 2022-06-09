@@ -221,3 +221,93 @@ export const getUserOrders = async (userId, token) => {
     return error;
   }
 };
+
+// countOrders
+export const getCountOrders = async (userId, token) => {
+  try {
+    const result = await fetch(`${API}/orders/countorders/${userId}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((res) => res.json());
+
+    return result;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+// countProducts
+export const getCountProducts = async (userId, token) => {
+  try {
+    const result = await fetch(`${API}/products/countproducts/${userId}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((res) => res.json());
+
+    return result;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+// countEmployers
+export const getCountEmployers = async (userId, token) => {
+  try {
+    const result = await fetch(`${API}/employers/countemployers/${userId}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((res) => res.json());
+
+    return result;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+// countCustomers
+export const getCountCustomers = async (userId, token) => {
+  try {
+    const result = await fetch(`${API}/users/countcustomers/${userId}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((res) => res.json());
+
+    return result;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+// getAllOrders
+export const getAllOrders = async (userId, token, status) => {
+  try {
+    const result = await fetch(`${API}/orders/${status}/${userId}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      }
+    }).then((res) => res.json());
+
+    return result;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};

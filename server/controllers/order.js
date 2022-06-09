@@ -28,17 +28,12 @@ exports.createOrder = async (req, res) => {
     cart = response.cart;
 
     const { shippingAddress, paymentMode } = req.body;
-    // console.log("Order Controller ShippingAddress", shippingAddress);
 
     if (!(shippingAddress || paymentMode || cart)) {
       return res.status(400).json({
         message: "Invalid Order request",
       });
     }
-
-    // console.log(
-    //   `Order Controller ShippingAddress , ${shippingAddress_houseName} ${shippingAddress_streetName}`
-    // );
 
     var totalPrice = 0;
     var Oproducts = [];
@@ -57,8 +52,6 @@ exports.createOrder = async (req, res) => {
       });
     });
 
-    // console.log("Order Controller ShippingAddress", shippingAddress);
-
     const order = await Order.create({
       Ouser: req.profile._id,
       Oproducts: Oproducts,
@@ -71,8 +64,6 @@ exports.createOrder = async (req, res) => {
       OpaymentMode: paymentMode,
       OpaymentStatus: "Pending",
     });
-
-    // console.log(order);
 
     order.save();
 
@@ -113,13 +104,6 @@ exports.razorPayOrder = async (req, res) => {
       key_id: process.env.RAZORPAY_KEY_ID,
       key_secret: process.env.RAZORPAY_KEY_SECRET,
     });
-
-    // var totalPrice = 0;
-    console.log("reached at razorPayOrder");
-
-    // const cart = req.body.cart;
-
-    console.log("Req body", req.body);
 
     const options = {
       // amount: totalPrice * 100,
@@ -187,9 +171,24 @@ exports.getOrder = (req, res) => {
 // getAllOrders
 exports.getAllOrders = async (req, res) => {
   try {
-    const user = await Order.find();
+    const status = req.params.status;
 
-    return res.json(user);
+    if (status === "pending") {
+      const orders = await Order.find({
+        $or: [{ Ostatus: "Ordered" }, { Ostatus: "Not-Confirmed" }],
+      });
+
+      return res.json(orders);
+    }
+
+    if (status === "all") {
+      const orders = await Order.find();
+
+      return res.json(orders);
+    }
+
+    const orders = await Order.find({ Ostatus: status });
+    return res.json(orders);
   } catch (error) {
     return res.status(400).json({
       message: "No orders found in DB",
@@ -226,6 +225,19 @@ exports.updateOrder = async (req, res) => {
   } catch (error) {
     return res.json({
       message: "Updating order failed",
+    });
+  }
+};
+
+// countOrders
+exports.countOrders = async (req, res) => {
+  try {
+    const count = await Order.countDocuments({});
+    return res.json(count);
+  } catch (error) {
+    console.log(error.message);
+    return res.json({
+      message: "Counting orders failed",
     });
   }
 };

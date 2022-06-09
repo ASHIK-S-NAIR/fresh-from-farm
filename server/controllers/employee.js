@@ -100,3 +100,13 @@ exports.deleteEmployee = async (req, res) => {
     });
   }
 };
+
+// countEmployers
+exports.countEmployers = async (req, res) => {
+  try {
+    const count = await Employee.countDocuments({})
+    return res.json(count);
+  } catch (error) {
+    return res.status(400).json("Failed to count Employers")
+  }
+}
