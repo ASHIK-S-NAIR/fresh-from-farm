@@ -4,9 +4,7 @@ import { isAuthenticated } from "../auth";
 import Cross from "../icons/cross-black.svg";
 
 const OrderDetails = ({ setOrderActive, order }) => {
-  console.log("order", order);
   const [userDetails, setUserDetails] = useState();
-
   const { user, token } = isAuthenticated();
 
   const loadUserDetails = async (userId, token) => {
@@ -35,8 +33,6 @@ const OrderDetails = ({ setOrderActive, order }) => {
                 Order #{order._id}
               </h1>
               <div className="cross-sec" onClick={() => setOrderActive(null)}>
-                {/* <div className="cross-one"></div>
-                <div className="cross-two"></div> */}
                 <img src={Cross} alt="" className="cross-img" />
               </div>
             </div>

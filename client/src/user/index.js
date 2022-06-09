@@ -302,7 +302,27 @@ export const getAllOrders = async (userId, token, status) => {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${token}`,
-      }
+      },
+    }).then((res) => res.json());
+
+    return result;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+// updateOrder
+export const updateOrderStatus = async (userId, token, orderId, status) => {
+  try {
+    const result = await fetch(`${API}/order/updatestatus/${orderId}/${userId}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({status:status}),
     }).then((res) => res.json());
 
     return result;

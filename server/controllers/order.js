@@ -7,11 +7,12 @@ const Razorpay = require("razorpay");
 exports.getOrderById = async (req, res, next, id) => {
   try {
     const order = await Order.findById({ _id: id }).populate(
-      "Ouser Oproducts.product"
+      "Ouser"
     );
     req.order = order;
     next();
   } catch (error) {
+    console.log(error.message);
     return res.status(400).json({
       message: "failed to get id from DB",
     });
@@ -210,6 +211,26 @@ exports.deleteOrder = async (req, res) => {
   }
 };
 
+// updateOrderStatus
+exports.updateOrderStatus = async(req, res) => {
+  try {
+    const {status} = req.body; 
+    await Order.findByIdAndUpdate(
+      { _id: req.order._id },
+      { $set:{Ostatus: status} },
+      { new: true, useFindAndModify: false }
+    );
+
+    res.json({
+      message: "Order updated successfully",
+    });
+  } catch (error) {
+    return res.json({
+      message: "Updating order Status failed",
+    });
+  }
+}
+
 // updateOrder
 exports.updateOrder = async (req, res) => {
   try {
@@ -232,7 +253,9 @@ exports.updateOrder = async (req, res) => {
 // countOrders
 exports.countOrders = async (req, res) => {
   try {
+    console.log("Happy husbands")
     const count = await Order.countDocuments({});
+    console.log("countOrders",count);
     return res.json(count);
   } catch (error) {
     console.log(error.message);
@@ -241,3 +264,7 @@ exports.countOrders = async (req, res) => {
     });
   }
 };
+
+exports.testRouteFunction = async(req, res) => {
+  res.json("route working")
+}

@@ -31,7 +31,6 @@ const AdminDashPanel = () => {
       if (data.error) {
         return console.log(data.error);
       } else {
-        console.log("Name", data.name);
         return setName(data.name);
       }
     } catch (error) {
