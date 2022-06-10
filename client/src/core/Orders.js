@@ -8,7 +8,7 @@ import OrderDetails from "../user/OrderDetails";
 const Orders = () => {
   const { userId } = useParams();
 
-  const [orders, setOrders] = useState();
+  const [orders, setOrders] = useState([]);
   const [orderActive, setOrderActive] = useState(null);
   const [order, setOrder] = useState();
 

@@ -3,7 +3,7 @@ import { API } from "../backend";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   getProduct,
-  getAllCategoryProducts,
+  getAllProducts
 } from "./helper/productDetailHelper";
 import { isAuthenticated } from "../auth/index";
 import { addToUserCart } from "../user";
@@ -31,7 +31,7 @@ const ProductDetail = () => {
 
   const loadProducts = async (productsData) => {
     try {
-      const productsData = await getAllCategoryProducts(productId);
+      const productsData = await getAllProducts("all");
       return setProducts(productsData);
     } catch (error) {
       console.log(error);

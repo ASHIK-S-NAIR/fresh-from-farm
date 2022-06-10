@@ -47,7 +47,7 @@ const Order = () => {
       <div className="adminDashPanel-right-subsection orders-filter-subSection">
         <button
           className={`orders-filter-btn ${status === "all" ? "active" : ""}`}
-          onClick={(e) => setStatus("all")}
+          onClick={() => setStatus("all")}
         >
           All
         </button>
@@ -55,7 +55,7 @@ const Order = () => {
           className={`orders-filter-btn ${
             status === "Not-Confirmed" ? "active" : ""
           }`}
-          onClick={(e) => setStatus("Not-Confirmed")}
+          onClick={() => setStatus("Not-Confirmed")}
         >
           Not-Confirmed
         </button>
@@ -63,7 +63,7 @@ const Order = () => {
           className={`orders-filter-btn ${
             status === "Ordered" ? "active" : ""
           }`}
-          onClick={(e) => setStatus("Ordered")}
+          onClick={() => setStatus("Ordered")}
         >
           Ordered
         </button>
@@ -71,7 +71,7 @@ const Order = () => {
           className={`orders-filter-btn ${
             status === "Processing" ? "active" : ""
           }`}
-          onClick={(e) => setStatus("Processing")}
+          onClick={() => setStatus("Processing")}
         >
           Processing
         </button>
@@ -79,7 +79,7 @@ const Order = () => {
           className={`orders-filter-btn ${
             status === "Picking-Up" ? "active" : ""
           }`}
-          onClick={(e) => setStatus("Picking-Up")}
+          onClick={() => setStatus("Picking-Up")}
         >
           Picking-Up
         </button>
@@ -87,7 +87,7 @@ const Order = () => {
           className={`orders-filter-btn ${
             status === "Out-For-Delivery" ? "active" : ""
           }`}
-          onClick={(e) => setStatus("Out-For-Delivery")}
+          onClick={() => setStatus("Out-For-Delivery")}
         >
           Out-For-Delivery
         </button>
@@ -95,7 +95,7 @@ const Order = () => {
           className={`orders-filter-btn ${
             status === "Delivered" ? "active" : ""
           }`}
-          onClick={(e) => setStatus("Delivered")}
+          onClick={() => setStatus("Delivered")}
         >
           Delivered
         </button>
@@ -103,7 +103,7 @@ const Order = () => {
           className={`orders-filter-btn ${
             status === "Cancelled" ? "active" : ""
           }`}
-          onClick={(e) => setStatus("Cancelled")}
+          onClick={() => setStatus("Cancelled")}
         >
           Cancelled
         </button>

@@ -207,7 +207,7 @@ export const updateOrderConfirmation = async (userId, token, orderId, body) => {
 
 export const getUserOrders = async (userId, token) => {
   try {
-    const result = await fetch(`${API}/orders/user/${userId}`, {
+    const result = await fetch(`${API}/user/orders/${userId}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -315,15 +315,18 @@ export const getAllOrders = async (userId, token, status) => {
 // updateOrder
 export const updateOrderStatus = async (userId, token, orderId, status) => {
   try {
-    const result = await fetch(`${API}/order/updatestatus/${orderId}/${userId}`, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      body: JSON.stringify({status:status}),
-    }).then((res) => res.json());
+    const result = await fetch(
+      `${API}/order/updatestatus/${orderId}/${userId}`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ status: status }),
+      }
+    ).then((res) => res.json());
 
     return result;
   } catch (error) {
@@ -331,3 +334,22 @@ export const updateOrderStatus = async (userId, token, orderId, status) => {
     return error;
   }
 };
+
+// createProducts
+export const createProduct = async (userId, token, value) => {
+  try {
+    const result = await fetch(`${API}/product/create/${userId}`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify(value)
+    }).then(res => res.json())
+
+    return result;
+  } catch (error) {
+    return error;
+  }
+}

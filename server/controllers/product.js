@@ -94,7 +94,14 @@ exports.deleteProduct = async (req, res) => {
 
 exports.getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find();
+    const category = req.params.category;
+
+    if (category === "all") {
+      const products = await Product.find({},{pImg: 0});
+      return res.json(products);
+    }
+
+    const products = await Product.find({ pCategory: category}, {pImg: 0 });
     return res.json(products);
   } catch (error) {
     return res.json({
@@ -148,11 +155,10 @@ exports.countProducts = async (req, res) => {
   try {
     const count = await Product.countDocuments();
     return res.json(count);
-    
   } catch (error) {
-    return res.status(400).json("Failed to count Products")
+    return res.status(400).json("Failed to count Products");
   }
-}
+};
 
 // middleware
 exports.photo = (req, res, next) => {

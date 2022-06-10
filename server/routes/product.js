@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require("multer");
 
-const {getProductById, createProduct, getProduct, updateProduct, deleteProduct, getAllProducts, getAllCategoryProducts, photo, countProducts} = require('../controllers/product');
+const {getProductById, createProduct, getProduct, updateProduct, deleteProduct, getAllProducts, photo, countProducts} = require('../controllers/product');
 const {isSignedIn, isAuthenticated, isAdmin} = require('../controllers/auth');
 const {getUserById} = require('../controllers/user');
 var storage = multer.diskStorage({
@@ -33,10 +33,10 @@ router.put("/product/:productId/:userId", isSignedIn, isAuthenticated, isAdmin, 
 router.delete("/product/:productId/:userId", isSignedIn, isAuthenticated, isAdmin, deleteProduct);
 
 // getAllProducts
-router.get("/products", getAllProducts);
+router.get("/products/:category", getAllProducts);
 
 // getAllCategoryProducts
-router.get("/categoryproducts/:productId", getAllCategoryProducts);
+// router.get("/categoryproducts/:productId", getAllCategoryProducts);
 
 // getProductPhoto
 router.get("/product/photo/:productId", photo);

@@ -271,6 +271,13 @@ a {
   margin-bottom: 1.3em;
 }
 
+.popup-form-triple-group{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 1.1em;
+  margin-bottom: 1.3em;
+}
+
 .popup-form-label {
   font-size: 0.875rem;
   margin-bottom: 0.3em;
@@ -298,6 +305,15 @@ a {
   color: var(--primary-color);
   font-weight: 500;
   margin-bottom: 1.3em;
+}
+
+.popup-form-input-btn{
+  padding: 0.5em 1em;
+  width: auto;
+  background-color: #bcd6d8;
+  color: var(--primary-color);
+  border-radius: 10px;
+  margin-left: 0.5em;
 }
 
 .popup-form-btn {
@@ -1552,28 +1568,80 @@ tr {
   color: #1124ce;
 }
 
-.adminDashPanel-right-table-icon{
+.adminDashPanel-right-table-icon {
   margin-right: 0.8em;
 }
 
-.dashboard-subSection{
+.dashboard-subSection {
   display: flex;
   justify-content: space-between;
 }
 
-.orders-filter-subSection{
+.orders-filter-subSection {
   margin-bottom: 2em;
 }
 
-.orders-filter-btn{
+.orders-filter-btn {
   margin-right: 2em;
   color: var(--primary-color);
   font-size: 0.82rem;
   font-weight: 500;
 }
 
-.orders-filter-btn.active{
+.orders-filter-btn.active {
   font-weight: 1000;
+}
+
+.adminDashPanel-product-img {
+  width: 4em;
+  height: 4em;
+}
+
+.adminDashPanel-product-filter-subSection {
+  margin-bottom: 2em;
+}
+
+.adminDashPanel-product-filter-btn {
+  margin-right: 2em;
+  color: var(--primary-color);
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.adminDashPanel-product-filter-btn.active{
+  font-weight: 1000;
+}
+
+.adminDashPanel-product-add-btn-subSection{
+  margin-bottom: 2em;
+}
+
+.adminDashPanel-product-add-btn{
+  background-color: var(--primary-color);
+  padding: 0.8em 1em;
+  border-radius: 50px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.adminDashPanel-product-add-btn-icon{
+  margin-right: 0.8em;
+  width: 1.8em;
+}
+
+.adminDashPanel-addproduct-textArea{
+  height: 5em;
+}
+
+.adminDashPanel-addProducts-triple-group{
+  grid-template-columns: 25% 25% auto;
+}
+
+.adminDashPanel-addProducts-input-div{
+  display: grid;
+  grid-template-columns: 75% 25%;
 }
 
 /* AdminDashPanel section ends */

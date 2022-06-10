@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { API } from "../backend";
-import { getAllProducts } from "./helper/shopHelper";
+import { getAllProducts } from "./helper/productDetailHelper";
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
 
   const loadAllProducts = async () => {
     try{
-      const data = await getAllProducts();
+      const data = await getAllProducts("all");
       return setProducts(data);
     }catch(error){
       console.log(error);
