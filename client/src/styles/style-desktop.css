@@ -1644,4 +1644,27 @@ tr {
   grid-template-columns: 75% 25%;
 }
 
+.adminDashPanel-productDetails-img-div{
+  width: 100%;
+  padding: 2em;
+  border: 1px solid var(--primary-color);
+  border-radius: 10px;
+}
+
+.adminDashPanel-productDetails-img{
+  width: 100%;
+}
+
+.adminDashPanel-productDetails-value{
+  padding: 0.5em 0;
+}
+
+.adminDashPanel-profileDetails-group{
+  margin-top: 1.5em;
+}
+
+.adminDashPanel-profileDetails-double-group{
+  margin-bottom: 3em;
+}
+
 /* AdminDashPanel section ends */

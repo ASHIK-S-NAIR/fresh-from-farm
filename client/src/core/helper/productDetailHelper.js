@@ -18,27 +18,33 @@ export const getProduct = async (productId) => {
 
 // getAllProducts
 export const getAllProducts = async (category) => {
-  try{
-      const result = await fetch(`${API}/products/${category}`, {
-        method: "GET",
-        headers: {
-          Accept: "application/json"
-        }
-      }).then(res => res.json())
+  try {
+    const result = await fetch(`${API}/products/${category}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    }).then((res) => res.json());
 
-      return result;
-  }catch(error){
-      console.log(error)
-      return error;
+    return result;
+  } catch (error) {
+    console.log(error);
+    return error;
   }
-}
+};
 
+export const deleteProduct = async (userId, token, productId) => {
+  try {
+    const result = await fetch(`${API}/product/${productId}/${userId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((res) => res.json());
 
-// export const getAllCategoryProducts = async (productId) => {
-//   try {
-//     const response = await axios.get(`${API}/categoryproducts/${productId}`);
-//     return response.data;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+    return result;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};

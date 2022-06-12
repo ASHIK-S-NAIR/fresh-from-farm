@@ -15,7 +15,7 @@ import CustomerActiveIcon from "../icons/customerActive.svg";
 import Dashboard from "../admin/Dashboard";
 import Order from "../admin/Order";
 import Product from "../admin/Product";
-import Employer from "../admin/Employer";
+import Employee from "../admin/Employee";
 import Customer from "../admin/Customer";
 
 const AdminDashPanel = () => {
@@ -110,20 +110,20 @@ const AdminDashPanel = () => {
             </li>
             <li className="adminDashPanel-left-li">
               <Link
-                to={`/admindashpanel/employer/${user._id}`}
+                to={`/admindashpanel/employee/${user._id}`}
                 className="adminDashPanel-left-link"
               >
                 <div
                   className={`adminDashPanel-left-tag ${
-                    tabActive === "employer" ? "active" : ""
+                    tabActive === "employee" ? "active" : ""
                   }`}
                 >
                   <img
-                    src={tabActive === "employer" ? EmployerActiveIcon : EmployerIcon}
+                    src={tabActive === "employee" ? EmployerActiveIcon : EmployerIcon}
                     alt=""
                     className="adminDashPanel-left-img"
                   />
-                  Employer
+                  Employee
                 </div>
               </Link>
             </li>
@@ -152,7 +152,7 @@ const AdminDashPanel = () => {
           {tabActive === 'dashboard' && <Dashboard />}
           {tabActive === 'order' && <Order />}
           {tabActive === 'product' && <Product />}
-          {tabActive === 'employer' && <Employer />}
+          {tabActive === 'employee' && <Employee />}
           {tabActive === 'customer' && <Customer />}
         </div>
       </div>

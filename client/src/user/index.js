@@ -341,15 +341,53 @@ export const createProduct = async (userId, token, value) => {
     const result = await fetch(`${API}/product/create/${userId}`, {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(value)
-    }).then(res => res.json())
+      body: JSON.stringify(value),
+    }).then((res) => res.json());
 
     return result;
   } catch (error) {
     return error;
   }
-}
+};
+
+// getEmployees
+export const getEmployees = async (userId, token, status) => {
+  try {
+    const result = await fetch(`${API}/employees/${status}/${userId}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((res) => res.json());
+
+    return result;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+// createEmployee
+export const createEmployee = async (userId, token, email) => {
+  try {
+    const result = await fetch(`${API}/employee/create/${userId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(email)
+    }).then((res) => res.json());
+
+    return result;
+  } catch (error) {
+    console.log("error", error.message)
+    return error;
+  }
+};

@@ -21,7 +21,16 @@ const AddProduct = ({ setAddProductActive }) => {
     setValues({ ...values, [name]: event.target.value });
   };
 
-  const onSubmit = async () => {
+  const handleFileChange = (e) => {
+    const img = {
+      preview: URL.createObjectURL(e.target.files[0]),
+      data: e.target.file[0],
+    };
+    setValues({ ...values, pImg: img });
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
     try {
       const data = await createProduct(user._id, token, {
         pName,
@@ -41,7 +50,7 @@ const AddProduct = ({ setAddProductActive }) => {
   };
 
   return (
-    <section className="signup-section">
+    <section className="addProduct-section">
       <div className="black-background">
         <div className="popup-big-sec">
           <div className="popup-group">
@@ -55,7 +64,7 @@ const AddProduct = ({ setAddProductActive }) => {
               </div>
             </div>
 
-            <div className="popup-form">
+            <form className="popup-form" encType="multipart/form-data">
               <div className="popup-form-single-group">
                 <div className="popup-form-group">
                   <label className="popup-form-label">Product Name</label>
@@ -123,9 +132,7 @@ const AddProduct = ({ setAddProductActive }) => {
                     <input
                       type="file"
                       className="popup-form-input"
-                      onChange={(e) =>
-                        setValues({ ...values, pImg: e.target.files[0] })
-                      }
+                      onChange={handleFileChange}
                     />
                     <button className="popup-form-input-btn">
                       Choose File
@@ -133,7 +140,7 @@ const AddProduct = ({ setAddProductActive }) => {
                   </div>
                 </div>
               </div>
-            </div>
+            </form>
             <button className="popup-form-btn" onClick={onSubmit}>
               Add Product
             </button>

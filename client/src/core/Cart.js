@@ -100,7 +100,7 @@ const Cart = () => {
     try {
       const data = await deleteFromCart(userId, token, productId);
       if (data.error) {
-        console.log(data.error);
+        return console.log(data.error);
       } else {
         return preLoadCart(userId, token);
       }

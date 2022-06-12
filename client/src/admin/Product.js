@@ -3,15 +3,17 @@ import ViewIcon from "../icons/view.svg";
 import EditIcon from "../icons/Edit.svg";
 import AddIcon from "../icons/add.svg";
 import { isAuthenticated } from "../auth";
-import { getAllProducts } from "../core/helper/productDetailHelper";
-// import moment from "moment";
+import { deleteProduct, getAllProducts } from "../core/helper/productDetailHelper";
 import { API } from "../backend";
 import AddProduct from "./AddProduct";
+import ProductDetail from "./ProductDetail";
 
 const Product = () => {
   const [products, setProducts] = useState([]);
   const [category, setCategory] = useState("all");
   const [addProductActive, setAddProductActive] = useState("");
+  const [productDetail, setProductDetail] = useState("");
+  const [product, setProduct] = useState();
 
   const { user, token } = isAuthenticated();
 
@@ -29,13 +31,22 @@ const Product = () => {
   };
 
   const handlePreview = async (product) => {
-    //
+    return setProductDetail("productDetail"), setProduct(product)
   };
   const handleEdit = async (product) => {
     //
   };
   const handleDelete = async (product) => {
-    //
+    try {
+      const data = await deleteProduct(user._id, token, product._id);
+      if(data.error){
+        return console.log(data.error);
+      }else{
+        return loadProducts(category);
+      }
+    } catch (error) {
+      return console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -170,6 +181,8 @@ const Product = () => {
       </div>
 
       {addProductActive === "addProduct" && <AddProduct setAddProductActive={setAddProductActive}/>}
+      {productDetail === "productDetail" && <ProductDetail setProductDetail= {setProductDetail} product={product} />}
+
     </section>
   );
 };

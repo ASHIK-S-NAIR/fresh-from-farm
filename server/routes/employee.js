@@ -12,13 +12,13 @@ router.param("employeeId", getEmployeeById);
 
 // routes
 // create employee
-router.post("/employee/create/:employeeUserId/:userId", isSignedIn, isAuthenticated, isAdmin, updateUserRole, createEmployee);
+router.post("/employee/create/:userId", isSignedIn, isAuthenticated, isAdmin, updateUserRole, createEmployee);
 
 // getEmployee
 router.get("/employee/:employeeId/:userId", isSignedIn, isAuthenticated, isAdmin, getEmployee);
 
 // getAllEmployees
-router.get("/employees/:userId", isSignedIn, isAuthenticated, isAdmin, getAllEmployees);
+router.get("/employees/:status/:userId", isSignedIn, isAuthenticated, isAdmin, getAllEmployees);
 
 // updateEmployeeStatus
 router.put("/employee/:employeeId/:userId", isSignedIn, isAuthenticated, isEmployee, updateEmployeeStatus);
