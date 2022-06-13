@@ -375,14 +375,13 @@ export const getEmployees = async (userId, token, status) => {
 // createEmployee
 export const createEmployee = async (userId, token, email) => {
   try {
-    const result = await fetch(`${API}/employee/create/${userId}`, {
+    const result = await fetch(`${API}/employee/create/${email}/${userId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
         Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(email)
+      }
     }).then((res) => res.json());
 
     return result;
@@ -391,3 +390,22 @@ export const createEmployee = async (userId, token, email) => {
     return error;
   }
 };
+
+// deleteEmployee
+export const deleteEmployee = async (userId, token, employeeId) => {
+  try {
+    const result = await fetch(`${API}/employee/${employeeId}/${userId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`
+      }
+    }).then(res => res.json())
+
+    return result;
+  } catch (error) {
+    console.log("error", error.message)
+    return error;
+  }
+}

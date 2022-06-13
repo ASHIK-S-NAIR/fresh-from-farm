@@ -19,7 +19,7 @@ exports.updateUserRole = async (req, res, next) => {
   try {
     const user = await User.findByIdAndUpdate(
       { _id: req.employeeUser._id },
-      { $set: { role: req.body.role } },
+      { $set: { role: 1 } },
       { new: true, useFindAndModify: false }
     );
     await user.save();

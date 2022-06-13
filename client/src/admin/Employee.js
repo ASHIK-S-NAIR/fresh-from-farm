@@ -3,7 +3,7 @@ import ViewIcon from "../icons/view.svg";
 import EditIcon from "../icons/Edit.svg";
 import AddIcon from "../icons/add.svg";
 import { isAuthenticated } from "../auth";
-import { getEmployees } from "../user";
+import { deleteEmployee, getEmployees } from "../user";
 import moment from "moment";
 import AddEmployee from "./AddEmployee";
 // import { deleteProduct, getAllProducts } from "../core/helper/productDetailHelper";
@@ -40,21 +40,40 @@ const Employee = () => {
     //
   };
 
-  const handleDelete = (employee) => {
-    //
+  const handleDelete = async (employee) => {
+    try {
+      const data = await deleteEmployee(user._id, token, employee._id);
+      if (data.error) {
+        return console.log(data.error);
+      } else {
+        return loadEmployees(user._id, token, status);
+      }
+    } catch (error) {
+      return console.log(error);
+    }
   };
 
   useEffect(() => {
     loadEmployees(user._id, token, status);
   }, [status, addEmployeeActive]);
 
-  // console.log("Employeed", employees);
+  console.log("Employeed", employees);
 
   return (
     <section className="adminDashPanel-section emploees-section">
       <h1 className="adminDashPanel-right-header">Employees</h1>
       <div className="adminDashPanel-right-subsection adminDashPanel-product-add-btn-subSection">
-        <button className="adminDashPanel-product-add-btn" onClick={() => setAddEmployeeActive("addEmployee")} ><img src={AddIcon} className="adminDashPanel-product-add-btn-icon" alt="" />ADD EMPLOYEE</button>
+        <button
+          className="adminDashPanel-product-add-btn"
+          onClick={() => setAddEmployeeActive("addEmployee")}
+        >
+          <img
+            src={AddIcon}
+            className="adminDashPanel-product-add-btn-icon"
+            alt=""
+          />
+          ADD EMPLOYEE
+        </button>
       </div>
       <div className="adminDashPanel-right-subsection adminDashPanel-product-filter-subSection">
         <button
@@ -107,7 +126,7 @@ const Employee = () => {
               <th className="adminDashPanel-right-table-head-value">Action</th>
             </tr>
           </thead>
-          <tbody className="adminDashPanel-right-table-body-sec">
+          {/* <tbody className="adminDashPanel-right-table-body-sec">
             {employees &&
               employees.map((employee, index) => {
                 return (
@@ -161,10 +180,12 @@ const Employee = () => {
                   </tr>
                 );
               })}
-          </tbody>
+          </tbody> */}
         </table>
       </div>
-      {addEmployeeActive === "addEmployee" && <AddEmployee setAddEmployeeActive = {setAddEmployeeActive} />}
+      {addEmployeeActive === "addEmployee" && (
+        <AddEmployee setAddEmployeeActive={setAddEmployeeActive} />
+      )}
     </section>
   );
 };

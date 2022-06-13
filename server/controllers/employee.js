@@ -14,6 +14,19 @@ exports.getEmployeeUserById = async (req, res, next, id) => {
   }
 };
 
+exports.getEmployeeUserByEmail = async (req, res, next, email) => {
+  try {
+    const employeeUser = await User.findOne({ email: email });
+    req.employeeUser = employeeUser;
+    // console.log("employee user", employeeUser);
+    next();
+  } catch (error) {
+    return res.status(400).json({
+      message: "Failed to find employeeUser email from DB",
+    });
+  }
+};
+
 exports.getEmployeeById = async (req, res, next, id) => {
   try {
     const employee = await Employee.findById({ _id: id }).populate({
@@ -30,10 +43,9 @@ exports.getEmployeeById = async (req, res, next, id) => {
 };
 
 exports.createEmployee = async (req, res) => {
-  console.log("got here")
   try {
     const employee = await Employee.create({
-      Euser: req.body.email
+      Euser: req.employeeUser._id
     });
     await employee.save();
     return res.json({
@@ -93,7 +105,7 @@ exports.updateEmployeeStatus = async (req, res) => {
 
 exports.deleteEmployee = async (req, res) => {
   try {
-    await User.deleteOne({ _id: req.employee.Euser });
+    // await User.deleteOne({ _id: req.employee.Euser });
     await Employee.findByIdAndUpdate(
       { _id: req.employee._id },
       { $set: { Estatus: "Deleted" } },

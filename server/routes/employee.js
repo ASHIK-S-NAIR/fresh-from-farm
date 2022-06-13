@@ -1,18 +1,19 @@
 const express = require("express");
 const router = express.Router();
 
-const {getEmployeeUserById, getEmployeeById, createEmployee, getEmployee, getAllEmployees, updateEmployeeStatus, deleteEmployee, countEmployers} = require("../controllers/employee");
+const {getEmployeeUserById, getEmployeeById, createEmployee, getEmployee, getAllEmployees, updateEmployeeStatus, deleteEmployee, countEmployers, getEmployeeUserByEmail} = require("../controllers/employee");
 const {isSignedIn, isAuthenticated, isEmployee, isAdmin} = require("../controllers/auth");
 const {getUserById, updateUserRole} = require("../controllers/user");
 
 // middleware
 router.param("userId", getUserById);
 router.param("employeeUserId", getEmployeeUserById);
+router.param("employeeUserEmail", getEmployeeUserByEmail);
 router.param("employeeId", getEmployeeById);
 
 // routes
 // create employee
-router.post("/employee/create/:userId", isSignedIn, isAuthenticated, isAdmin, updateUserRole, createEmployee);
+router.post("/employee/create/:employeeUserEmail/:userId", isSignedIn, isAuthenticated, isAdmin, updateUserRole, createEmployee);
 
 // getEmployee
 router.get("/employee/:employeeId/:userId", isSignedIn, isAuthenticated, isAdmin, getEmployee);
