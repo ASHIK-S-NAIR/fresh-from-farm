@@ -256,8 +256,10 @@ exports.changePassword = async (req, res) => {
 
 // deleteUser
 exports.deleteUser = async (req, res) => {
+  const {customerId} = req.params
+  console.log("CustomerId", customerId)
   try {
-    await User.deleteOne({ _id: req.profile._id });
+    await User.deleteOne({ _id: customerId });
 
     return res.json({
       message: "User successfully deleted from DB",
@@ -289,11 +291,21 @@ exports.getUserOrders = async (req, res) => {
 };
 
 // countCustomers
-exports.countCustomers = async(req, res) => {
+exports.countCustomers = async (req, res) => {
   try {
-    const count = await User.countDocuments({role : '0'});
+    const count = await User.countDocuments({ role: "0" });
     return res.json(count);
   } catch (error) {
-    return res.status(400).json("Failed to count customers")
+    return res.status(400).json("Failed to count customers");
   }
-}
+};
+
+// getCustomers
+exports.getCustomers = async (req, res) => {
+  try {
+    const customers = await User.find({ role: "0" }).populate("orders");
+    return res.json(customers);
+  } catch (error) {
+    return res.status(400).json("Failed to get customers");
+  }
+};

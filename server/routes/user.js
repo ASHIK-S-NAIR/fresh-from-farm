@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const {getUserById, getUser, getAllUsers, updateUser, deleteUser, addToUserCart,  updateFromUserCart, deleteFromUserCart, changePassword, getUserCart, updateQuantity, countCustomers, getUserOrders} = require("../controllers/user");
+const {getUserById, getUser, getAllUsers, updateUser, deleteUser, addToUserCart,  updateFromUserCart, deleteFromUserCart, changePassword, getUserCart, updateQuantity, countCustomers, getUserOrders, getCustomers} = require("../controllers/user");
 const {isSignedIn, isAuthenticated, isAdmin} = require("../controllers/auth");
 
 // params
@@ -24,7 +24,7 @@ router.put("/user/:userId", isSignedIn, isAuthenticated, updateUser);
 router.put("/user/password/:userId", isSignedIn, isAuthenticated, changePassword);
 
 // deleteUser
-router.delete("/user/:userId", isSignedIn, isAuthenticated, deleteUser);
+router.delete("/user/:customerId/:userId", isSignedIn, isAuthenticated, deleteUser);
 
 // countCustomers
 router.get("/users/countcustomers/:userId", isSignedIn, isAuthenticated, isAdmin, countCustomers);
@@ -44,6 +44,7 @@ router.post("/user/deletecart/:userId", isSignedIn, isAuthenticated, deleteFromU
 // getUserOrders
 router.get("/user/orders/:userId", isSignedIn, isAuthenticated, getUserOrders);
 
-
+// getCustomers
+router.get("/user/customers/:userId", isSignedIn, isAuthenticated, isAdmin, getCustomers)
 
 module.exports = router;

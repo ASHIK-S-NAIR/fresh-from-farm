@@ -1667,4 +1667,17 @@ tr {
   margin-bottom: 3em;
 }
 
+.adminDashPanel-employeeDetails-form-group{
+  margin-bottom: 0.75em;
+  /* border: 1px solid red; */
+}
+
+.adminDashPanel-employeeDetails-value{
+  padding: 0.5em 0;
+}
+
+.adminDashPanel-customerDetails-value{
+  padding: 0.5em 0;
+}
+
 /* AdminDashPanel section ends */

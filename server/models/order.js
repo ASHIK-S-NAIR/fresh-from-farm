@@ -33,6 +33,12 @@ const orderSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Employee"
     },
+    OemployeeName: {
+        type: String
+    },
+    OemployeePhoneNumber: {
+        type: String
+    },
     Oaddress: {
         houseName: {
             type: String 

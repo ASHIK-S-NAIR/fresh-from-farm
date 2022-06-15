@@ -15,8 +15,21 @@ const employeeSchema = new Schema({
     },
     Eorders: [
         {
-            type: Schema.Types.ObjectId,
+            EorderId: {
+                type: Schema.Types.ObjectId,
             ref: "Order"
+            },
+            EorderTotal: {
+                type: Number
+            },
+            EorderAddress: {
+                houseName: {
+                    type: String
+                },
+                streetName: {
+                    type: String
+                }
+            }
         }
     ]
 }, {timestamps: true})

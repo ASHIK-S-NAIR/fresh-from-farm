@@ -7,7 +7,7 @@ const ProductDetail = ({product, setProductDetail}) => {
 
     console.log(product.pCategory);
   return (
-    <section className="signup-section">
+    <section className="productDetail-section">
       <div className="black-background">
         <div className="popup-big-sec">
           <div className="popup-group">

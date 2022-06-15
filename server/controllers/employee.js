@@ -45,7 +45,7 @@ exports.getEmployeeById = async (req, res, next, id) => {
 exports.createEmployee = async (req, res) => {
   try {
     const employee = await Employee.create({
-      Euser: req.employeeUser._id
+      Euser: req.employeeUser._id,
     });
     await employee.save();
     return res.json({
@@ -56,7 +56,7 @@ exports.createEmployee = async (req, res) => {
       message: "Employee creation Failed",
     });
   }
-}; 
+};
 
 exports.getEmployee = (req, res) => {
   return res.json(req.employee);
@@ -105,12 +105,8 @@ exports.updateEmployeeStatus = async (req, res) => {
 
 exports.deleteEmployee = async (req, res) => {
   try {
-    // await User.deleteOne({ _id: req.employee.Euser });
-    await Employee.findByIdAndUpdate(
-      { _id: req.employee._id },
-      { $set: { Estatus: "Deleted" } },
-      { new: true, useFindAndModify: false }
-    );
+    await User.deleteOne({ _id: req.employee.Euser });
+    await Employee.deleteOne({ _id: req.employee._id });
 
     return res.json({
       message: "Employee deleted from Database successfully",

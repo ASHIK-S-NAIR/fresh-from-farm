@@ -32,8 +32,8 @@ router.put("/order/updatestatus/:orderId/:userId", isSignedIn, isAuthenticated, 
 router.put("/order/orderconfirmation/:orderId/:userId", isSignedIn, isAuthenticated, updateOrder);
 
 // countOrders
-// router.get("/orders/countorders/:userId", isSignedIn, isAuthenticated, isAdmin, countOrders);
-router.get("/orders/countorders/:userId", isSignedIn, isAuthenticated, isAdmin, testRouteFunction);
+router.get("/order/orders/countorders/:userId", isSignedIn, isAuthenticated, isAdmin, countOrders);
+// router.get("/orders/countorders/:userId", isSignedIn, isAuthenticated, isAdmin, testRouteFunction);
 
 // razorPayOrder
 router.post("/order/razorpayorder", razorPayOrder);

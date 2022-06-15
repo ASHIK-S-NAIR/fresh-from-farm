@@ -6,16 +6,14 @@ import { isAuthenticated } from "../auth";
 import { deleteEmployee, getEmployees } from "../user";
 import moment from "moment";
 import AddEmployee from "./AddEmployee";
-// import { deleteProduct, getAllProducts } from "../core/helper/productDetailHelper";
-// import { API } from "../backend";
-// import AddProduct from "./AddProduct";
-// import ProductDetail from "./ProductDetail";
+import EmployeeDetail from "./EmployeeDetail";
 
 const Employee = () => {
   const [employees, setEmployees] = useState([]);
   const [status, setStatus] = useState("all");
   const [employee, setEmployee] = useState();
   const [addEmployeeActive, setAddEmployeeActive] = useState("");
+  const [employeeDetail, setEmployeeDetail] = useState("");
 
   const { user, token } = isAuthenticated();
 
@@ -33,11 +31,7 @@ const Employee = () => {
   };
 
   const handlePreview = (employee) => {
-    //
-  };
-
-  const handleEdit = (employee) => {
-    //
+    return setEmployeeDetail("employeeDetail"), setEmployee(employee);
   };
 
   const handleDelete = async (employee) => {
@@ -57,10 +51,8 @@ const Employee = () => {
     loadEmployees(user._id, token, status);
   }, [status, addEmployeeActive]);
 
-  console.log("Employeed", employees);
-
   return (
-    <section className="adminDashPanel-section emploees-section">
+    <section className="adminDashPanel-section employee-section">
       <h1 className="adminDashPanel-right-header">Employees</h1>
       <div className="adminDashPanel-right-subsection adminDashPanel-product-add-btn-subSection">
         <button
@@ -100,20 +92,13 @@ const Employee = () => {
         >
           Not-Available
         </button>
-        <button
-          className={`adminDashPanel-product-filter-btn ${
-            status === "Deleted" ? "active" : ""
-          }`}
-          onClick={() => setStatus("Deleted")}
-        >
-          Deleted
-        </button>
       </div>
       <div className="adminDashPanel-right-subsection">
         <table className="adminDashPanel-right-table">
           <thead className="adminDashPanel-right-table-head-sec">
             <tr>
               <th className="adminDashPanel-right-table-head-value">Name</th>
+              <th className="adminDashPanel-right-table-head-value">Employee ID</th>
               <th className="adminDashPanel-right-table-head-value">Email</th>
               <th className="adminDashPanel-right-table-head-value">Status</th>
               <th className="adminDashPanel-right-table-head-value">
@@ -126,7 +111,7 @@ const Employee = () => {
               <th className="adminDashPanel-right-table-head-value">Action</th>
             </tr>
           </thead>
-          {/* <tbody className="adminDashPanel-right-table-body-sec">
+          <tbody className="adminDashPanel-right-table-body-sec">
             {employees &&
               employees.map((employee, index) => {
                 return (
@@ -136,6 +121,9 @@ const Employee = () => {
                   >
                     <td className="adminDashPanel-right-table-body-value">
                       {employee.Euser.name}
+                    </td>
+                    <td className="adminDashPanel-right-table-body-value">
+                      {employee._id}
                     </td>
                     <td className="adminDashPanel-right-table-body-value">
                       {employee.Euser.email}
@@ -162,13 +150,6 @@ const Employee = () => {
                           className="adminDashPanel-right-table-icon "
                         />
                       </button>
-                      <button onClick={() => handleEdit(employee)}>
-                        <img
-                          src={EditIcon}
-                          alt=""
-                          className="adminDashPanel-right-table-icon "
-                        />
-                      </button>
                       <button onClick={() => handleDelete(employee)}>
                         <img
                           src={EditIcon}
@@ -180,11 +161,17 @@ const Employee = () => {
                   </tr>
                 );
               })}
-          </tbody> */}
+          </tbody>
         </table>
       </div>
       {addEmployeeActive === "addEmployee" && (
         <AddEmployee setAddEmployeeActive={setAddEmployeeActive} />
+      )}
+      {employeeDetail === "employeeDetail" && (
+        <EmployeeDetail
+          employee={employee}
+          setEmployeeDetail={setEmployeeDetail}
+        />
       )}
     </section>
   );

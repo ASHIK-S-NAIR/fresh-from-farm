@@ -225,7 +225,7 @@ export const getUserOrders = async (userId, token) => {
 // countOrders
 export const getCountOrders = async (userId, token) => {
   try {
-    const result = await fetch(`${API}/orders/countorders/${userId}`, {
+    const result = await fetch(`${API}/order/orders/countorders/${userId}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -381,12 +381,12 @@ export const createEmployee = async (userId, token, email) => {
         "Content-Type": "application/json",
         Accept: "application/json",
         Authorization: `Bearer ${token}`,
-      }
+      },
     }).then((res) => res.json());
 
     return result;
   } catch (error) {
-    console.log("error", error.message)
+    console.log("error", error.message);
     return error;
   }
 };
@@ -399,13 +399,49 @@ export const deleteEmployee = async (userId, token, employeeId) => {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((res) => res.json());
+
+    return result;
+  } catch (error) {
+    console.log("error", error.message);
+    return error;
+  }
+};
+
+// getCustomers
+export const getCustomers = async (userId, token) => {
+  try {
+    const result = await fetch(`${API}/user/customers/${userId}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((res) => res.json());
+
+    return result;
+  } catch (error) {
+    console.log("error", error.message);
+    return error;
+  }
+};
+
+// deleteCustomer
+export const deleteCustomer = async(userId, token, customerId) => {
+  try {
+    const result = await fetch(`${API}/user/${customerId}/${userId}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
         Authorization: `Bearer ${token}`
       }
     }).then(res => res.json())
 
     return result;
   } catch (error) {
-    console.log("error", error.message)
+    console.log("error", error.message);
     return error;
   }
 }
