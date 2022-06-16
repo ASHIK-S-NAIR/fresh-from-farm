@@ -5,7 +5,6 @@ exports.getEmployeeUserById = async (req, res, next, id) => {
   try {
     const employeeUser = await User.findById({ _id: id });
     req.employeeUser = employeeUser;
-    // console.log("employee user", employeeUser);
     next();
   } catch (error) {
     return res.status(400).json({
@@ -18,7 +17,6 @@ exports.getEmployeeUserByEmail = async (req, res, next, email) => {
   try {
     const employeeUser = await User.findOne({ email: email });
     req.employeeUser = employeeUser;
-    // console.log("employee user", employeeUser);
     next();
   } catch (error) {
     return res.status(400).json({
@@ -31,8 +29,9 @@ exports.getEmployeeById = async (req, res, next, id) => {
   try {
     const employee = await Employee.findById({ _id: id }).populate({
       path: "Euser",
-      select: "name email phoneNumber role address",
+      select: "name email phoneNumber role address _id",
     });
+    console.log("EmployeeId", employee._id);
     req.employee = employee;
     next();
   } catch (error) {
@@ -127,3 +126,56 @@ exports.countEmployers = async (req, res) => {
     return res.status(400).json("Failed to count Employers");
   }
 };
+
+// getAllDeleveries
+exports.getAllDeliveries = async (req, res) => {
+  try {
+    const deliveries = await Employee.findOne({
+      Euser: req.employeeUser._id,
+    }).select("Eorders");
+    return res.json(deliveries);
+  } catch (error) {
+    console.log("error Message", error.message);
+    return res.status(400).json("Failed to find Employee Deliveries");
+  }
+};
+
+// getCountDeliveries
+exports.getCountDeliveries = async (req, res) => {
+  try {
+    const deliveries = await Employee.findOne({
+      Euser: req.employeeUser._id,
+    }).select("Eorders");
+    return res.json(deliveries.Eorders.length);
+  } catch (error) {
+    console.log("error Message", error.message);
+    return res.status(400).json("Failed to find Employee Deliveries");
+  }
+};
+
+// getCountDeliveries
+exports.getCountNewDeliveries = async (req, res) => {
+  try {
+    const deliveries = await Employee.findOne({
+      Euser: req.employeeUser._id,
+    }).populate("Eorders.EorderId").select("Eorders");
+    const countNewDeliveries = deliveries.Eorders.filter((order) => {return order.Ostatus === "Processing"})
+    console.log(countNewDeliveries.length);
+    return res.json(countNewDeliveries.length);
+  } catch (error) {
+    console.log("error Message", error.message);
+    return res.status(400).json("Failed to find Employee Deliveries");
+  }
+};
+
+// getEmployeeStatus
+exports.getEmployeeStatus = async (req, res) => {
+  try {
+    const status = await Employee.findOne({Euser: req.employeeUser._id}).select("Estatus");
+    console.log(status);
+    return res.json(status.Estatus);
+  } catch (error) {
+    console.log("error Message", error.message);
+    return res.status(400).json("Failed to find Employee Deliveries");
+  }
+}

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { isAuthenticated } from "../auth";
+import Dashboard from "../employee/Dashboard";
 import { getUser } from "../user";
 import Accounts from "./Accounts";
-import Orders from "./Orders";
+// import Orders from "./Orders";
 import Settings from "./Settings";
 
 const EmployeeBoard = () => {
@@ -115,8 +116,8 @@ const EmployeeBoard = () => {
           </ul>
         </div>
         <div className="userBoard-right">
+          {tabActive === "dashboard" && <Dashboard />}
           {tabActive === "accounts" && <Accounts userValues={values} />}
-          {/* {tabActive === "orders" && <Orders userValues={values} />} */}
           {tabActive === "settings" && <Settings userValues={values} />}
         </div>
       </div>
