@@ -37,7 +37,7 @@ const orderSchema = new Schema({
         type: String
     },
     OemployeePhoneNumber: {
-        type: String
+        type: Number
     },
     Oaddress: {
         houseName: {

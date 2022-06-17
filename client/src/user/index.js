@@ -491,36 +491,60 @@ export const getCountDeliveries = async (userId, token) => {
 // getCountNewDeliveries
 export const getCountNewDeliveries = async (userId, token) => {
   try {
-    const result = await fetch(`${API}/employee/countnewdeliveries/${userId}/${userId}`, {
-      method: "GET",
+    const result = await fetch(
+      `${API}/employee/countnewdeliveries/${userId}/${userId}`,
+      {
+        method: "GET",
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${token}`,
         },
-    }).then(res => res.json())
+      }
+    ).then((res) => res.json());
 
     return result;
   } catch (error) {
     console.log("error", error.message);
     return error;
   }
-}
-
+};
 
 // getEmployeeStatus
 export const getEmployeeStatus = async (userId, token) => {
   try {
     const result = await fetch(`${API}/employee/status/${userId}/${userId}`, {
       method: "GET",
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-    }).then(res => res.json())
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((res) => res.json());
 
     return result;
   } catch (error) {
     console.log("error", error.message);
     return error;
   }
-}
+};
+
+// addEmployeeOrder
+export const addEmployeeOrder = async (userId, token, orderId, employeeId) => {
+  try {
+    const result = await fetch(
+      `${API}/employee/addemployeeorder/${employeeId}/${orderId}/${userId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+      }
+    ).then((res) => res.json());
+
+    return result;
+  } catch (error) {
+    console.log("errorMessage", error);
+    return error;
+  }
+};

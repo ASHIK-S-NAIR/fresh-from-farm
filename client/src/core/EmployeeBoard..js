@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { isAuthenticated } from "../auth";
 import Dashboard from "../employee/Dashboard";
+import Deliveries from "../employee/Deliveries";
 import { getUser } from "../user";
+import Profile from "../icons/profile.svg";
 import Accounts from "./Accounts";
 // import Orders from "./Orders";
 import Settings from "./Settings";
@@ -48,10 +50,12 @@ const EmployeeBoard = () => {
       <div className="wrap userBoard-wrap">
         <div className="userBoard-left">
           <div className="userBoard-user-detail">
-            <h1 className="userBoard-user-detail-icon">Image</h1>
+          <img className="userBoard-user-detail-image" src={Profile} alt="" />
             <div className="userBoard-user-detail-info">
               <p className="userBoard-user-detail-greetings">Hello</p>
-              <h3 className="userBoard-user-detail-name">{name}</h3>
+              <h3 className="userBoard-user-detail-name">
+                {name.length > 6 ? name.substring(0, 6) : name}
+              </h3>
             </div>
           </div>
           <ul className="userBoard-left-ul">
@@ -63,7 +67,7 @@ const EmployeeBoard = () => {
                 {" "}
                 <div
                   className={`userBoard-left-tag ${
-                    tabActive === "orders" ? "active" : ""
+                    tabActive === "dashboard" ? "active" : ""
                   }`}
                 >
                   Dashboard
@@ -78,7 +82,7 @@ const EmployeeBoard = () => {
                 {" "}
                 <div
                   className={`userBoard-left-tag ${
-                    tabActive === "orders" ? "active" : ""
+                    tabActive === "deliveries" ? "active" : ""
                   }`}
                 >
                   Deliveries
@@ -117,6 +121,7 @@ const EmployeeBoard = () => {
         </div>
         <div className="userBoard-right">
           {tabActive === "dashboard" && <Dashboard />}
+          {tabActive === "deliveries" && <Deliveries />}
           {tabActive === "accounts" && <Accounts userValues={values} />}
           {tabActive === "settings" && <Settings userValues={values} />}
         </div>

@@ -6,6 +6,7 @@ import ViewIcon from "../icons/view.svg";
 import EditIcon from "../icons/Edit.svg";
 import OrderDetails from "../user/OrderDetails";
 import OrderUpdate from "./OrderUpdate";
+import EmployeeUpdate from "./EmployeeUpdate";
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
@@ -13,6 +14,8 @@ const Order = () => {
   const [orderUpdateActive, setOrderUpdateActive] = useState("");
   const [order, setOrder] = useState({});
   const [status, setStatus] = useState("all");
+  const [orderEmployeeAssignActive, setOrderEmployeeAssignActive] =
+    useState("");
 
   const { user, token } = isAuthenticated();
 
@@ -35,6 +38,12 @@ const Order = () => {
 
   const handleEdit = async (order) => {
     return setOrderUpdateActive("orderUpdateActive"), setOrder(order);
+  };
+
+  const handleEmployeeAssign = async (order) => {
+    return (
+      setOrderEmployeeAssignActive("orderEmployeeAssignActive"), setOrder(order)
+    );
   };
 
   useEffect(() => {
@@ -167,7 +176,16 @@ const Order = () => {
                       </div>
                     </td>
                     <td className="adminDashPanel-right-table-body-value">
-                      {order.OemployeeId ? order.OemployeeId : "Not Assigned"}
+                      {order.OemployeeName ? (
+                        order.OemployeeName
+                      ) : (
+                        <button
+                          className="adminDashPanel-right-table-body-value-btn"
+                          onClick={() => handleEmployeeAssign(order)}
+                        >
+                          Not Assigned
+                        </button>
+                      )}
                     </td>
                     <td className="adminDashPanel-right-table-body-value">
                       <button onClick={() => handlePreview(order)}>
@@ -197,6 +215,12 @@ const Order = () => {
       {orderUpdateActive === "orderUpdateActive" && (
         <OrderUpdate
           setOrderUpdateActive={setOrderUpdateActive}
+          order={order}
+        />
+      )}
+      {orderEmployeeAssignActive === "orderEmployeeAssignActive" && (
+        <EmployeeUpdate
+          setOrderEmployeeAssignActive={setOrderEmployeeAssignActive}
           order={order}
         />
       )}

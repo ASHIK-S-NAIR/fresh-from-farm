@@ -1,5 +1,6 @@
 const Employee = require("../models/employee");
 const User = require("../models/user");
+const Order = require("../models/order");
 
 exports.getEmployeeUserById = async (req, res, next, id) => {
   try {
@@ -158,8 +159,12 @@ exports.getCountNewDeliveries = async (req, res) => {
   try {
     const deliveries = await Employee.findOne({
       Euser: req.employeeUser._id,
-    }).populate("Eorders.EorderId").select("Eorders");
-    const countNewDeliveries = deliveries.Eorders.filter((order) => {return order.Ostatus === "Processing"})
+    })
+      .populate("Eorders.EorderId")
+      .select("Eorders");
+    const countNewDeliveries = deliveries.Eorders.filter((order) => {
+      return order.Ostatus === "Processing";
+    });
     console.log(countNewDeliveries.length);
     return res.json(countNewDeliveries.length);
   } catch (error) {
@@ -171,11 +176,39 @@ exports.getCountNewDeliveries = async (req, res) => {
 // getEmployeeStatus
 exports.getEmployeeStatus = async (req, res) => {
   try {
-    const status = await Employee.findOne({Euser: req.employeeUser._id}).select("Estatus");
+    const status = await Employee.findOne({
+      Euser: req.employeeUser._id,
+    }).select("Estatus");
     console.log(status);
     return res.json(status.Estatus);
   } catch (error) {
     console.log("error Message", error.message);
     return res.status(400).json("Failed to find Employee Deliveries");
   }
-}
+};
+
+exports.addEmplyeeOrder = async (req, res) => {
+  console.log("Happy employee controller")
+  try {
+    const order = await Order.findById(req.order._id).populate("Ouser");
+    const employee = await Employee.findById(req.employee._id);
+    var Eorders = employee.Eorders;
+    Eorders.push({
+      EorderId: order._id,
+      EorderTotal: order.OtotalPrice,
+      EorderPhoneNumber: order.Ouser.phoneNumber,
+      EorderAddress: order.Oaddress,
+    });
+
+    await Employee.findByIdAndUpdate(
+      { _id: req.employee._id },
+      { $set: { Eorders: Eorders } },
+      { new: true, useFindAndModify: false }
+    );
+
+    return res.json("Employee order updated successfully")
+  } catch (error) {
+    console.log("ErrorMessageEmployee", error.message)
+    return res.status(400).json("Failed to add employee Order");
+  }
+};

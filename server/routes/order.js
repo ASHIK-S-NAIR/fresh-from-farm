@@ -20,8 +20,6 @@ router.get("/order/:orderId/:userId", isSignedIn, isAuthenticated, getOrder);
 // getAllOrders
 router.get("/orders/:status/:userId", isSignedIn, isAuthenticated, isAdmin, getAllOrders);
 
-
-
 // deleteOrder
 router.delete("/order/:orderId/:userId", isSignedIn, isAuthenticated, isAdmin, deleteOrder);
 
@@ -33,7 +31,6 @@ router.put("/order/orderconfirmation/:orderId/:userId", isSignedIn, isAuthentica
 
 // countOrders
 router.get("/order/orders/countorders/:userId", isSignedIn, isAuthenticated, isAdmin, countOrders);
-// router.get("/orders/countorders/:userId", isSignedIn, isAuthenticated, isAdmin, testRouteFunction);
 
 // razorPayOrder
 router.post("/order/razorpayorder", razorPayOrder);

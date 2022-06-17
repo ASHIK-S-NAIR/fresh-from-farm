@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { isAuthenticated } from "../auth";
 import { getUser } from "../user";
+import Profile from "../icons/profile.svg";
 import Accounts from "./Accounts";
 // import Orders from "./Orders";
 import Settings from "./Settings";
@@ -47,10 +48,12 @@ const AdminBoard = () => {
       <div className="wrap userBoard-wrap">
         <div className="userBoard-left">
           <div className="userBoard-user-detail">
-            <h1 className="userBoard-user-detail-icon">Image</h1>
+            <img className="userBoard-user-detail-image" src={Profile} alt="" />
             <div className="userBoard-user-detail-info">
               <p className="userBoard-user-detail-greetings">Hello</p>
-              <h3 className="userBoard-user-detail-name">{name}</h3>
+              <h3 className="userBoard-user-detail-name">
+                {name.length > 6 ? name.substring(0, 6) : name}
+              </h3>
             </div>
           </div>
           <ul className="userBoard-left-ul">

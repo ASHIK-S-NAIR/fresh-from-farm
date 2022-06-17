@@ -1,5 +1,6 @@
 const Order = require("../models/order");
 const User = require("../models/user");
+const Employee = require("../models/employee");
 const crypto = require("crypto");
 const Razorpay = require("razorpay");
 
@@ -219,7 +220,7 @@ exports.updateOrderStatus = async (req, res) => {
       { new: true, useFindAndModify: false }
     );
 
-    res.json({
+    return res.json({
       message: "Order updated successfully",
     });
   } catch (error) {
@@ -261,7 +262,26 @@ exports.countOrders = async (req, res) => {
   }
 };
 
-exports.testRouteFunction = async (req, res) => {
-  console.log("Everything working fine: countOrders Alpha");
-  return res.json("route working");
+exports.updateOrderEmployee = async (req, res, next) => {
+  try {
+    const employee = await Employee.findById(req.employee._id).populate("Euser");
+    await Order.findByIdAndUpdate(
+      { _id: req.order._id },
+      {
+        $set: {
+          OemployeeId: employee._id,
+          OemployeeName: employee.Euser.name,
+          OemployeePhoneNumber: employee.Euser.phoneNumber,
+        },
+      },
+      { new: true, useFindAndModify: false }
+    );
+
+    next();
+  } catch (error) {
+    console.log("ErrorMessageOrder", error.message)
+    return res.status(400).json({
+      message: "Failed to update order employee",
+    });
+  }
 };

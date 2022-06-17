@@ -21,12 +21,12 @@ const handleUpdate = (userId, token, orderId, status) => {
   }
 }
   return (
-    <section className="orderDetails-section">
+    <section className="orderUpdate-section">
       <div className="black-background">
         <div className="popup-small-sec">
           <div className="popup-group">
             <div className="popup-head-sec">
-              <h1 className="popup-header orderDetails-popup-header">
+              <h1 className="popup-header orderUpdate-popup-header">
                 Update Order Status
               </h1>
               <div

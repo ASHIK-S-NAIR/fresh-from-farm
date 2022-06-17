@@ -16,6 +16,7 @@ import {
 } from "../user";
 import OrderDetails from "../user/OrderDetails";
 import OrderUpdate from "./OrderUpdate";
+import EmployeeUpdate from "./EmployeeUpdate";
 
 const Dashboard = () => {
   const [statusValues, setStatusValues] = useState({
@@ -28,6 +29,8 @@ const Dashboard = () => {
   const [orderActive, setOrderActive] = useState("");
   const [order, setOrder] = useState({});
   const [orderUpdateActive, setOrderUpdateActive] = useState("");
+  const [orderEmployeeAssignActive, setOrderEmployeeAssignActive] =
+    useState("");
 
   const { user, token } = isAuthenticated();
 
@@ -83,32 +86,38 @@ const Dashboard = () => {
     return setOrderUpdateActive("orderUpdateActive"), setOrder(order);
   };
 
+  const handleEmployeeAssign = async (order) => {
+    return (
+      setOrderEmployeeAssignActive("orderEmployeeAssignActive"), setOrder(order)
+    );
+  };
+
   useEffect(() => {
     loadStatusValues(user._id, token);
-  }, []);
+  }, [orderActive, orderUpdateActive, orderEmployeeAssignActive]);
 
   useEffect(() => {
     loadPendingOrders(user._id, token);
-  }, []);
+  }, [orderActive, orderUpdateActive, orderEmployeeAssignActive]);
   return (
     <section className="adminDashPanel-right-section dashboard-section">
       <div className="adminDashPanel-right-subsection dashboard-subSection">
-        <div className="dashboard-status-sec dashboard-status-sec-orders">
+        <div className="adminDashPanel-dashboard-status-sec dashboard-status-sec-orders">
           <p className="dashboard-status-tag">Orders</p>
           <h1 className="dashboard-status-value">{orderStatus}</h1>
           <img src={CartIcon} alt="" className="dashboard-status-img" />
         </div>
-        <div className="dashboard-status-sec dashboard-status-sec-products">
+        <div className="adminDashPanel-dashboard-status-sec dashboard-status-sec-products">
           <p className="dashboard-status-tag">Products</p>
           <h1 className="dashboard-status-value">{productStatus}</h1>
           <img src={ProductIcon} alt="" className="dashboard-status-img" />
         </div>
-        <div className="dashboard-status-sec dashboard-status-sec-employers">
+        <div className="adminDashPanel-dashboard-status-sec dashboard-status-sec-employers">
           <p className="dashboard-status-tag">Employers</p>
           <h1 className="dashboard-status-value">{employerStatus}</h1>
           <img src={EmployerIcon} alt="" className="dashboard-status-img" />
         </div>
-        <div className="dashboard-status-sec dashboard-status-sec-customers">
+        <div className="adminDashPanel-dashboard-status-sec dashboard-status-sec-customers">
           <p className="dashboard-status-tag">Customers</p>
           <h1 className="dashboard-status-value">{customerStatus}</h1>
           <img src={CustomerIcon} alt="" className="dashboard-status-img" />
@@ -175,7 +184,16 @@ const Dashboard = () => {
                       </div>
                     </td>
                     <td className="adminDashPanel-right-table-body-value">
-                      {order.OemployeeId ? order.OemployeeId : "Not Assigned"}
+                      {order.OemployeeName ? (
+                        order.OemployeeName
+                      ) : (
+                        <button
+                          className="adminDashPanel-right-table-body-value-btn"
+                          onClick={() => handleEmployeeAssign(order)}
+                        >
+                          Not Assigned
+                        </button>
+                      )}
                     </td>
                     <td className="adminDashPanel-right-table-body-value">
                       <button onClick={() => handlePreview(order)}>
@@ -205,6 +223,12 @@ const Dashboard = () => {
       {orderUpdateActive === "orderUpdateActive" && (
         <OrderUpdate
           setOrderUpdateActive={setOrderUpdateActive}
+          order={order}
+        />
+      )}
+      {orderEmployeeAssignActive === "orderEmployeeAssignActive" && (
+        <EmployeeUpdate
+          setOrderEmployeeAssignActive={setOrderEmployeeAssignActive}
           order={order}
         />
       )}

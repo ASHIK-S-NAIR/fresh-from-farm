@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import moment from "moment";
+// import moment from "moment";
 import CartIcon from "../icons/cart.svg";
 import ProductIcon from "../icons/product.svg";
 import EmployerIcon from "../icons/employer.svg";
-import CustomerIcon from "../icons/customer.svg";
+// import CustomerIcon from "../icons/customer.svg";
 import ViewIcon from "../icons/view.svg";
 import EditIcon from "../icons/Edit.svg";
 import { isAuthenticated } from "../auth";
@@ -17,7 +17,7 @@ const Dashboard = () => {
   });
   const [newDeliveries, setNewDeliveires] = useState([]);
 
-  const { totalDeliveries, NewDeliveries, EmpoyeeStatus } = statusValues;
+  const { totalDeliveries, NewDeliveries, EmployeeStatus } = statusValues;
 
   const { user, token } = isAuthenticated();
 
@@ -31,16 +31,16 @@ const Dashboard = () => {
       console.log("NewDeliveries", NewDeliveries);
       console.log("EmployeeStatus", EmployeeStatus);
 
-      //   if (totalDeliveries.error || NewDeliveries.error || EmpoyeeStatus.error) {
-      //     return console.log("status update error occured");
-      //   } else {
-      //     return setStatusValues({
-      //       ...statusValues,
-      //       totalDeliveries: totalDeliveries,
-      //       NewDeliveries: NewDeliveries,
-      //       EmpoyeeStatus: EmpoyeeStatus,
-      //     });
-      //   }
+        if (totalDeliveries.error || NewDeliveries.error || EmployeeStatus.error) {
+          return console.log("status update error occured");
+        } else {
+          return setStatusValues({
+            ...statusValues,
+            totalDeliveries: totalDeliveries,
+            NewDeliveries: NewDeliveries,
+            EmployeeStatus: EmployeeStatus,
+          });
+        }
     } catch (error) {
       return console.log(error);
     }
@@ -78,20 +78,20 @@ const Dashboard = () => {
 
   return (
     <section className="employeeBoard-section">
-      <div className="employeeBoard-right-subsection dashboard-subSection">
-        <div className="dashboard-status-sec dashboard-status-sec-TotalDeliveries">
+      <div className="-right-subsection dashboard-subSection">
+        <div className="employeeBoard-dashboard-status-sec dashboard-status-sec-TotalDeliveries">
           <p className="dashboard-status-tag">Total Deliveries</p>
           <h1 className="dashboard-status-value">{totalDeliveries}</h1>
           <img src={CartIcon} alt="" className="dashboard-status-img" />
         </div>
-        <div className="dashboard-status-sec dashboard-status-sec-DeliveryStatus">
+        <div className="employeeBoard-dashboard-status-sec dashboard-status-sec-DeliveryStatus">
           <p className="dashboard-status-tag">New Deliveries</p>
           <h1 className="dashboard-status-value">{NewDeliveries}</h1>
           <img src={ProductIcon} alt="" className="dashboard-status-img" />
         </div>
-        <div className="dashboard-status-sec dashboard-status-sec-EmpoyeeStatus">
+        <div className="employeeBoard-dashboard-status-sec dashboard-status-sec-EmpoyeeStatus">
           <p className="dashboard-status-tag">My Status</p>
-          <h1 className="dashboard-status-value">{EmpoyeeStatus}</h1>
+          <h1 className="dashboard-status-value">{EmployeeStatus}</h1>
           <img src={EmployerIcon} alt="" className="dashboard-status-img" />
         </div>
       </div>
@@ -105,6 +105,8 @@ const Dashboard = () => {
               <th className="employeeBoard-right-table-head-value">Order ID</th>
               <th className="employeeBoard-right-table-head-value">Status</th>
               <th className="employeeBoard-right-table-head-value">Total</th>
+              <th className="employeeBoard-right-table-head-value">Payment Mode</th>
+              <th className="employeeBoard-right-table-head-value">Payment Status</th>
               <th className="employeeBoard-right-table-head-value">Address</th>
               <th className="employeeBoard-right-table-head-value">Action</th>
             </tr>
