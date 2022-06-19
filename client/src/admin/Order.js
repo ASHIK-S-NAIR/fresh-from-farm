@@ -48,7 +48,7 @@ const Order = () => {
 
   useEffect(() => {
     loadOrders(user._id, token, status);
-  }, [orderActive, orderUpdateActive, status]);
+  }, [orderActive, orderUpdateActive, status, orderEmployeeAssignActive]);
 
   return (
     <section className="adminDashPanel-right-section order-section">

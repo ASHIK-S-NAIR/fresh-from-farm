@@ -7,15 +7,23 @@ import EmployerIcon from "../icons/employer.svg";
 import ViewIcon from "../icons/view.svg";
 import EditIcon from "../icons/Edit.svg";
 import { isAuthenticated } from "../auth";
-import { getAllDeliveries, getCountDeliveries, getCountNewDeliveries, getEmployeeStatus } from "../user";
+import {
+  getAllDeliveries,
+  getCountDeliveries,
+  getCountNewDeliveries,
+  getEmployeeStatus,
+} from "../user";
+import OrderDetails from "./OrderDetails";
 
 const Dashboard = () => {
   const [statusValues, setStatusValues] = useState({
     totalDeliveries: "",
     NewDeliveries: "",
-   EmployeeStatus: "",
+    EmployeeStatus: "",
   });
   const [newDeliveries, setNewDeliveires] = useState([]);
+  const [order, setOrder] = useState({});
+  const [orderActive, setOrderActive] = useState("");
 
   const { totalDeliveries, NewDeliveries, EmployeeStatus } = statusValues;
 
@@ -27,20 +35,24 @@ const Dashboard = () => {
       const NewDeliveries = await getCountNewDeliveries(userId, token);
       const EmployeeStatus = await getEmployeeStatus(userId, token);
 
-      console.log("totalDeliveries", totalDeliveries);
-      console.log("NewDeliveries", NewDeliveries);
-      console.log("EmployeeStatus", EmployeeStatus);
+      // console.log("totalDeliveries", totalDeliveries);
+      // console.log("NewDeliveries", NewDeliveries);
+      // console.log("EmployeeStatus", EmployeeStatus);
 
-        if (totalDeliveries.error || NewDeliveries.error || EmployeeStatus.error) {
-          return console.log("status update error occured");
-        } else {
-          return setStatusValues({
-            ...statusValues,
-            totalDeliveries: totalDeliveries,
-            NewDeliveries: NewDeliveries,
-            EmployeeStatus: EmployeeStatus,
-          });
-        }
+      if (
+        totalDeliveries.error ||
+        NewDeliveries.error ||
+        EmployeeStatus.error
+      ) {
+        return console.log("status update error occured");
+      } else {
+        return setStatusValues({
+          ...statusValues,
+          totalDeliveries: totalDeliveries,
+          NewDeliveries: NewDeliveries,
+          EmployeeStatus: EmployeeStatus,
+        });
+      }
     } catch (error) {
       return console.log(error);
     }
@@ -49,7 +61,7 @@ const Dashboard = () => {
   const loadNewDelivery = async (userId, token) => {
     try {
       const data = await getAllDeliveries(userId, token, "pending");
-      console.log("data", data);
+      // console.log("data", data);
       if (data.error) {
         return console.log(data.error);
       } else {
@@ -61,7 +73,7 @@ const Dashboard = () => {
   };
 
   const handlePreview = (order) => {
-    //
+    return setOrderActive("orderDetails"), setOrder(order);
   };
 
   const handleEdit = (order) => {
@@ -105,8 +117,12 @@ const Dashboard = () => {
               <th className="employeeBoard-right-table-head-value">Order ID</th>
               <th className="employeeBoard-right-table-head-value">Status</th>
               <th className="employeeBoard-right-table-head-value">Total</th>
-              <th className="employeeBoard-right-table-head-value">Payment Mode</th>
-              <th className="employeeBoard-right-table-head-value">Payment Status</th>
+              <th className="employeeBoard-right-table-head-value">
+                Payment Mode
+              </th>
+              <th className="employeeBoard-right-table-head-value">
+                Payment Status
+              </th>
               <th className="employeeBoard-right-table-head-value">Address</th>
               <th className="employeeBoard-right-table-head-value">Action</th>
             </tr>
@@ -114,39 +130,40 @@ const Dashboard = () => {
           <tbody className="employeeBoard-right-table-body-sec">
             {newDeliveries &&
               newDeliveries.map((order, index) => {
+                {/* console.log("Order", order); */}
                 return (
-                  order.Ostatus === "Processing" && (
+                  order.EorderId.Ostatus !== ("Delivered" || "Cancelled") && (
                     <tr
                       key={index}
                       className="employeeBoard-right-table-body-tr "
                     >
                       <td className="employeeBoard-right-table-body-value">
-                        {order._id}
+                        {order.EorderId._id}
                       </td>
                       <td className="employeeBoard-right-table-body-value">
                         <div
-                          className={`employeeBoard-right-table-body-div ${order.Ostatus}`}
+                          className={`employeeBoard-right-table-body-div ${order.EorderId.Ostatus}`}
                         >
-                          {order.Ostatus}
+                          {order.EorderId.Ostatus}
                         </div>
                       </td>
                       <td className="employeeBoard-right-table-body-value">
-                        {order.OtotalPrice}
+                        {order.EorderId.OtotalPrice}
                       </td>
                       <td className="employeeBoard-right-table-body-value">
-                        {order.OpaymentMode}
+                        {order.EorderId.OpaymentMode}
                       </td>
                       <td className="employeeBoard-right-table-body-value">
                         <div
-                          className={`employeeBoard-right-table-body-div ${order.OpaymentStatus}`}
+                          className={`employeeBoard-right-table-body-div ${order.EorderId.OpaymentStatus}`}
                         >
-                          {order.OpaymentStatus}
+                          {order.EorderId.OpaymentStatus}
                         </div>
                       </td>
                       <td className="employeeBoard-right-table-body-value">
-                        {order.Oaddress.houseName}
+                        {order.EorderAddress.houseName}
                         <br />
-                        {order.Oaddress.streetName}
+                        {order.EorderAddress.streetName}
                       </td>
                       <td className="employeeBoard-right-table-body-value">
                         <button onClick={() => handlePreview(order)}>
@@ -171,6 +188,9 @@ const Dashboard = () => {
           </tbody>
         </table>
       </div>
+      {orderActive === "orderDetails" && (
+        <OrderDetails setOrderActive={setOrderActive} order={order} />
+      )}
     </section>
   );
 };

@@ -32,7 +32,6 @@ exports.getEmployeeById = async (req, res, next, id) => {
       path: "Euser",
       select: "name email phoneNumber role address _id",
     });
-    console.log("EmployeeId", employee._id);
     req.employee = employee;
     next();
   } catch (error) {
@@ -75,7 +74,6 @@ exports.getAllEmployees = async (req, res) => {
       return res.json(employees);
     }
   } catch (error) {
-    console.log(error.message);
     return res.status(400).json({
       message: "NO employees found in DB",
     });
@@ -96,7 +94,6 @@ exports.updateEmployeeStatus = async (req, res) => {
       message: "Status updated successfully",
     });
   } catch (error) {
-    console.log(error.message);
     return res.status(400).json({
       message: "Failed to update employee status in DB",
     });
@@ -133,10 +130,12 @@ exports.getAllDeliveries = async (req, res) => {
   try {
     const deliveries = await Employee.findOne({
       Euser: req.employeeUser._id,
-    }).select("Eorders");
+    })
+      .select("Eorders")
+      .populate(["Eorders.EorderId", "Eorders.EorderId.Ouser"]);
+    // .populate("Eorders.EorderId")
     return res.json(deliveries);
   } catch (error) {
-    console.log("error Message", error.message);
     return res.status(400).json("Failed to find Employee Deliveries");
   }
 };
@@ -149,7 +148,6 @@ exports.getCountDeliveries = async (req, res) => {
     }).select("Eorders");
     return res.json(deliveries.Eorders.length);
   } catch (error) {
-    console.log("error Message", error.message);
     return res.status(400).json("Failed to find Employee Deliveries");
   }
 };
@@ -163,12 +161,10 @@ exports.getCountNewDeliveries = async (req, res) => {
       .populate("Eorders.EorderId")
       .select("Eorders");
     const countNewDeliveries = deliveries.Eorders.filter((order) => {
-      return order.Ostatus === "Processing";
+      return order.Ostatus !== "Processing";
     });
-    console.log(countNewDeliveries.length);
     return res.json(countNewDeliveries.length);
   } catch (error) {
-    console.log("error Message", error.message);
     return res.status(400).json("Failed to find Employee Deliveries");
   }
 };
@@ -179,16 +175,14 @@ exports.getEmployeeStatus = async (req, res) => {
     const status = await Employee.findOne({
       Euser: req.employeeUser._id,
     }).select("Estatus");
-    console.log(status);
+
     return res.json(status.Estatus);
   } catch (error) {
-    console.log("error Message", error.message);
     return res.status(400).json("Failed to find Employee Deliveries");
   }
 };
 
 exports.addEmplyeeOrder = async (req, res) => {
-  console.log("Happy employee controller")
   try {
     const order = await Order.findById(req.order._id).populate("Ouser");
     const employee = await Employee.findById(req.employee._id);
@@ -206,9 +200,8 @@ exports.addEmplyeeOrder = async (req, res) => {
       { new: true, useFindAndModify: false }
     );
 
-    return res.json("Employee order updated successfully")
+    return res.json("Employee order updated successfully");
   } catch (error) {
-    console.log("ErrorMessageEmployee", error.message)
     return res.status(400).json("Failed to add employee Order");
   }
 };

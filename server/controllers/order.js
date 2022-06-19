@@ -264,7 +264,9 @@ exports.countOrders = async (req, res) => {
 
 exports.updateOrderEmployee = async (req, res, next) => {
   try {
-    const employee = await Employee.findById(req.employee._id).populate("Euser");
+    const employee = await Employee.findById(req.employee._id).populate(
+      "Euser"
+    );
     await Order.findByIdAndUpdate(
       { _id: req.order._id },
       {
@@ -272,6 +274,7 @@ exports.updateOrderEmployee = async (req, res, next) => {
           OemployeeId: employee._id,
           OemployeeName: employee.Euser.name,
           OemployeePhoneNumber: employee.Euser.phoneNumber,
+          Ostatus: "Processing",
         },
       },
       { new: true, useFindAndModify: false }
@@ -279,7 +282,7 @@ exports.updateOrderEmployee = async (req, res, next) => {
 
     next();
   } catch (error) {
-    console.log("ErrorMessageOrder", error.message)
+    console.log("ErrorMessageOrder", error.message);
     return res.status(400).json({
       message: "Failed to update order employee",
     });

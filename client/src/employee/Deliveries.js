@@ -58,38 +58,37 @@ const Deliveries = () => {
             {deliveries &&
               deliveries.map((order, index) => {
                 return (
-                  order.Ostatus === "Processing" && (
-                    <tr
+                  <tr
                       key={index}
                       className="employeeBoard-right-table-body-tr "
                     >
                       <td className="employeeBoard-right-table-body-value">
-                        {order._id}
+                        {order.EorderId._id}
                       </td>
                       <td className="employeeBoard-right-table-body-value">
                         <div
-                          className={`employeeBoard-right-table-body-div ${order.Ostatus}`}
+                          className={`employeeBoard-right-table-body-div ${order.EorderId.Ostatus}`}
                         >
-                          {order.Ostatus}
+                          {order.EorderId.Ostatus}
                         </div>
                       </td>
                       <td className="employeeBoard-right-table-body-value">
-                        {order.OtotalPrice}
+                        {order.EorderId.OtotalPrice}
                       </td>
                       <td className="employeeBoard-right-table-body-value">
-                        {order.OpaymentMode}
+                        {order.EorderId.OpaymentMode}
                       </td>
                       <td className="employeeBoard-right-table-body-value">
                         <div
-                          className={`employeeBoard-right-table-body-div ${order.OpaymentStatus}`}
+                          className={`employeeBoard-right-table-body-div ${order.EorderId.OpaymentStatus}`}
                         >
-                          {order.OpaymentStatus}
+                          {order.EorderId.OpaymentStatus}
                         </div>
                       </td>
                       <td className="employeeBoard-right-table-body-value">
-                        {order.Oaddress.houseName}
+                        {order.EorderAddress.houseName}
                         <br />
-                        {order.Oaddress.streetName}
+                        {order.EorderAddress.streetName}
                       </td>
                       <td className="employeeBoard-right-table-body-value">
                         <button onClick={() => handlePreview(order)}>
@@ -108,7 +107,6 @@ const Deliveries = () => {
                         </button>
                       </td>
                     </tr>
-                  )
                 );
               })}
           </tbody>
