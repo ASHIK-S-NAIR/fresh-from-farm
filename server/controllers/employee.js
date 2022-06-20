@@ -132,8 +132,18 @@ exports.getAllDeliveries = async (req, res) => {
       Euser: req.employeeUser._id,
     })
       .select("Eorders")
-      .populate(["Eorders.EorderId", "Eorders.EorderId.Ouser"]);
+      // .populate(["Eorders.EorderId", "Eorders.EorderId.Ouser"]);
     // .populate("Eorders.EorderId")
+    .populate({
+      path: "Eorders.EorderId",
+      model: "Order",
+      match: { isDeleted: false },
+      populate: {
+        path: "Ouser",
+        model: "User",
+        select: "name phoneNumber email"
+      }
+    })
     return res.json(deliveries);
   } catch (error) {
     return res.status(400).json("Failed to find Employee Deliveries");

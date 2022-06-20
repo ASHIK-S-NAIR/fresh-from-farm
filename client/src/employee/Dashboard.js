@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import CartIcon from "../icons/cart.svg";
 import ProductIcon from "../icons/product.svg";
 import EmployerIcon from "../icons/employer.svg";
-// import CustomerIcon from "../icons/customer.svg";
 import ViewIcon from "../icons/view.svg";
 import EditIcon from "../icons/Edit.svg";
 import { isAuthenticated } from "../auth";
@@ -14,6 +13,7 @@ import {
   getEmployeeStatus,
 } from "../user";
 import OrderDetails from "./OrderDetails";
+import OrderUpdate from "./OrderUpdate";
 
 const Dashboard = () => {
   const [statusValues, setStatusValues] = useState({
@@ -24,6 +24,7 @@ const Dashboard = () => {
   const [newDeliveries, setNewDeliveires] = useState([]);
   const [order, setOrder] = useState({});
   const [orderActive, setOrderActive] = useState("");
+  const [orderUpdateActive, setOrderUpdateActive] = useState("");
 
   const { totalDeliveries, NewDeliveries, EmployeeStatus } = statusValues;
 
@@ -77,8 +78,12 @@ const Dashboard = () => {
   };
 
   const handleEdit = (order) => {
-    //
+    return setOrderUpdateActive("orderUpdateActive"), setOrder(order);
   };
+
+  const handlePaymentStatus = (order) => {
+    // 
+  }
 
   useEffect(() => {
     loadNewDelivery(user._id, token);
@@ -130,7 +135,7 @@ const Dashboard = () => {
           <tbody className="employeeBoard-right-table-body-sec">
             {newDeliveries &&
               newDeliveries.map((order, index) => {
-                {/* console.log("Order", order); */}
+                console.log("Order", order);
                 return (
                   order.EorderId.Ostatus !== ("Delivered" || "Cancelled") && (
                     <tr
@@ -153,12 +158,22 @@ const Dashboard = () => {
                       <td className="employeeBoard-right-table-body-value">
                         {order.EorderId.OpaymentMode}
                       </td>
-                      <td className="employeeBoard-right-table-body-value">
+                      {/* <td className="employeeBoard-right-table-body-value">
                         <div
                           className={`employeeBoard-right-table-body-div ${order.EorderId.OpaymentStatus}`}
                         >
                           {order.EorderId.OpaymentStatus}
                         </div>
+                      </td> */}
+                      <td className="employeeBoard-right-table-body-value">
+                        {order.EorderId.OpaymentStatus === "Paid" ? order.EorderId.OpaymentStatus : (
+                          <button
+                          className="adminDashPanel-right-table-body-value-btn"
+                          onClick={() => handlePaymentStatus(order)}
+                        >
+                          Pending
+                        </button>
+                        )}
                       </td>
                       <td className="employeeBoard-right-table-body-value">
                         {order.EorderAddress.houseName}
@@ -190,6 +205,12 @@ const Dashboard = () => {
       </div>
       {orderActive === "orderDetails" && (
         <OrderDetails setOrderActive={setOrderActive} order={order} />
+      )}
+      {orderUpdateActive === "orderUpdateActive" && (
+        <OrderUpdate
+          setOrderUpdateActive={setOrderUpdateActive}
+          order={order}
+        />
       )}
     </section>
   );
