@@ -49,7 +49,6 @@ const OrderDetails = ({ setOrderActive, order }) => {
                 </tr>
               </thead>
               <tbody className="popup-table-body-sec">
-                {console.log("order.EorderId.Ouser",  order.EorderId.Ouser)}
                 {order.EorderId.Oproducts.map((product, index) => {
                   return (
                     <tr key={index}>

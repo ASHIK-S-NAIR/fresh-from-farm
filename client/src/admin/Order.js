@@ -7,6 +7,7 @@ import EditIcon from "../icons/Edit.svg";
 import OrderDetails from "../user/OrderDetails";
 import OrderUpdate from "./OrderUpdate";
 import EmployeeUpdate from "./EmployeeUpdate";
+import PaymentStatusUpdate from "./PaymentStatusUpdate";
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
@@ -16,6 +17,7 @@ const Order = () => {
   const [status, setStatus] = useState("all");
   const [orderEmployeeAssignActive, setOrderEmployeeAssignActive] =
     useState("");
+    const [orderUpdatePayment, setOrderUpdatePayment] = useState("");
 
   const { user, token } = isAuthenticated();
 
@@ -45,6 +47,11 @@ const Order = () => {
       setOrderEmployeeAssignActive("orderEmployeeAssignActive"), setOrder(order)
     );
   };
+
+  const handlePaymentStatus = (order) => {
+    return setOrderUpdatePayment("orderUpdatePayment"), setOrder(order);
+  };
+
 
   useEffect(() => {
     loadOrders(user._id, token, status);
@@ -169,11 +176,16 @@ const Order = () => {
                       {order.OpaymentMode}
                     </td>
                     <td className="adminDashPanel-right-table-body-value">
-                      <div
-                        className={`adminDashPanel-right-table-body-div ${order.OpaymentStatus}`}
-                      >
-                        {order.OpaymentStatus}
-                      </div>
+                      {order.OpaymentStatus === "Paid" ? (
+                        order.OpaymentStatus
+                      ) : (
+                        <button
+                          className="adminDashPanel-right-table-body-value-btn"
+                          onClick={() => handlePaymentStatus(order)}
+                        >
+                          Pending
+                        </button>
+                      )}
                     </td>
                     <td className="adminDashPanel-right-table-body-value">
                       {order.OemployeeName ? (
@@ -221,6 +233,12 @@ const Order = () => {
       {orderEmployeeAssignActive === "orderEmployeeAssignActive" && (
         <EmployeeUpdate
           setOrderEmployeeAssignActive={setOrderEmployeeAssignActive}
+          order={order}
+        />
+      )}
+      {orderUpdatePayment === "orderUpdatePayment" && (
+        <PaymentStatusUpdate
+          setOrderUpdatePayment={setOrderUpdatePayment}
           order={order}
         />
       )}

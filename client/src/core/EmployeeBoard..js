@@ -6,7 +6,6 @@ import Deliveries from "../employee/Deliveries";
 import { getUser } from "../user";
 import Profile from "../icons/profile.svg";
 import Accounts from "./Accounts";
-// import Orders from "./Orders";
 import Settings from "./Settings";
 
 const EmployeeBoard = () => {

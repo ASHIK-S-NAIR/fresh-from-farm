@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from "react";
-import moment from "moment";
 import { isAuthenticated } from "../auth";
 import { getAllDeliveries } from "../user";
 import ViewIcon from "../icons/view.svg";
 import EditIcon from "../icons/Edit.svg";
+import OrderDetails from "./OrderDetails";
+import OrderUpdate from "./OrderUpdate";
 
 const Deliveries = () => {
   const [deliveries, setDeliveires] = useState([]);
+  const [order, setOrder] = useState({});
+  const [orderActive, setOrderActive] = useState("");
+  const [orderUpdateActive, setOrderUpdateActive] = useState("");
 
   const { user, token } = isAuthenticated();
 
   const loadDelivery = async (userId, token) => {
     try {
       const data = await getAllDeliveries(userId, token, "pending");
-      console.log("data", data);
+
       if (data.error) {
         return console.log(data.error);
       } else {
@@ -25,11 +29,11 @@ const Deliveries = () => {
   };
 
   const handlePreview = (order) => {
-    //
+    return setOrderActive("orderDetails"), setOrder(order);
   };
 
   const handleEdit = (order) => {
-    //
+    return setOrderUpdateActive("orderUpdateActive"), setOrder(order);
   };
 
   useEffect(() => {
@@ -38,7 +42,6 @@ const Deliveries = () => {
 
   return (
     <section className="employeeBoard-section">
-
       <h1 className="employeeBoard-right-header">Deliveries</h1>
 
       <div className="employeeBoard-right-subsection">
@@ -48,8 +51,12 @@ const Deliveries = () => {
               <th className="employeeBoard-right-table-head-value">Order ID</th>
               <th className="employeeBoard-right-table-head-value">Status</th>
               <th className="employeeBoard-right-table-head-value">Total</th>
-              <th className="employeeBoard-right-table-head-value">Payment Mode</th>
-              <th className="employeeBoard-right-table-head-value">Payment Status</th>
+              <th className="employeeBoard-right-table-head-value">
+                Payment Mode
+              </th>
+              <th className="employeeBoard-right-table-head-value">
+                Payment Status
+              </th>
               <th className="employeeBoard-right-table-head-value">Address</th>
               <th className="employeeBoard-right-table-head-value">Action</th>
             </tr>
@@ -59,61 +66,71 @@ const Deliveries = () => {
               deliveries.map((order, index) => {
                 return (
                   <tr
-                      key={index}
-                      className="employeeBoard-right-table-body-tr "
-                    >
-                      <td className="employeeBoard-right-table-body-value">
-                        {order.EorderId._id}
-                      </td>
-                      <td className="employeeBoard-right-table-body-value">
-                        <div
-                          className={`employeeBoard-right-table-body-div ${order.EorderId.Ostatus}`}
-                        >
-                          {order.EorderId.Ostatus}
-                        </div>
-                      </td>
-                      <td className="employeeBoard-right-table-body-value">
-                        {order.EorderId.OtotalPrice}
-                      </td>
-                      <td className="employeeBoard-right-table-body-value">
-                        {order.EorderId.OpaymentMode}
-                      </td>
-                      <td className="employeeBoard-right-table-body-value">
-                        <div
-                          className={`employeeBoard-right-table-body-div ${order.EorderId.OpaymentStatus}`}
-                        >
-                          {order.EorderId.OpaymentStatus}
-                        </div>
-                      </td>
-                      <td className="employeeBoard-right-table-body-value">
-                        {order.EorderAddress.houseName}
-                        <br />
-                        {order.EorderAddress.streetName}
-                      </td>
-                      <td className="employeeBoard-right-table-body-value">
-                        <button onClick={() => handlePreview(order)}>
-                          <img
-                            src={ViewIcon}
-                            alt=""
-                            className="employeeBoard-right-table-icon vie"
-                          />
-                        </button>
-                        <button onClick={() => handleEdit(order)}>
-                          <img
-                            src={EditIcon}
-                            alt=""
-                            className="employeeBoard-right-table-icon vie"
-                          />
-                        </button>
-                      </td>
-                    </tr>
+                    key={index}
+                    className="employeeBoard-right-table-body-tr "
+                  >
+                    <td className="employeeBoard-right-table-body-value">
+                      {order.EorderId._id}
+                    </td>
+                    <td className="employeeBoard-right-table-body-value">
+                      <div
+                        className={`employeeBoard-right-table-body-div ${order.EorderId.Ostatus}`}
+                      >
+                        {order.EorderId.Ostatus}
+                      </div>
+                    </td>
+                    <td className="employeeBoard-right-table-body-value">
+                      {order.EorderId.OtotalPrice}
+                    </td>
+                    <td className="employeeBoard-right-table-body-value">
+                      {order.EorderId.OpaymentMode}
+                    </td>
+                    <td className="employeeBoard-right-table-body-value">
+                      <div
+                        className={`employeeBoard-right-table-body-div ${order.EorderId.OpaymentStatus}`}
+                      >
+                        {order.EorderId.OpaymentStatus}
+                      </div>
+                    </td>
+                    <td className="employeeBoard-right-table-body-value">
+                      {order.EorderAddress.houseName}
+                      <br />
+                      {order.EorderAddress.streetName}
+                    </td>
+                    <td className="employeeBoard-right-table-body-value">
+                      <button onClick={() => handlePreview(order)}>
+                        <img
+                          src={ViewIcon}
+                          alt=""
+                          className="employeeBoard-right-table-icon vie"
+                        />
+                      </button>
+                      <button onClick={() => handleEdit(order.EorderId)}>
+                        <img
+                          src={EditIcon}
+                          alt=""
+                          className="employeeBoard-right-table-icon vie"
+                        />
+                      </button>
+                    </td>
+                  </tr>
                 );
               })}
           </tbody>
         </table>
       </div>
+
+      {orderActive === "orderDetails" && (
+        <OrderDetails setOrderActive={setOrderActive} order={order} />
+      )}
+      {orderUpdateActive === "orderUpdateActive" && (
+        <OrderUpdate
+          setOrderUpdateActive={setOrderUpdateActive}
+          order={order}
+        />
+      )}
     </section>
   );
-}
+};
 
-export default Deliveries
+export default Deliveries;

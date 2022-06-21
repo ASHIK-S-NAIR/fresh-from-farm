@@ -14,6 +14,7 @@ import {
 } from "../user";
 import OrderDetails from "./OrderDetails";
 import OrderUpdate from "./OrderUpdate";
+import PaymentStatusUpdate from "./PaymentStatusUpdate";
 
 const Dashboard = () => {
   const [statusValues, setStatusValues] = useState({
@@ -25,6 +26,7 @@ const Dashboard = () => {
   const [order, setOrder] = useState({});
   const [orderActive, setOrderActive] = useState("");
   const [orderUpdateActive, setOrderUpdateActive] = useState("");
+  const [orderUpdatePayment, setOrderUpdatePayment] = useState("");
 
   const { totalDeliveries, NewDeliveries, EmployeeStatus } = statusValues;
 
@@ -35,10 +37,6 @@ const Dashboard = () => {
       const totalDeliveries = await getCountDeliveries(userId, token);
       const NewDeliveries = await getCountNewDeliveries(userId, token);
       const EmployeeStatus = await getEmployeeStatus(userId, token);
-
-      // console.log("totalDeliveries", totalDeliveries);
-      // console.log("NewDeliveries", NewDeliveries);
-      // console.log("EmployeeStatus", EmployeeStatus);
 
       if (
         totalDeliveries.error ||
@@ -82,16 +80,16 @@ const Dashboard = () => {
   };
 
   const handlePaymentStatus = (order) => {
-    // 
-  }
+    return setOrderUpdatePayment("orderUpdatePayment"), setOrder(order);
+  };
 
   useEffect(() => {
     loadNewDelivery(user._id, token);
-  }, []);
+  }, [orderUpdateActive, orderUpdatePayment]);
 
   useEffect(() => {
     loadStatusValues(user._id, token);
-  }, []);
+  }, [orderUpdateActive, orderUpdatePayment]);
 
   return (
     <section className="employeeBoard-section">
@@ -135,7 +133,6 @@ const Dashboard = () => {
           <tbody className="employeeBoard-right-table-body-sec">
             {newDeliveries &&
               newDeliveries.map((order, index) => {
-                console.log("Order", order);
                 return (
                   order.EorderId.Ostatus !== ("Delivered" || "Cancelled") && (
                     <tr
@@ -158,21 +155,16 @@ const Dashboard = () => {
                       <td className="employeeBoard-right-table-body-value">
                         {order.EorderId.OpaymentMode}
                       </td>
-                      {/* <td className="employeeBoard-right-table-body-value">
-                        <div
-                          className={`employeeBoard-right-table-body-div ${order.EorderId.OpaymentStatus}`}
-                        >
-                          {order.EorderId.OpaymentStatus}
-                        </div>
-                      </td> */}
                       <td className="employeeBoard-right-table-body-value">
-                        {order.EorderId.OpaymentStatus === "Paid" ? order.EorderId.OpaymentStatus : (
+                        {order.EorderId.OpaymentStatus === "Paid" ? (
+                          order.EorderId.OpaymentStatus
+                        ) : (
                           <button
-                          className="adminDashPanel-right-table-body-value-btn"
-                          onClick={() => handlePaymentStatus(order)}
-                        >
-                          Pending
-                        </button>
+                            className="adminDashPanel-right-table-body-value-btn"
+                            onClick={() => handlePaymentStatus(order.EorderId)}
+                          >
+                            Pending
+                          </button>
                         )}
                       </td>
                       <td className="employeeBoard-right-table-body-value">
@@ -188,7 +180,7 @@ const Dashboard = () => {
                             className="employeeBoard-right-table-icon vie"
                           />
                         </button>
-                        <button onClick={() => handleEdit(order)}>
+                        <button onClick={() => handleEdit(order.EorderId)}>
                           <img
                             src={EditIcon}
                             alt=""
@@ -209,6 +201,12 @@ const Dashboard = () => {
       {orderUpdateActive === "orderUpdateActive" && (
         <OrderUpdate
           setOrderUpdateActive={setOrderUpdateActive}
+          order={order}
+        />
+      )}
+      {orderUpdatePayment === "orderUpdatePayment" && (
+        <PaymentStatusUpdate
+          setOrderUpdatePayment={setOrderUpdatePayment}
           order={order}
         />
       )}

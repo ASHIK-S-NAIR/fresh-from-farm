@@ -40,6 +40,10 @@ const Nav = () => {
     }
   };
 
+  const loadEmployeeStatusButton = () => {
+    // 
+  }
+
   useEffect(() => {
     getCartCount(user, token);
   }, []);
@@ -144,6 +148,63 @@ const Nav = () => {
             </ul>
           )}
 
+          {isAuthenticated() && isAuthenticated().user.role === 1 && (
+            <ul className="nav-ul">
+              <li
+                className="nav-li nav-border"
+                onMouseOver={showDropDown}
+                onMouseLeave={hideDropDown}
+              >
+                <button className="nav-btn">
+                  {isAuthenticated().user.name.length > 6
+                    ? isAuthenticated().user.name.substring(0, 6)
+                    : isAuthenticated().user.name}
+                </button>
+                {active && (
+                  <ul className="nav-drop-ul" onMouseOver={showDropDown}>
+                    <li className="nav-drop-li">
+                      <Link to={`/employeeboard/dashboard/${user._id}`}>
+                        {" "}
+                        Dashboard
+                      </Link>
+                    </li>
+                    <li className="nav-drop-li">
+                      <Link to={`/employeeboard/deliveries/${user._id}`}>
+                        {" "}
+                        Deliveries
+                      </Link>
+                    </li>
+                    <li className="nav-drop-li">
+                      <Link to={`/employeeboard/accounts/${user._id}`}>
+                        {" "}
+                        Account
+                      </Link>
+                    </li>
+                    <li className="nav-drop-li">
+                      <Link to={`/employeeboard/settings/${user._id}`}>
+                        {" "}
+                        Settings
+                      </Link>
+                    </li>
+                    <li className="nav-drop-li">
+                      <button className="nav-drop-btn">Make Available</button>
+                    </li>
+                    <li className="nav-drop-li">
+                      <button
+                        className="nav-drop-btn"
+                        onClick={() => {
+                          logout(() => navigate("/"));
+                        }}
+                      >
+                        Log Out
+                      </button>
+                    </li>
+                  </ul>
+                )}
+              </li>
+            </ul>
+          )}
+
           {isAuthenticated() && isAuthenticated().user.role === 2 && (
             <ul className="nav-ul">
               <li
@@ -174,53 +235,6 @@ const Nav = () => {
                         {" "}
                         Settings
                       </Link>
-                    </li>
-                    <li className="nav-drop-li">
-                      <button
-                        className="nav-drop-btn"
-                        onClick={() => {
-                          logout(() => navigate("/"));
-                        }}
-                      >
-                        Log Out
-                      </button>
-                    </li>
-                  </ul>
-                )}
-              </li>
-            </ul>
-          )}
-
-          {isAuthenticated() && isAuthenticated().user.role === 1 && (
-            <ul className="nav-ul">
-              <li
-                className="nav-li nav-border"
-                onMouseOver={showDropDown}
-                onMouseLeave={hideDropDown}
-              >
-                <button className="nav-btn">
-                  {isAuthenticated().user.name.length > 6
-                    ? isAuthenticated().user.name.substring(0, 6)
-                    : isAuthenticated().user.name}
-                </button>
-                {active && (
-                  <ul className="nav-drop-ul" onMouseOver={showDropDown}>
-                    <li className="nav-drop-li">Dashboard</li>
-                    <li className="nav-drop-li">Deliveries</li>
-                    <li className="nav-drop-li">
-                      <Link to={`/employeeboard/accounts/${user._id}`}>
-                        {" "}
-                        Account
-                      </Link>
-                    </li>
-                    <li className="nav-drop-li">
-                      <Link to={`/employeeboard/settings/${user._id}`}>
-                        {" "}
-                        Settings
-                      </Link>
-                    </li>
-                    <li className="nav-drop-li">
-                      <button className="nav-drop-btn">Make Available</button>
                     </li>
                     <li className="nav-drop-li">
                       <button
@@ -338,6 +352,67 @@ const Nav = () => {
               </li>
             </ul>
           )}
+
+          {isAuthenticated() && isAuthenticated().user.role === 1 && (
+            <ul className="nav-ul">
+              <li className="nav-li">
+                <div
+                  className={`nav-handburger-section ${
+                    toggled ? "active" : ""
+                  } `}
+                  onClick={toggle}
+                >
+                  <div className="nav-handburger-sec-one"></div>
+                  <div className="nav-handburger-sec-two"></div>
+                  <div className="nav-handburger-sec-three"></div>
+                </div>
+                <ul className={`nav-drop-ul ${toggled ? "active" : ""}`}>
+                  <li className="nav-drop-li">Shop</li>
+                  <li className="nav-drop-li">Contact Us</li>
+                  <li className="nav-drop-li">
+                    <Link to={`/employeeboard/dashboard/${user._id}`}>
+                      {" "}
+                      Dashboard
+                    </Link>
+                  </li>
+                  <li className="nav-drop-li">
+                    {" "}
+                    <Link to={`/employeeboard/deliveries/${user._id}`}>
+                      {" "}
+                      Deliveries
+                    </Link>
+                  </li>
+                  <li className="nav-drop-li">
+                    <Link to={`/employeeboard/accounts/${user._id}`}>
+                      {" "}
+                      Account
+                    </Link>
+                  </li>
+                  <li className="nav-drop-li">
+                    <Link to={`/employeeboard/settings/${user._id}`}>
+                      {" "}
+                      Settings
+                    </Link>
+                  </li>
+                  <li className="nav-drop-li">
+                    {/* <button className="nav-drop-btn">Make Available</button> */}
+                    {loadEmployeeStatusButton()}
+                  </li>
+                  <li className="nav-drop-li">
+                    <button
+                      className="nav-drop-btn"
+                      onClick={() => {
+                        logout(() => navigate("/"));
+                      }}
+                    >
+                      Log Out
+                    </button>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          )}
+
           {isAuthenticated() && isAuthenticated().user.role === 2 && (
             <ul className="nav-ul">
               <li className="nav-li">
@@ -376,53 +451,6 @@ const Nav = () => {
                       className="nav-drop-btn"
                       onClick={() => {
                         toggle();
-                        logout(() => navigate("/"));
-                      }}
-                    >
-                      Log Out
-                    </button>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          )}
-          {isAuthenticated() && isAuthenticated().user.role === 1 && (
-            <ul className="nav-ul">
-              <li className="nav-li">
-                <div
-                  className={`nav-handburger-section ${
-                    toggled ? "active" : ""
-                  } `}
-                  onClick={toggle}
-                >
-                  <div className="nav-handburger-sec-one"></div>
-                  <div className="nav-handburger-sec-two"></div>
-                  <div className="nav-handburger-sec-three"></div>
-                </div>
-                <ul className={`nav-drop-ul ${toggled ? "active" : ""}`}>
-                  <li className="nav-drop-li">Shop</li>
-                  <li className="nav-drop-li">Contact Us</li>
-                  <li className="nav-drop-li">Dashboard</li>
-                  <li className="nav-drop-li">Deliveries</li>
-                  <li className="nav-drop-li">
-                    <Link to={`/employeeboard/accounts/${user._id}`}>
-                      {" "}
-                      Account
-                    </Link>
-                  </li>
-                  <li className="nav-drop-li">
-                    <Link to={`/employeeboard/settings/${user._id}`}>
-                      {" "}
-                      Settings
-                    </Link>
-                  </li>
-                  <li className="nav-drop-li">
-                    <button className="nav-drop-btn">Make Available</button>
-                  </li>
-                  <li className="nav-drop-li">
-                    <button
-                      className="nav-drop-btn"
-                      onClick={() => {
                         logout(() => navigate("/"));
                       }}
                     >

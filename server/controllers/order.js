@@ -230,6 +230,27 @@ exports.updateOrderStatus = async (req, res) => {
   }
 };
 
+// updatePaymentStatus
+exports.updatePaymentStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+    console.log("Status", status)
+    await Order.findByIdAndUpdate(
+      { _id: req.order._id },
+      { $set: { OpaymentStatus: status } },
+      { new: true, useFindAndModify: false }
+    );
+
+    return res.json({
+      message: "Order updated successfully",
+    });
+  } catch (error) {
+    return res.json({
+      message: "Updating payment Status failed",
+    });
+  }
+};
+
 // updateOrder
 exports.updateOrder = async (req, res) => {
   try {

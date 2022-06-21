@@ -47,6 +47,12 @@ button {
   cursor: pointer;
 }
 
+.button-unclickable{
+  pointer-events: none;
+  /* color: green; */
+  background-color: #777676 !important;
+}
+
 ul {
   list-style-type: none;
 }

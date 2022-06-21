@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { isAuthenticated } from "../auth";
 import Cross from "../icons/cross-black.svg";
-import { updateOrderStatus } from "../user";
+import { employeeUpdatePaymentStatus } from "../user";
 
-const PaymentStatusUpdate = ({ setOrderUpdateActive, order }) => {
-  const [status, setStatus] = useState(order.Ostatus);
+const PaymentStatusUpdate = ({ setOrderUpdatePayment, order }) => {
+  const [status, setStatus] = useState(order.OpaymentStatus);
   
   const {user, token} = isAuthenticated();
 
 const handleUpdate = (userId, token, orderId, status) => {
   try {
-    const data = updateOrderStatus(userId, token, orderId, status);
+    const data = employeeUpdatePaymentStatus(userId, token, orderId, status);
     if(data.error){
       return console.log(data.error)
     }else{
-      return setOrderUpdateActive("");
+      return setOrderUpdatePayment("");
     }
   } catch (error) {
     return console.log(error)
@@ -27,11 +27,11 @@ const handleUpdate = (userId, token, orderId, status) => {
           <div className="popup-group">
             <div className="popup-head-sec">
               <h1 className="popup-header orderUpdate-popup-header">
-                Update Order Status
+                Update Payment Status
               </h1>
               <div
                 className="cross-sec"
-                onClick={() => setOrderUpdateActive(null)}
+                onClick={() => setOrderUpdatePayment(null)}
               >
                 <img src={Cross} alt="" className="cross-img" />
               </div>
@@ -53,17 +53,15 @@ const handleUpdate = (userId, token, orderId, status) => {
                     onChange={(e) => setStatus(e.target.value)}
                     className= "popup-form-value"
                   >
-                    <option value="Ordered">Ordered</option>
-                    <option value="Not-Confirmed">Not-Confirmed</option>
-                    <option value="Processing">Processing</option>
-                    <option value="Picking-Up">Picking-Up</option>
-                    <option value="Out-For-Delivery">Out-For-Delivery</option>
-                    <option value="Delivered">Delivered</option>
-                    <option value="Cancelled">Cancelled</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Paid">Paid</option>
+                    
                   </select>
                 </div>
               </div>
-              <button className="popup-form-btn" onClick={() =>  handleUpdate(user._id, token, order._id, status)}>
+              <button className={`popup-form-btn ${
+                  status === order.OpaymentStatus ? "button-unclickable" : ""
+                }`} onClick={() =>  handleUpdate(user._id, token, order._id, status)}>
                 Update
               </button>
             </div>

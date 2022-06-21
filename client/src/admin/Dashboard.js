@@ -17,6 +17,7 @@ import {
 import OrderDetails from "../user/OrderDetails";
 import OrderUpdate from "./OrderUpdate";
 import EmployeeUpdate from "./EmployeeUpdate";
+import PaymentStatusUpdate from "./PaymentStatusUpdate";
 
 const Dashboard = () => {
   const [statusValues, setStatusValues] = useState({
@@ -31,6 +32,7 @@ const Dashboard = () => {
   const [orderUpdateActive, setOrderUpdateActive] = useState("");
   const [orderEmployeeAssignActive, setOrderEmployeeAssignActive] =
     useState("");
+  const [orderUpdatePayment, setOrderUpdatePayment] = useState("");
 
   const { user, token } = isAuthenticated();
 
@@ -90,6 +92,10 @@ const Dashboard = () => {
     return (
       setOrderEmployeeAssignActive("orderEmployeeAssignActive"), setOrder(order)
     );
+  };
+
+  const handlePaymentStatus = (order) => {
+    return setOrderUpdatePayment("orderUpdatePayment"), setOrder(order);
   };
 
   useEffect(() => {
@@ -177,11 +183,16 @@ const Dashboard = () => {
                       {order.OpaymentMode}
                     </td>
                     <td className="adminDashPanel-right-table-body-value">
-                      <div
-                        className={`adminDashPanel-right-table-body-div ${order.OpaymentStatus}`}
-                      >
-                        {order.OpaymentStatus}
-                      </div>
+                      {order.OpaymentStatus === "Paid" ? (
+                        order.OpaymentStatus
+                      ) : (
+                        <button
+                          className="adminDashPanel-right-table-body-value-btn"
+                          onClick={() => handlePaymentStatus(order)}
+                        >
+                          Pending
+                        </button>
+                      )}
                     </td>
                     <td className="adminDashPanel-right-table-body-value">
                       {order.OemployeeName ? (
@@ -229,6 +240,12 @@ const Dashboard = () => {
       {orderEmployeeAssignActive === "orderEmployeeAssignActive" && (
         <EmployeeUpdate
           setOrderEmployeeAssignActive={setOrderEmployeeAssignActive}
+          order={order}
+        />
+      )}
+      {orderUpdatePayment === "orderUpdatePayment" && (
+        <PaymentStatusUpdate
+          setOrderUpdatePayment={setOrderUpdatePayment}
           order={order}
         />
       )}
