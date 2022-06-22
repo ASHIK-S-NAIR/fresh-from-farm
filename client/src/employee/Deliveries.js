@@ -5,12 +5,14 @@ import ViewIcon from "../icons/view.svg";
 import EditIcon from "../icons/Edit.svg";
 import OrderDetails from "./OrderDetails";
 import OrderUpdate from "./OrderUpdate";
+import PaymentStatusUpdate from "./PaymentStatusUpdate";
 
 const Deliveries = () => {
   const [deliveries, setDeliveires] = useState([]);
   const [order, setOrder] = useState({});
   const [orderActive, setOrderActive] = useState("");
   const [orderUpdateActive, setOrderUpdateActive] = useState("");
+  const [orderUpdatePayment, setOrderUpdatePayment] = useState("");
 
   const { user, token } = isAuthenticated();
 
@@ -34,6 +36,10 @@ const Deliveries = () => {
 
   const handleEdit = (order) => {
     return setOrderUpdateActive("orderUpdateActive"), setOrder(order);
+  };
+
+  const handlePaymentStatus = (order) => {
+    return setOrderUpdatePayment("orderUpdatePayment"), setOrder(order);
   };
 
   useEffect(() => {
@@ -86,12 +92,17 @@ const Deliveries = () => {
                       {order.EorderId.OpaymentMode}
                     </td>
                     <td className="employeeBoard-right-table-body-value">
-                      <div
-                        className={`employeeBoard-right-table-body-div ${order.EorderId.OpaymentStatus}`}
-                      >
-                        {order.EorderId.OpaymentStatus}
-                      </div>
-                    </td>
+                        {order.EorderId.OpaymentStatus === "Paid" ? (
+                          order.EorderId.OpaymentStatus
+                        ) : (
+                          <button
+                            className="adminDashPanel-right-table-body-value-btn"
+                            onClick={() => handlePaymentStatus(order.EorderId)}
+                          >
+                            Pending
+                          </button>
+                        )}
+                      </td>
                     <td className="employeeBoard-right-table-body-value">
                       {order.EorderAddress.houseName}
                       <br />
@@ -126,6 +137,12 @@ const Deliveries = () => {
       {orderUpdateActive === "orderUpdateActive" && (
         <OrderUpdate
           setOrderUpdateActive={setOrderUpdateActive}
+          order={order}
+        />
+      )}
+      {orderUpdatePayment === "orderUpdatePayment" && (
+        <PaymentStatusUpdate
+          setOrderUpdatePayment={setOrderUpdatePayment}
           order={order}
         />
       )}

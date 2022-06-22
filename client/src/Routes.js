@@ -16,6 +16,7 @@ import Cart from "./core/Cart";
 import { CartPayment } from "./core/CartPayment";
 import ThankYou from "./core/ThankYou";
 import AdminDashPanel from "./core/AdminDashPanel";
+import Footer from "./core/Footer";
 
 const Routes = () => {
   const [authActive, setAuthActive] = useState(null);
@@ -84,6 +85,7 @@ const Routes = () => {
             }
           />
         </Router>
+        <Footer />
       </AuthContext.Provider>
     </BrowserRouter>
   );

@@ -41,8 +41,12 @@ const Nav = () => {
   };
 
   const loadEmployeeStatusButton = () => {
-    // 
-  }
+    //
+  };
+
+  const handleMakeAvailable = () => {
+    console.log("Clicked");
+  };
 
   useEffect(() => {
     getCartCount(user, token);
@@ -116,20 +120,21 @@ const Nav = () => {
                   <ul className="nav-drop-ul" onMouseOver={showDropDown}>
                     <li className="nav-drop-li">
                       <Link to={`/customerboard/orders/${user._id}`}>
-                        {" "}
-                        My Orders
+                      <div className="nav-drop-li-div">My Orders</div>
+                        
                       </Link>
                     </li>
                     <li className="nav-drop-li">
                       <Link to={`/customerboard/accounts/${user._id}`}>
                         {" "}
-                        My Account
+                      <div className="nav-drop-li-div">My Account</div>
+                        
                       </Link>
                     </li>
                     <li className="nav-drop-li">
                       <Link to={`/customerboard/settings/${user._id}`}>
-                        {" "}
-                        My Settings
+                      <div className="nav-drop-li-div">My Settings</div>
+                        
                       </Link>
                     </li>
                     <li className="nav-drop-li">
@@ -164,30 +169,31 @@ const Nav = () => {
                   <ul className="nav-drop-ul" onMouseOver={showDropDown}>
                     <li className="nav-drop-li">
                       <Link to={`/employeeboard/dashboard/${user._id}`}>
-                        {" "}
-                        Dashboard
+                        <div className="nav-drop-li-div">Dashboard</div>
                       </Link>
                     </li>
                     <li className="nav-drop-li">
                       <Link to={`/employeeboard/deliveries/${user._id}`}>
-                        {" "}
-                        Deliveries
+                        <div className="nav-drop-li-div">Deliveries</div>
                       </Link>
                     </li>
                     <li className="nav-drop-li">
                       <Link to={`/employeeboard/accounts/${user._id}`}>
-                        {" "}
-                        Account
+                        <div className="nav-drop-li-div">Account</div>
                       </Link>
                     </li>
                     <li className="nav-drop-li">
                       <Link to={`/employeeboard/settings/${user._id}`}>
-                        {" "}
-                        Settings
+                        <div className="nav-drop-li-div">Settings</div>
                       </Link>
                     </li>
                     <li className="nav-drop-li">
-                      <button className="nav-drop-btn">Make Available</button>
+                      <button
+                        className="nav-drop-btn"
+                        onClick={handleMakeAvailable()}
+                      >
+                        Make Available
+                      </button>
                     </li>
                     <li className="nav-drop-li">
                       <button
@@ -221,23 +227,22 @@ const Nav = () => {
                   <ul className="nav-drop-ul" onMouseOver={showDropDown}>
                     <li className="nav-drop-li">
                       <Link to={`/admindashpanel/dashboard/${user._id}`}>
-                        Admin Panel
+                      <div className="nav-drop-li-div">Admin Panel</div>
                       </Link>
                     </li>
                     <li className="nav-drop-li">
                       <Link to={`/adminboard/accounts/${user._id}`}>
-                        {" "}
-                        Account
+                      <div className="nav-drop-li-div">Account</div>
+                        
                       </Link>
                     </li>
                     <li className="nav-drop-li">
                       <Link to={`/adminboard/settings/${user._id}`}>
-                        {" "}
-                        Settings
+                      <div className="nav-drop-li-div">Settings</div>
                       </Link>
                     </li>
                     <li className="nav-drop-li">
-                      <button
+                    <button
                         className="nav-drop-btn"
                         onClick={() => {
                           logout(() => navigate("/"));

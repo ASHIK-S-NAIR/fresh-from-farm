@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { isAuthenticated } from "../auth";
 import { AccountsContext } from "../context/Context";
 import { updateUser, getUser } from "../user";
+import Cross from "../icons/cross-black.svg";
 
 const EditAddress = () => {
   const { userId } = useParams();
@@ -141,8 +142,7 @@ const EditAddress = () => {
                 className="cross-sec"
                 onClick={() => setAccountsActive(null)}
               >
-                <div className="cross-one"></div>
-                <div className="cross-two"></div>
+              <img src={Cross} alt="" className="cross-img" />
               </div>
             </div>
 

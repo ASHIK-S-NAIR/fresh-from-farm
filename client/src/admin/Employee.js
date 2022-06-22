@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ViewIcon from "../icons/view.svg";
-import EditIcon from "../icons/Edit.svg";
+import TrashIcon from "../icons/Trash.svg";
 import AddIcon from "../icons/add.svg";
 import { isAuthenticated } from "../auth";
 import { deleteEmployee, getEmployees } from "../user";
@@ -152,7 +152,7 @@ const Employee = () => {
                       </button>
                       <button onClick={() => handleDelete(employee)}>
                         <img
-                          src={EditIcon}
+                          src={TrashIcon}
                           alt=""
                           className="adminDashPanel-right-table-icon "
                         />

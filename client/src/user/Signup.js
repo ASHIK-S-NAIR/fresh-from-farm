@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../context/Context";
 import { signup, login, authenticate } from "../auth";
+import Cross from "../icons/cross-black.svg";
 
 const Signup = () => {
   const { setAuthActive } = useContext(AuthContext);
@@ -177,8 +178,8 @@ const Signup = () => {
             <div className="popup-head-sec">
               <h1 className="popup-header">Sign Up</h1>
               <div className="cross-sec" onClick={() => setAuthActive(null)}>
-                <div className="cross-one"></div>
-                <div className="cross-two"></div>
+              <img src={Cross} alt="" className="cross-img" />
+
               </div>
             </div>
 

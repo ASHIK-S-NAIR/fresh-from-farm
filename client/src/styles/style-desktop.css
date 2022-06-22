@@ -47,7 +47,7 @@ button {
   cursor: pointer;
 }
 
-.button-unclickable{
+.button-unclickable {
   pointer-events: none;
   /* color: green; */
   background-color: #777676 !important;
@@ -166,14 +166,38 @@ a {
   box-shadow: 0px 3px 5px 3px rgba(0, 0, 0, 0.07);
 }
 
-.nav-drop-li {
+/* .nav-drop-li {
+  
+} */
+
+/* .nav-drop-li:hover {
+  background-color: rgba(166, 164, 164, 0.3);
+} */
+
+.nav-drop-li-div {
+  width: 100%;
+  height: auto;
   color: var(--primary-color);
   font-size: 0.813rem;
   padding: 0.8em 0 0.8em 1.5em;
   cursor: pointer;
 }
 
-.nav-drop-li:hover {
+.nav-drop-li-div:hover {
+  background-color: rgba(166, 164, 164, 0.3);
+}
+
+.nav-drop-btn{
+  width: 100%;
+  height: auto;
+  color: var(--primary-color);
+  font-size: 0.813rem;
+  padding: 0.8em 0 0.8em 1.5em;
+  cursor: pointer;
+  text-align: left;
+}
+
+.nav-drop-btn:hover{
   background-color: rgba(166, 164, 164, 0.3);
 }
 
@@ -1521,8 +1545,8 @@ tr {
   padding-bottom: 1em;
 }
 
-.adminDashPanel-right-table-body-value-btn{
-  border: 1px solid var(--primary-color);
+.adminDashPanel-right-table-body-value-btn {
+  border: 1px solid #9e9a9a;
   padding: 0.3em 0.8em;
   border-radius: 10px;
   font-size: 0.68rem;

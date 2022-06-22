@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { isAuthenticated } from "../auth";
 import { AccountsContext } from "../context/Context";
 import { updateUser, getUser } from "../user";
+import Cross from "../icons/cross-black.svg";
 
 const EditPersonalInformation = () => {
   const { userId } = useParams();
@@ -33,16 +34,14 @@ const EditPersonalInformation = () => {
 
       preLoadValues = {
         name: userDetails.name,
-        phoneNumber: userDetails.phoneNumber
-      }
+        phoneNumber: userDetails.phoneNumber,
+      };
 
       return setValues({
         ...values,
         name: userDetails.name,
         email: userDetails.email,
         phoneNumber: userDetails.phoneNumber,
-        // houseName: userDetails.address.houseName,
-        // streetName: userDetails.address.streetName,
       });
     } catch (error) {
       console.log(error);
@@ -105,9 +104,7 @@ const EditPersonalInformation = () => {
         });
       }
 
-
       return setAccountsActive(null);
-
     } catch (error) {
       console.log(error);
       return setValues({
@@ -147,8 +144,7 @@ const EditPersonalInformation = () => {
                 className="cross-sec"
                 onClick={() => setAccountsActive(null)}
               >
-                <div className="cross-one"></div>
-                <div className="cross-two"></div>
+                <img src={Cross} alt="" className="cross-img" />
               </div>
             </div>
 

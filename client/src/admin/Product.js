@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ViewIcon from "../icons/view.svg";
 import EditIcon from "../icons/Edit.svg";
 import AddIcon from "../icons/add.svg";
+import TrashIcon from "../icons/Trash.svg";
 import { isAuthenticated } from "../auth";
 import { deleteProduct, getAllProducts } from "../core/helper/productDetailHelper";
 import { API } from "../backend";
@@ -167,7 +168,7 @@ const Product = () => {
                       </button>
                       <button onClick={() => handleDelete(product)}>
                         <img
-                          src={EditIcon}
+                          src={TrashIcon}
                           alt=""
                           className="adminDashPanel-right-table-icon "
                         />

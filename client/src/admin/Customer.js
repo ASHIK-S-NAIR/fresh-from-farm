@@ -3,6 +3,7 @@ import { isAuthenticated } from "../auth";
 import { deleteCustomer, getCustomers } from "../user";
 import moment from "moment";
 import ViewIcon from "../icons/view.svg";
+import TrashIcon from "../icons/Trash.svg";
 import CustomerDetail from "./CustomerDetail";
 
 const Customer = () => {
@@ -108,7 +109,7 @@ const Customer = () => {
                       </button>
                       <button onClick={() => handleDelete(customer)}>
                         <img
-                          src={ViewIcon}
+                          src={TrashIcon}
                           alt=""
                           className="adminDashPanel-right-table-icon "
                         />

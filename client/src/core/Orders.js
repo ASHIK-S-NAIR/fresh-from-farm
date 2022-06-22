@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { isAuthenticated } from "../auth";
 import { getUserOrders } from "../user";
+import ViewIcon from "../icons/view.svg";
 import moment from "moment";
 import OrderDetails from "../user/OrderDetails";
 
@@ -96,7 +97,11 @@ const Orders = () => {
                     </td>
                     <td className="userBoard-right-customer-order-table-head-value">
                       <button onClick={() => handlePreview(order._id)}>
-                        Preview
+                      <img
+                          src={ViewIcon}
+                          alt=""
+                          className="employeeBoard-right-table-icon vie"
+                        />
                       </button>
                     </td>
                   </tr>
