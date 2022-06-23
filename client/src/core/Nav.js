@@ -5,12 +5,13 @@ import { AuthContext } from "../context/Context";
 import Signup from "../user/Signup";
 import Login from "../user/Login";
 import cart from "../icons/cart.svg";
-import { getUserCart } from "../user/index";
+import { getEmployeeStatus, getUserCart } from "../user/index";
 
 const Nav = () => {
   const [active, setActive] = useState(false);
   const [toggled, setToggled] = useState(false);
   const [cartCount, setCartCount] = useState();
+  const [employeeStatus, setEmployeeStatus] = useState();
 
   const { authActive, setAuthActive } = useContext(AuthContext);
 
@@ -40,16 +41,29 @@ const Nav = () => {
     }
   };
 
-  const loadEmployeeStatusButton = () => {
-    //
+  const loadEmployeeStatus = async (employeeId, token) => {
+    try {
+      const data = await getEmployeeStatus(employeeId, token);
+      if (data.error) {
+        return console.log(data.error);
+      } else {
+        return setEmployeeStatus(data);
+      }
+    } catch (error) {
+      return console.log(error);
+    }
   };
 
-  const handleMakeAvailable = () => {
+  const handleEmployeeStatus = () => {
     console.log("Clicked");
   };
 
   useEffect(() => {
     getCartCount(user, token);
+  }, [cartCount]);
+
+  useEffect(() => {
+    loadEmployeeStatus(isAuthenticated().user._id, isAuthenticated().token);
   }, []);
 
   return (
@@ -85,9 +99,9 @@ const Nav = () => {
                   Sign Up
                 </button>
               </li>
-              <li className="nav-li nav-border">
+              <li className="nav-li ">
                 <button
-                  className="nav-btn"
+                  className="nav-btn nav-border"
                   onClick={() => setAuthActive("login")}
                 >
                   Log In
@@ -120,21 +134,18 @@ const Nav = () => {
                   <ul className="nav-drop-ul" onMouseOver={showDropDown}>
                     <li className="nav-drop-li">
                       <Link to={`/customerboard/orders/${user._id}`}>
-                      <div className="nav-drop-li-div">My Orders</div>
-                        
+                        <div className="nav-drop-li-div">My Orders</div>
                       </Link>
                     </li>
                     <li className="nav-drop-li">
                       <Link to={`/customerboard/accounts/${user._id}`}>
                         {" "}
-                      <div className="nav-drop-li-div">My Account</div>
-                        
+                        <div className="nav-drop-li-div">My Account</div>
                       </Link>
                     </li>
                     <li className="nav-drop-li">
                       <Link to={`/customerboard/settings/${user._id}`}>
-                      <div className="nav-drop-li-div">My Settings</div>
-                        
+                        <div className="nav-drop-li-div">My Settings</div>
                       </Link>
                     </li>
                     <li className="nav-drop-li">
@@ -187,13 +198,16 @@ const Nav = () => {
                         <div className="nav-drop-li-div">Settings</div>
                       </Link>
                     </li>
+                    {console.log("isAuthenticated", isAuthenticated())}
                     <li className="nav-drop-li">
-                      <button
-                        className="nav-drop-btn"
-                        onClick={handleMakeAvailable()}
-                      >
-                        Make Available
-                      </button>
+                      {employeeStatus === "Available" && (
+                        <button
+                          className="nav-drop-btn"
+                          onClick={() => handleEmployeeStatus()}
+                        >
+                          Make Not Available
+                        </button>
+                      )}
                     </li>
                     <li className="nav-drop-li">
                       <button
@@ -227,22 +241,21 @@ const Nav = () => {
                   <ul className="nav-drop-ul" onMouseOver={showDropDown}>
                     <li className="nav-drop-li">
                       <Link to={`/admindashpanel/dashboard/${user._id}`}>
-                      <div className="nav-drop-li-div">Admin Panel</div>
+                        <div className="nav-drop-li-div">Admin Panel</div>
                       </Link>
                     </li>
                     <li className="nav-drop-li">
                       <Link to={`/adminboard/accounts/${user._id}`}>
-                      <div className="nav-drop-li-div">Account</div>
-                        
+                        <div className="nav-drop-li-div">Account</div>
                       </Link>
                     </li>
                     <li className="nav-drop-li">
                       <Link to={`/adminboard/settings/${user._id}`}>
-                      <div className="nav-drop-li-div">Settings</div>
+                        <div className="nav-drop-li-div">Settings</div>
                       </Link>
                     </li>
                     <li className="nav-drop-li">
-                    <button
+                      <button
                         className="nav-drop-btn"
                         onClick={() => {
                           logout(() => navigate("/"));
@@ -401,7 +414,7 @@ const Nav = () => {
                   </li>
                   <li className="nav-drop-li">
                     {/* <button className="nav-drop-btn">Make Available</button> */}
-                    {loadEmployeeStatusButton()}
+                    {/* {loadEmployeeStatusButton()} */}
                   </li>
                   <li className="nav-drop-li">
                     <button

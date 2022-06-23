@@ -70,7 +70,6 @@ const Orders = () => {
                 return (
                   <tr
                     key={index}
-                    onClick={() => handlePreview(order)}
                     className="userBoard-right-customer-order-table-body-tr"
                   >
                     <td className="userBoard-right-customer-order-table-body-value">
@@ -96,7 +95,7 @@ const Orders = () => {
                       {order.OemployeeId ? order.OemployeeId : "Not Assigned"}
                     </td>
                     <td className="userBoard-right-customer-order-table-head-value">
-                      <button onClick={() => handlePreview(order._id)}>
+                      <button onClick={() => handlePreview(order)}>
                       <img
                           src={ViewIcon}
                           alt=""

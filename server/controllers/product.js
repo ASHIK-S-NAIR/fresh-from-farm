@@ -13,15 +13,14 @@ exports.createProduct = async (req, res) => {
       pPrice: req.body.pPrice,
       pStock: req.body.pStock,
       pCategory: req.body.pCategory,
-      pStatus: req.body.pStatus,
       pImg: {
         data: fs.readFileSync(
-          // path.join(__dirname + "/uploads/" + req.file.filename)
           path.join(process.cwd() + "/uploads/" + req.file.filename)
         ),
         contentType: "image/jpeg",
       },
     };
+
     const product = await Product.create(obj);
     await product.save();
 
@@ -97,11 +96,11 @@ exports.getAllProducts = async (req, res) => {
     const category = req.params.category;
 
     if (category === "all") {
-      const products = await Product.find({},{pImg: 0});
+      const products = await Product.find({}, { pImg: 0 });
       return res.json(products);
     }
 
-    const products = await Product.find({ pCategory: category}, {pImg: 0 });
+    const products = await Product.find({ pCategory: category }, { pImg: 0 });
     return res.json(products);
   } catch (error) {
     return res.json({
@@ -129,14 +128,12 @@ exports.updateStock = async (req, res, next) => {
   ).populate("cart.product");
   cart = response.cart;
 
-  console.log("cart", cart);
-
   let myoperations = cart.map((prod) => {
     return {
       updateOne: {
         filter: { _id: prod.product },
         update: { $inc: { pStock: -prod.quantity, pSold: +prod.quantity } },
-      },
+      }
     };
   });
 

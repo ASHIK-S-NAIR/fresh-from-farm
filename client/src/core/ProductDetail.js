@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { API } from "../backend";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import {
-  getProduct,
-  getAllProducts
-} from "./helper/productDetailHelper";
+import { getProduct, getAllProducts } from "./helper/productDetailHelper";
 import { isAuthenticated } from "../auth/index";
 import { addToUserCart } from "../user";
 
@@ -99,11 +96,16 @@ const ProductDetail = () => {
             <p className="productDetail-quantity-p">Kg</p>
           </div>
           <button
-            className="productDetail-btn"
+            className={`productDetail-btn ${
+              product.pStock === 0 ? "button-unclickable" : ""
+            }`}
             onClick={() => handleAddToCart(product._id, quantity)}
           >
             Add to Cart
           </button>
+          {product.pStock === 0 && (
+            <p className="productDetail-OOS">Currently Out of Stock</p>
+          )}
         </div>
       </div>
 
