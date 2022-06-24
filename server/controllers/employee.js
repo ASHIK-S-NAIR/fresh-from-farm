@@ -82,10 +82,10 @@ exports.getAllEmployees = async (req, res) => {
 
 exports.updateEmployeeStatus = async (req, res) => {
   try {
-    const employee = await Employee.findByIdAndUpdate(
-      { _id: req.employee._id },
-      { $set: { Estatus: req.body.Estatus } },
-      { new: true, useFindAndModify: false }
+    const employee = await Employee.findOneAndUpdate(
+      { Euser: req.employeeUser._id },
+      { Estatus: req.body.Estatus },
+      { new: true }
     );
 
     await employee.save();
@@ -132,18 +132,16 @@ exports.getAllDeliveries = async (req, res) => {
       Euser: req.employeeUser._id,
     })
       .select("Eorders")
-      // .populate(["Eorders.EorderId", "Eorders.EorderId.Ouser"]);
-    // .populate("Eorders.EorderId")
-    .populate({
-      path: "Eorders.EorderId",
-      model: "Order",
-      match: { isDeleted: false },
-      populate: {
-        path: "Ouser",
-        model: "User",
-        select: "name phoneNumber email"
-      }
-    })
+      .populate({
+        path: "Eorders.EorderId",
+        model: "Order",
+        match: { isDeleted: false },
+        populate: {
+          path: "Ouser",
+          model: "User",
+          select: "name phoneNumber email",
+        },
+      });
     return res.json(deliveries);
   } catch (error) {
     return res.status(400).json("Failed to find Employee Deliveries");
@@ -188,6 +186,7 @@ exports.getEmployeeStatus = async (req, res) => {
 
     return res.json(status.Estatus);
   } catch (error) {
+    console.log("Error Message", error.message);
     return res.status(400).json("Failed to find Employee Deliveries");
   }
 };

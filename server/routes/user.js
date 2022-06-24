@@ -8,7 +8,12 @@ const {isSignedIn, isAuthenticated, isAdmin} = require("../controllers/auth");
 router.param('userId', getUserById);
 
 // routes
+
 // getUser
+// @type GET
+// @route /api/user/:userId
+// @desc router to get user By ID
+// @access PRIVATE
 router.get("/user/:userId", isSignedIn, isAuthenticated, getUser);
 
 // getUserCart

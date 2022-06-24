@@ -68,7 +68,7 @@ router.get(
 
 // updateEmployeeStatus
 router.put(
-  "/employee/:employeeId/:userId",
+  "/employee/updateemployeestatus/:employeeUserId/:userId",
   isSignedIn,
   isAuthenticated,
   isEmployee,
