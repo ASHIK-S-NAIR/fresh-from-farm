@@ -247,6 +247,7 @@ a {
   font-size: 1.563rem;
   font-weight: 500;
   color: var(--primary-color);
+  margin-bottom: 1em;
 }
 
 .orderDetails-popup-header {
@@ -306,6 +307,15 @@ a {
   grid-template-columns: repeat(3, 1fr);
   column-gap: 1.1em;
   margin-bottom: 1.3em;
+}
+
+.popup-form-p{
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.popup-form-link{
+  color: var(--main-color);
 }
 
 .popup-form-label {
@@ -493,7 +503,7 @@ a {
 
 /* shop section starts */
 
-.shop-section{
+.shop-section {
   padding-top: 2em;
   padding-bottom: 5em;
 }
@@ -524,7 +534,7 @@ a {
   position: relative;
 }
 
-.outOfStock{
+.outOfStock {
   width: 100%;
   height: 100%;
   display: grid;
@@ -535,10 +545,10 @@ a {
   right: 0;
   bottom: 0;
   z-index: 2;
-  background-color: rgba(255,255,255,0.2);
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
-.outOfStock-div{
+.outOfStock-div {
   width: 80%;
   height: auto;
   background-color: #000000;
@@ -547,7 +557,7 @@ a {
   padding: 0.6em 0;
 }
 
-.outOfStock-p{
+.outOfStock-p {
   color: #fff;
   font-size: 0.9rem;
   font-weight: 600;
@@ -743,7 +753,7 @@ a {
   margin-bottom: 0.5em;
 }
 
-.productDetail-OOS{
+.productDetail-OOS {
   color: rgb(123, 6, 6);
   font-size: 0.8rem;
   font-weight: 600;
@@ -1916,6 +1926,7 @@ tr {
 .footer-section {
   background-color: var(--main-color);
   padding-top: 4em;
+  margin-top: 5em;
   /* padding-bottom: 3em; */
 }
 
@@ -1953,7 +1964,7 @@ tr {
   margin-bottom: 0.8em;
 }
 
-.footer-sub-sec-link:hover{
+.footer-sub-sec-link:hover {
   color: #fce82d;
 }
 
@@ -1973,3 +1984,49 @@ tr {
 }
 
 /* footer section ends */
+
+/* signup-section starts */
+
+.signup-wrap {
+  display: grid;
+  place-items: center;
+}
+
+.signup-popup {
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  /* box-shadow: 0px, 4px, 15px, 10px rgba(0, 0, 0, 0.1); */
+}
+
+.signup-head-sec {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.signup-popup-btn{
+  background-color: var(--main-color);
+}
+
+.login-wrap {
+  display: grid;
+  place-items: center;
+}
+
+.login-popup {
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  /* box-shadow: 0px, 4px, 15px, 10px rgba(0, 0, 0, 0.1); */
+}
+
+.login-head-sec {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.login-popup-btn{
+  background-color: var(--main-color);
+}
+
+/* signup-section ends */

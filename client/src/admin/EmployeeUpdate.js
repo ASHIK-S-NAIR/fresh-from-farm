@@ -24,8 +24,7 @@ const EmployeeUpdate = ({ order, setOrderEmployeeAssignActive }) => {
   };
 
   const handleEmployeeAssign = async (userId, token, orderId, employeeId) => {
-    console.log("orderId", orderId);
-    console.log("employeeId", employeeId);
+    
     try {
       const data = await addEmployeeOrder(userId, token, orderId, employeeId);
       if (data.error) {
@@ -74,13 +73,6 @@ const EmployeeUpdate = ({ order, setOrderEmployeeAssignActive }) => {
                     onChange={(e) => setEmployeeId(e.target.value)}
                     className="popup-form-value"
                   >
-                    {/* <option value="Ordered">Ordered</option>
-                        <option value="Not-Confirmed">Not-Confirmed</option>
-                        <option value="Processing">Processing</option>
-                        <option value="Picking-Up">Picking-Up</option>
-                        <option value="Out-For-Delivery">Out-For-Delivery</option>
-                        <option value="Delivered">Delivered</option>
-                        <option value="Cancelled">Cancelled</option> */}
 
                     {employees &&
                       employees.map((employee, index) => {

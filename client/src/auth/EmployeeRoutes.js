@@ -1,13 +1,15 @@
 import React from "react";
-import {Navigate} from "react-router-dom";
-import {isAuthenticated} from "./index";
+import { useNavigate } from "react-router-dom";
+import { isAuthenticated } from "./index";
 
-const EmployeeRoutes = ({children}) => {
-  if(!(isAuthenticated() && isAuthenticated().user.role === 1)){
-      return <Navigate to= {-1} />
+const EmployeeRoutes = ({ children }) => {
+  const navigate = useNavigate();
+
+  if (!(isAuthenticated() && isAuthenticated().user.role === 1)) {
+    return navigate("/");
   }
 
-  return children
-}
+  return children;
+};
 
-export default EmployeeRoutes
+export default EmployeeRoutes;

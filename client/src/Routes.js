@@ -11,6 +11,8 @@ import CustomerRoutes from "./auth/CustomerRoutes";
 import CustomerBoard from "./core/CustomerBoard";
 import EmployeeBoard from "./core/EmployeeBoard.";
 import AdminBoard from "./core/AdminBoard";
+import Signup from "./user/Signup";
+import Login from "./user/Login";
 
 import Cart from "./core/Cart";
 import { CartPayment } from "./core/CartPayment";
@@ -86,6 +88,8 @@ const Routes = () => {
                 </CustomerRoutes>
               }
             />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
           </Router>
           <Footer />
         </ScrollToTop>

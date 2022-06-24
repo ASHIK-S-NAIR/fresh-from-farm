@@ -1,48 +1,50 @@
-const dotenv = require('dotenv');
-dotenv.config()
+const dotenv = require("dotenv");
+dotenv.config();
 
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const cors = require('cors');
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 const port = process.env.PORT || 8000;
 
 // Middlewares
-app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors());
 
 //DB connection
-mongoose.connect(process.env.DATABASE,  {
+mongoose
+  .connect(process.env.DATABASE, {
     useNewUrlParser: true,
     // useUnifiedTopoloy: true,
     // useCreateIndex: true
-}).then(() => {
-    console.log("DB connected")
-})
+  })
+  .then(() => {
+    console.log("DB connected");
+  });
 
 // routes
-const authRoute = require("./routes/auth");
-const userRoute = require("./routes/user");
-const employeeRoute = require("./routes/employee");
-const productRoute = require("./routes/product");
-const orderRoute = require("./routes/order");
+const authRoute = require("./src/api/v1/routes/auth");
+const userRoute = require("./src/api/v1/routes/user");
+const employeeRoute = require("./src/api/v1/routes/employee");
+const productRoute = require("./src/api/v1/routes/product");
+const orderRoute = require("./src/api/v1/routes/order");
 
 // My routes
-app.use("/api", authRoute);
-app.use("/api", userRoute);
-app.use("/api", productRoute);
-app.use("/api", orderRoute);
-app.use("/api", employeeRoute);
+app.use("/api/v1/", authRoute);
+app.use("/api/v1/", userRoute);
+app.use("/api/v1/", productRoute);
+app.use("/api/v1/", orderRoute);
+app.use("/api/v1/", employeeRoute);
 
 app.get("/", (req, res) => {
-    res.send("revenew dipp")
-})
+  res.send("revenew dipp");
+});
 
 app.listen(port, () => {
-    console.log(`Server is running on : ${port}`);
-})
+  console.log(`Server is running on : ${port}`);
+});

@@ -1,19 +1,18 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { isAuthenticated, logout } from "../auth/index";
-import { AuthContext } from "../context/Context";
-import Signup from "../user/Signup";
-import Login from "../user/Login";
 import cart from "../icons/cart.svg";
-import { getEmployeeStatus, getUserCart } from "../user/index";
+import {
+  getEmployeeStatus,
+  getUserCart,
+  updateEmployeeStatus,
+} from "../user/index";
 
 const Nav = () => {
   const [active, setActive] = useState(false);
   const [toggled, setToggled] = useState(false);
   const [cartCount, setCartCount] = useState();
   const [employeeStatus, setEmployeeStatus] = useState();
-
-  const { authActive, setAuthActive } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -41,9 +40,12 @@ const Nav = () => {
     }
   };
 
-  const loadEmployeeStatus = async (employeeId, token) => {
+  const loadEmployeeStatus = async () => {
     try {
-      const data = await getEmployeeStatus(employeeId, token);
+      const data = await getEmployeeStatus(
+        isAuthenticated().user._id,
+        isAuthenticated().token
+      );
       if (data.error) {
         return console.log(data.error);
       } else {
@@ -54,16 +56,29 @@ const Nav = () => {
     }
   };
 
-  const handleEmployeeStatus = () => {
-    console.log("Clicked");
+  const handleEmployeeStatus = async (employeeUserId, token, Estatus) => {
+    try {
+      const data = await updateEmployeeStatus(employeeUserId, token, Estatus);
+      if (data.error) {
+        return console.log(data.error);
+      } else {
+        return loadEmployeeStatus();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
-    getCartCount(user, token);
+    if (isAuthenticated()) {
+      getCartCount(user, token);
+    }
   }, [cartCount]);
 
   useEffect(() => {
-    loadEmployeeStatus(isAuthenticated().user._id, isAuthenticated().token);
+    if (isAuthenticated()) {
+      loadEmployeeStatus(isAuthenticated().user._id, isAuthenticated().token);
+    }
   }, []);
 
   return (
@@ -92,20 +107,14 @@ const Nav = () => {
           {!isAuthenticated() && (
             <ul className="nav-ul">
               <li className="nav-li">
-                <button
-                  className="nav-btn"
-                  onClick={() => setAuthActive("signup")}
-                >
-                  Sign Up
-                </button>
+                <Link to="/signup">
+                  <button className="nav-btn">Sign Up</button>
+                </Link>
               </li>
-              <li className="nav-li ">
-                <button
-                  className="nav-btn nav-border"
-                  onClick={() => setAuthActive("login")}
-                >
-                  Log In
-                </button>
+              <li className="nav-li">
+                <Link to="/login">
+                  <button className="nav-btn">Log In</button>
+                </Link>
               </li>
             </ul>
           )}
@@ -198,14 +207,38 @@ const Nav = () => {
                         <div className="nav-drop-li-div">Settings</div>
                       </Link>
                     </li>
-                    {console.log("isAuthenticated", isAuthenticated())}
                     <li className="nav-drop-li">
                       {employeeStatus === "Available" && (
                         <button
                           className="nav-drop-btn"
-                          onClick={() => handleEmployeeStatus()}
+                          onClick={() =>
+                            handleEmployeeStatus(
+                              isAuthenticated().user._id,
+                              isAuthenticated().token,
+                              "NotAvailable"
+                            )
+                          }
                         >
                           Make Not Available
+                        </button>
+                      )}
+                      {employeeStatus === "NotAvailable" && (
+                        <button
+                          className="nav-drop-btn"
+                          onClick={() =>
+                            handleEmployeeStatus(
+                              isAuthenticated().user._id,
+                              isAuthenticated().token,
+                              "Available"
+                            )
+                          }
+                        >
+                          Make Available
+                        </button>
+                      )}
+                      {employeeStatus === "OnDuty" && (
+                        <button className="nav-drop-btn button-unclickable">
+                          On Duty
                         </button>
                       )}
                     </li>
@@ -282,20 +315,14 @@ const Nav = () => {
           {!isAuthenticated() && (
             <ul className="nav-ul">
               <li className="nav-li">
-                <button
-                  className="nav-btn"
-                  onClick={() => setAuthActive("signup")}
-                >
-                  Sign Up
-                </button>
+                <Link to="/signup">
+                  <button className="nav-btn">Sign Up</button>
+                </Link>
               </li>
               <li className="nav-li nav-border">
-                <button
-                  className="nav-btn"
-                  onClick={() => setAuthActive("login")}
-                >
-                  Log In
-                </button>
+                <Link to="/login">
+                  <button className="nav-btn">Log In</button>
+                </Link>
               </li>
               <li className="nav-li">
                 <div
@@ -413,8 +440,39 @@ const Nav = () => {
                     </Link>
                   </li>
                   <li className="nav-drop-li">
-                    {/* <button className="nav-drop-btn">Make Available</button> */}
-                    {/* {loadEmployeeStatusButton()} */}
+                    {employeeStatus === "Available" && (
+                      <button
+                        className="nav-drop-btn"
+                        onClick={() =>
+                          handleEmployeeStatus(
+                            isAuthenticated().user._id,
+                            isAuthenticated().token,
+                            "NotAvailable"
+                          )
+                        }
+                      >
+                        Make Not Available
+                      </button>
+                    )}
+                    {employeeStatus === "NotAvailable" && (
+                      <button
+                        className="nav-drop-btn"
+                        onClick={() =>
+                          handleEmployeeStatus(
+                            isAuthenticated().user._id,
+                            isAuthenticated().token,
+                            "Available"
+                          )
+                        }
+                      >
+                        Make Available
+                      </button>
+                    )}
+                    {employeeStatus === "OnDuty" && (
+                      <button className="nav-drop-btn button-unclickable">
+                        On Duty
+                      </button>
+                    )}
                   </li>
                   <li className="nav-drop-li">
                     <button
@@ -483,9 +541,6 @@ const Nav = () => {
       </div>
 
       {/* nav-mobile section ends */}
-
-      {authActive === "signup" && <Signup />}
-      {authActive === "login" && <Login />}
     </section>
   );
 };

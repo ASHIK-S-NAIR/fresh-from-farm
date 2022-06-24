@@ -37,11 +37,20 @@ const ProductDetail = () => {
 
   const handleAddToCart = async (productId, quantity) => {
     try {
-      var data = await addToUserCart(user._id, token, { productId, quantity });
-      if (data.error) {
-        console.log(data.error);
+      if (isAuthenticated() && user.role === 0) {
+        var data = await addToUserCart(user._id, token, {
+          productId,
+          quantity,
+        });
+        if (data.error) {
+          console.log(data.error);
+        } else {
+          return navigate(`/cart/${user._id}`);
+        }
+      } else if (isAuthenticated()) {
+        return "";
       } else {
-        navigate(`/cart/${user._id}`);
+        navigate("/login");
       }
     } catch (error) {
       console.log(error);

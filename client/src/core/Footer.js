@@ -26,28 +26,16 @@ const Footer = () => {
 
             {!isAuthenticated() && (
               <>
-                <Link
-                  className="footer-sub-sec-link"
-                  to=""
-                >
+                <Link className="footer-sub-sec-link" to="/login">
                   My Account
                 </Link>
-                <Link
-                  className="footer-sub-sec-link"
-                  to=""
-                >
+                <Link className="footer-sub-sec-link" to="/login">
                   My Orders
                 </Link>
-                <Link
-                  className="footer-sub-sec-link"
-                  to=""
-                >
+                <Link className="footer-sub-sec-link" to="/login">
                   My Settings
                 </Link>
-                <Link
-                  className="footer-sub-sec-link"
-                  to=""
-                >
+                <Link className="footer-sub-sec-link" to="/login">
                   My Cart
                 </Link>
               </>

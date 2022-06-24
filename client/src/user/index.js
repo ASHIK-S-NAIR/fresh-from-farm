@@ -1,5 +1,6 @@
 import { API } from "../backend";
 
+// getUser
 export const getUser = async (userId, token) => {
   try {
     const result = await fetch(`${API}/user/${userId}`, {
@@ -16,6 +17,7 @@ export const getUser = async (userId, token) => {
   }
 };
 
+// updateUser
 export const updateUser = async (body, userId, token) => {
   try {
     const result = await fetch(`${API}/user/${userId}`, {
@@ -34,9 +36,8 @@ export const updateUser = async (body, userId, token) => {
   }
 };
 
+// changePssword
 export const changePassword = async (userId, token, body) => {
-  // console.log("index oldPassword : " ,oldPassword);
-  // console.log("index newPassword : " ,newPassword);
   try {
     const result = await fetch(`${API}/user/password/${userId}`, {
       method: "PUT",
@@ -54,6 +55,7 @@ export const changePassword = async (userId, token, body) => {
   }
 };
 
+// getUserCart
 export const getUserCart = async (userId, token) => {
   try {
     const result = await fetch(`${API}/user/cart/${userId}`, {
@@ -63,7 +65,6 @@ export const getUserCart = async (userId, token) => {
         Authorization: `Bearer ${token}`,
       },
     }).then((res) => res.json());
-    // console.log("result: ", result);
 
     return result;
   } catch (error) {
@@ -71,6 +72,7 @@ export const getUserCart = async (userId, token) => {
   }
 };
 
+// addToCart
 export const addToUserCart = (userId, token, body) => {
   try {
     const result = fetch(`${API}/user/addtocart/${userId}`, {
@@ -89,6 +91,7 @@ export const addToUserCart = (userId, token, body) => {
   }
 };
 
+// updateFromCart
 export const updateFromUserCart = (userId, token, { productId, quantity }) => {
   try {
     const result = fetch(`${API}/user/updatecart/${userId}`, {
@@ -107,6 +110,7 @@ export const updateFromUserCart = (userId, token, { productId, quantity }) => {
   }
 };
 
+// deleteFromCart
 export const deleteFromCart = (userId, token, productId) => {
   try {
     const result = fetch(`${API}/user/deletecart/${userId}`, {
@@ -125,6 +129,7 @@ export const deleteFromCart = (userId, token, productId) => {
   }
 };
 
+// createOrder
 export const createOrder = (
   userId,
   token,
@@ -148,6 +153,7 @@ export const createOrder = (
   }
 };
 
+// razorPayOrder
 export const razorPayOrder = async (body) => {
   try {
     const result = await fetch(`${API}/order/razorpayorder`, {
@@ -166,6 +172,7 @@ export const razorPayOrder = async (body) => {
   }
 };
 
+// paymentVerify
 export const paymentVerify = async (body) => {
   try {
     const result = await fetch(`${API}/order/verify`, {
@@ -183,9 +190,9 @@ export const paymentVerify = async (body) => {
   }
 };
 
+// updateOrderConfirmation
 export const updateOrderConfirmation = async (userId, token, orderId, body) => {
   try {
-    // const result = await fetch(`${API}/order/${orderId}/${userId}`, {
     const result = await fetch(
       `${API}/order/orderconfirmation/${orderId}/${userId}`,
       {
@@ -205,6 +212,7 @@ export const updateOrderConfirmation = async (userId, token, orderId, body) => {
   }
 };
 
+// getUserOrders
 export const getUserOrders = async (userId, token) => {
   try {
     const result = await fetch(`${API}/user/orders/${userId}`, {
@@ -632,6 +640,29 @@ export const addEmployeeOrder = async (userId, token, orderId, employeeId) => {
           Authorization: `Bearer ${token}`,
           Accept: "application/json",
         },
+      }
+    ).then((res) => res.json());
+
+    return result;
+  } catch (error) {
+    console.log("errorMessage", error);
+    return error;
+  }
+};
+
+// updateEmployeeStatus
+export const updateEmployeeStatus = (userId, token, Estatus) => {
+  try {
+    const result = fetch(
+      `${API}/employee/updateemployeestatus/${userId}/${userId}`,
+      {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ Estatus }),
       }
     ).then((res) => res.json());
 
