@@ -309,12 +309,12 @@ a {
   margin-bottom: 1.3em;
 }
 
-.popup-form-p{
+.popup-form-p {
   font-size: 0.875rem;
   font-weight: 600;
 }
 
-.popup-form-link{
+.popup-form-link {
   color: var(--main-color);
 }
 
@@ -2004,7 +2004,12 @@ tr {
   flex-direction: column;
 }
 
-.signup-popup-btn{
+.signup-header-p {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.signup-popup-btn {
   background-color: var(--main-color);
 }
 
@@ -2025,7 +2030,16 @@ tr {
   flex-direction: column;
 }
 
-.login-popup-btn{
+.popup-header-p {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.popup-header-link {
+  color: var(--main-color);
+}
+
+.login-popup-btn {
   background-color: var(--main-color);
 }
 

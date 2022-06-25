@@ -1,11 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { login, authenticate } from "../auth";
-import { AuthContext } from "../context/Context";
-import Cross from "../icons/cross-black.svg";
 
 const Login = () => {
-  const { setAuthActive } = useContext(AuthContext);
-
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -15,6 +12,8 @@ const Login = () => {
   });
 
   const { email, password, error, loading, success } = values;
+
+  const naviagte = useNavigate();
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
@@ -68,17 +67,9 @@ const Login = () => {
         });
       }
       authenticate(data);
-      setAuthActive(null);
-      console.log("success");
-      return setValues({
-        email: "",
-        password: "",
-        success: true,
-        error: "",
-        loading: "",
-      });
+
+      return naviagte("/");
     } catch (error) {
-      console.log(error);
       return setValues({
         ...values,
         loading: "",
@@ -106,15 +97,17 @@ const Login = () => {
   };
   return (
     <section className="login-section">
-      <div className="black-background">
-        <div className="popup-big-sec">
+      <div className="wrap login-wrap">
+        <div className="popup-small-sec login-popup">
           <div className="popup-group">
-            <div className="popup-head-sec">
+            <div className="popup-head-sec login-head-sec">
               <h1 className="popup-header">Log In</h1>
-              <div className="cross-sec" onClick={() => setAuthActive(null)}>
-              <img src={Cross} alt="" className="cross-img" />
-
-              </div>
+              <p className="popup-header-p">
+                Don't have an account ?{" "}
+                <Link to="/signup" className="popup-header-link">
+                  Signup
+                </Link>
+              </p>
             </div>
 
             <div className="popup-form">
@@ -140,7 +133,10 @@ const Login = () => {
                   />
                 </div>
               </div>
-              <button className="popup-form-btn" onClick={onSubmit}>
+              <button
+                className="popup-form-btn login-popup-btn"
+                onClick={onSubmit}
+              >
                 Log In
               </button>
             </div>

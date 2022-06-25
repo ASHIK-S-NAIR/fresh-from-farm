@@ -1,11 +1,8 @@
-import React, { useState, useContext } from "react";
-import { AuthContext } from "../context/Context";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { signup, login, authenticate } from "../auth";
-import Cross from "../icons/cross-black.svg";
 
 const Signup = () => {
-  const { setAuthActive } = useContext(AuthContext);
-
   const [values, setValues] = useState({
     name: "",
     email: "",
@@ -31,6 +28,8 @@ const Signup = () => {
     loading,
     success,
   } = values;
+
+  const navigate = useNavigate();
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
@@ -128,20 +127,7 @@ const Signup = () => {
         });
       }
       authenticate(data);
-      setAuthActive(null);
-      
-      return setValues({
-        name: "",
-        email: "",
-        phoneNumber: "",
-        password: "",
-        confirmPassword: "",
-        houseName: "",
-        streetName: "",
-        success: true,
-        error: "",
-        loading: "",
-      });
+      return navigate("/");
     } catch (error) {
       console.log(error);
       return setValues({
@@ -172,15 +158,17 @@ const Signup = () => {
 
   return (
     <section className="signup-section">
-      <div className="black-background">
-        <div className="popup-big-sec">
+      <div className="wrap signup-wrap">
+        <div className="popup-small-sec signup-popup">
           <div className="popup-group">
-            <div className="popup-head-sec">
+            <div className="popup-head-sec signup-head-sec">
               <h1 className="popup-header">Sign Up</h1>
-              <div className="cross-sec" onClick={() => setAuthActive(null)}>
-              <img src={Cross} alt="" className="cross-img" />
-
-              </div>
+              <p className="popup-header-p">
+                Already a member ?{" "}
+                <Link to="/login" className="popup-header-link">
+                  Log In
+                </Link>
+              </p>
             </div>
 
             <div className="popup-form">
@@ -258,7 +246,10 @@ const Signup = () => {
                   </div>
                 </div>
               </div>
-              <button className="popup-form-btn" onClick={onSubmit}>
+              <button
+                className="popup-form-btn signup-popup-btn"
+                onClick={onSubmit}
+              >
                 Sign Up
               </button>
             </div>
