@@ -4,7 +4,6 @@ import { isAuthenticated } from "../auth";
 import { getUser } from "../user";
 import Profile from "../icons/profile.svg";
 import Accounts from "./Accounts";
-// import Orders from "./Orders";
 import Settings from "./Settings";
 
 const AdminBoard = () => {
@@ -51,9 +50,13 @@ const AdminBoard = () => {
             <img className="userBoard-user-detail-image" src={Profile} alt="" />
             <div className="userBoard-user-detail-info">
               <p className="userBoard-user-detail-greetings">Hello</p>
-              <h3 className="userBoard-user-detail-name">
-                {name.length > 6 ? name.substring(0, 6) : name}
-              </h3>
+              <div className="userBoard-user-detail-sec">
+                <h3 className="userBoard-user-detail-name">
+                  {name.length > 6 ? name.substring(0, 6) : name}
+                </h3>
+
+                <p className="userBoard-user-detail-role">(Admin)</p>
+              </div>
             </div>
           </div>
           <ul className="userBoard-left-ul">

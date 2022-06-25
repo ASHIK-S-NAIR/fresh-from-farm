@@ -807,9 +807,20 @@ a {
   font-weight: 200;
 }
 
+.userBoard-user-detail-sec{
+  display: flex;
+  align-items: center;
+}
+
 .userBoard-user-detail-name {
   font-size: 1.2rem;
   font-weight: 500;
+  margin-right: 0.3em;
+}
+
+.userBoard-user-detail-role{
+  font-size: 0.7rem;
+  font-weight: 300;
 }
 
 .userBoard-user-detail-info {
@@ -1384,32 +1395,32 @@ tr {
   width: fit-content;
   font-weight: 600;
   border-radius: 5px;
-  box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+  /* box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.1); */
 }
 
 .userBoard-right-customer-order-table-body-div.Not-Confirmed {
-  background-color: #eff8bc;
-  color: #434401;
+  background-color: #EFFE96;
+  color: #3D3006;
 }
 
 .userBoard-right-customer-order-table-body-div.Ordered {
-  background-color: #dce7f9;
-  color: #1124ce;
+  background-color: #C5D7F3;
+  color: #07169D;
 }
 
 .userBoard-right-customer-order-table-body-div.Processing {
-  background-color: #fcefd6;
-  color: #8e3e04;
+  background-color: #FDCFA4;
+  color: #733406;
 }
 
 .userBoard-right-customer-order-table-body-div.Picking-Up {
-  background-color: #fed7fa;
-  color: #520354;
+  background-color: #FCC1F6;
+  color: #440845;
 }
 
 .userBoard-right-customer-order-table-body-div.Out-For-Delivery {
-  background-color: #d8fedc;
-  color: #02530a;
+  background-color: #BDFDC3;
+  color: #013A07;
 }
 
 .userBoard-right-customer-order-table-body-div.Delivered {
@@ -1418,8 +1429,8 @@ tr {
 }
 
 .userBoard-right-customer-order-table-body-div.Cancelled {
-  background-color: #fedbdb;
-  color: #710303;
+  background-color: #FCCCCC;
+  color: #9C1818;
 }
 
 /* order section ends */
@@ -1471,11 +1482,17 @@ tr {
 
 .adminDashPanel-right-section {
   width: 100%;
+  /* background-color: #f5f5f5; */
   /* border: 1px solid green; */
 }
 
 .adminDashPanel-right-subsection {
   width: 100%;
+  /* background-color: #ffffff; */
+  /* padding: 2em; */
+  border-radius: 10px;
+  /* border: 1px solid red; */
+  /* margin-bottom: 5em; */
 }
 
 .adminDashPanel-right-header {
@@ -1486,60 +1503,64 @@ tr {
 }
 
 .adminDashPanel-dashboard-status-sec {
-  box-shadow: 1px 1px 10px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 1px 1px 10px 10px rgba(0, 0, 0, 0.02);
   border-radius: 5px;
   display: grid;
   place-items: center;
   width: 20%;
   height: 6.5em;
   position: relative;
-  margin-bottom: 5em;
 }
 
 .dashboard-status-sec-orders {
-  background: rgb(28, 94, 222);
+  /* background: rgb(28, 94, 222);
   background: linear-gradient(
     90deg,
     rgba(28, 94, 222, 1) 0%,
     rgba(54, 120, 247, 1) 100%
-  );
+  ); */
+  background-color: #cbe5fa;
 }
 
 .dashboard-status-sec-products {
-  background: rgb(252, 97, 48);
+  /* background: rgb(252, 97, 48);
   background: linear-gradient(
     90deg,
     rgba(252, 97, 48, 1) 0%,
     rgba(250, 105, 60, 1) 100%
-  );
+  ); */
+  background-color: #fbeacc;
 }
 
 .dashboard-status-sec-employers {
-  background: rgb(70, 194, 112);
+  /* background: rgb(70, 194, 112);
   background: linear-gradient(
     90deg,
     rgba(70, 194, 112, 1) 0%,
     rgba(78, 215, 124, 1) 100%
-  );
+  ); */
+  background-color: #bef2c2;
 }
 
 .dashboard-status-sec-customers {
-  background: rgb(199, 55, 158);
+  /* background: rgb(199, 55, 158);
   background: linear-gradient(
     90deg,
     rgba(199, 55, 158, 1) 0%,
     rgba(236, 64, 187, 1) 100%
-  );
+  ); */
+  background-color: #ffdbdb;
 }
 
 .dashboard-status-tag {
   position: absolute;
   left: 1em;
   top: 1em;
-  color: #fff;
+  /* color: #fff; */
+  color: var(--primary-color);
   font-size: 0.75rem;
-  opacity: 0.8;
-  font-weight: 400;
+  opacity: 1;
+  font-weight: 500;
 }
 
 .dashboard-status-img {
@@ -1547,11 +1568,12 @@ tr {
   right: 0.5em;
   bottom: 0;
   width: 40%;
-  opacity: 0.13;
+  opacity: 0.12;
 }
 
 .dashboard-status-value {
-  color: #fff;
+  /* color: #fff; */
+  color: var(--primary-color);
   font-size: 1.875rem;
 }
 
@@ -1608,32 +1630,31 @@ tr {
   width: fit-content;
   font-weight: 600;
   border-radius: 5px;
-  box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+  /* box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.1); */
 }
 
 .adminDashPanel-right-table-body-div.Not-Confirmed {
-  background-color: #eff8bc;
-  color: #434401;
+  background-color: #EFFE96;
+  color: #3D3006;
 }
 
 .adminDashPanel-right-table-body-div.Ordered {
-  background-color: #dce7f9;
-  color: #1124ce;
+  background-color: #C5D7F3;
+  color: #07169D;
 }
-
 .adminDashPanel-right-table-body-div.Processing {
-  background-color: #fcefd6;
-  color: #8e3e04;
+  background-color: #FDCFA4;
+  color: #733406;
 }
 
 .adminDashPanel-right-table-body-div.Picking-Up {
-  background-color: #fed7fa;
-  color: #520354;
+  background-color: #FCC1F6;
+  color: #440845;
 }
 
 .adminDashPanel-right-table-body-div.Out-For-Delivery {
-  background-color: #d8fedc;
-  color: #02530a;
+  background-color: #BDFDC3;
+  color: #013A07;
 }
 
 .adminDashPanel-right-table-body-div.Delivered {
@@ -1642,8 +1663,8 @@ tr {
 }
 
 .adminDashPanel-right-table-body-div.Cancelled {
-  background-color: #fedbdb;
-  color: #710303;
+  background-color: #FCCCCC;
+  color: #9C1818;
 }
 
 .adminDashPanel-right-table-body-div.Pending {
@@ -1663,6 +1684,7 @@ tr {
 .dashboard-subSection {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 4em;
 }
 
 .orders-filter-subSection {
@@ -1777,30 +1799,15 @@ tr {
 }
 
 .dashboard-status-sec-TotalDeliveries {
-  background: rgb(28, 94, 222);
-  background: linear-gradient(
-    90deg,
-    rgba(28, 94, 222, 1) 0%,
-    rgba(54, 120, 247, 1) 100%
-  );
+  background-color: #cbe5fa;
 }
 
 .dashboard-status-sec-DeliveryStatus {
-  background: rgb(252, 97, 48);
-  background: linear-gradient(
-    90deg,
-    rgba(252, 97, 48, 1) 0%,
-    rgba(250, 105, 60, 1) 100%
-  );
+  background-color: #ffdbdb;
 }
 
 .dashboard-status-sec-EmpoyeeStatus {
-  background: rgb(70, 194, 112);
-  background: linear-gradient(
-    90deg,
-    rgba(70, 194, 112, 1) 0%,
-    rgba(78, 215, 124, 1) 100%
-  );
+  background-color: #bef2c2;
 }
 
 .employeeBoard-dashboard-status-sec {
@@ -1867,32 +1874,35 @@ tr {
   width: fit-content;
   font-weight: 600;
   border-radius: 5px;
-  box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+  /* box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.1); */
 }
 
 .employeeBoard-right-table-body-div.Not-Confirmed {
-  background-color: #eff8bc;
-  color: #434401;
+  background-color: #EFFE96;
+  color: #3D3006;
 }
 
 .employeeBoard-right-table-body-div.Ordered {
-  background-color: #dce7f9;
-  color: #1124ce;
+  background-color: #C5D7F3;
+  color: #07169D;
 }
+
+
 
 .employeeBoard-right-table-body-div.Processing {
-  background-color: #fcefd6;
-  color: #8e3e04;
+  background-color: #FDCFA4;
+  color: #733406;
 }
 
+
 .employeeBoard-right-table-body-div.Picking-Up {
-  background-color: #fed7fa;
-  color: #520354;
+  background-color: #FCC1F6;
+  color: #440845;
 }
 
 .employeeBoard-right-table-body-div.Out-For-Delivery {
-  background-color: #d8fedc;
-  color: #02530a;
+  background-color: #BDFDC3;
+  color: #013A07;
 }
 
 .employeeBoard-right-table-body-div.Delivered {
@@ -1901,8 +1911,8 @@ tr {
 }
 
 .employeeBoard-right-table-body-div.Cancelled {
-  background-color: #fedbdb;
-  color: #710303;
+  background-color: #FCCCCC;
+  color: #9C1818;
 }
 
 .employeeBoard-right-table-body-div.Pending {
@@ -2044,3 +2054,5 @@ tr {
 }
 
 /* signup-section ends */
+
+
