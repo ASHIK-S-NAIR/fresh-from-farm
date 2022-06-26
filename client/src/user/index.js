@@ -437,7 +437,8 @@ export const employeeUpdatePaymentStatus = async (
 };
 
 // createProducts
-export const createProduct = async (userId, token, value) => {
+export const createProduct = async (userId, token, formData) => {
+  console.log("formData", formData)
   try {
     const result = await fetch(`${API}/product/create/${userId}`, {
       method: "POST",
@@ -446,7 +447,7 @@ export const createProduct = async (userId, token, value) => {
         Accept: "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(value),
+      body: JSON.stringify(formData),
     }).then((res) => res.json());
 
     return result;

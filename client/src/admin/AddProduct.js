@@ -22,31 +22,35 @@ const AddProduct = ({ setAddProductActive }) => {
   };
 
   const handleFileChange = (e) => {
-    const img = {
-      preview: URL.createObjectURL(e.target.files[0]),
-      data: e.target.file[0],
-    };
-    setValues({ ...values, pImg: img });
+    // const img = {
+    //   preview: URL.createObjectURL(e.target.files[0]),
+    //   data: e.target.file[0],
+    // };
+    setValues({ ...values, pImg: e.target.files[0] });
+    console.log("pImg", pImg);
   };
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("pImg", pImg);
+    formData.append("pName", pName);
+    formData.append("pDescription", pDescription);
+    formData.append("pStock", pStock);
+    formData.append("pPrice", pPrice);
+    formData.append("pCategory", pCategory);
     try {
-      const data = await createProduct(user._id, token, {
-        pName,
-        pDescription,
-        pStock,
-        pPrice,
-        pCategory,
-        pImg,
-      });
+      const data = await createProduct(user._id, token, formData);
 
       if (data.error) {
         return console.log(data.error);
       } else {
         return setAddProductActive(null);
       }
-    } catch (error) {}
+    } catch (error) {
+      return console.log(error);
+    }
   };
 
   return (
@@ -131,6 +135,8 @@ const AddProduct = ({ setAddProductActive }) => {
                   <div className="popup-form-input-div adminDashPanel-addProducts-input-div">
                     <input
                       type="file"
+                      name="pImg"
+                      accept=".png, .jpg, .jpeg"
                       className="popup-form-input"
                       onChange={handleFileChange}
                     />

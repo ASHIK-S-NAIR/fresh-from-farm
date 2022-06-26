@@ -1,7 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { isAuthenticated, logout } from "../auth/index";
-import cart from "../icons/cart.svg";
+import { CartContext } from "../context/Context";
+import CartIcon from "../icons/cart.svg";
 import {
   getEmployeeStatus,
   getUserCart,
@@ -11,8 +12,11 @@ import {
 const Nav = () => {
   const [active, setActive] = useState(false);
   const [toggled, setToggled] = useState(false);
-  const [cartCount, setCartCount] = useState();
+  // const [cartCount, setCartCount] = useState();
+
   const [employeeStatus, setEmployeeStatus] = useState();
+
+  const { cart, setCart } = useContext(CartContext);
 
   const navigate = useNavigate();
 
@@ -30,15 +34,20 @@ const Nav = () => {
     setToggled(!toggled);
   };
 
-  const getCartCount = async (user, token) => {
-    const data = await getUserCart(user._id, token);
-    if (data.error) {
-      console.log(data.error);
-    } else {
-      console.log(data.cart.length);
-      return setCartCount(data.cart.length);
-    }
-  };
+  // const getCartCount = async (user, token) => {
+  //   try {
+  //     const data = await getUserCart(user._id, token);
+  //     if (data.error) {
+  //       console.log(data.error);
+  //     } else {
+  //       console.log("cart length type", typeof data.cart.length);
+  //       return setCartCount(data.cart.length);
+  //       // return data.cart.length;
+  //     }
+  //   } catch (error) {
+  //     return console.log(error);
+  //   }
+  // };
 
   const loadEmployeeStatus = async () => {
     try {
@@ -71,15 +80,14 @@ const Nav = () => {
 
   useEffect(() => {
     if (isAuthenticated()) {
-      getCartCount(user, token);
-    }
-  }, [cartCount]);
-
-  useEffect(() => {
-    if (isAuthenticated()) {
       loadEmployeeStatus(isAuthenticated().user._id, isAuthenticated().token);
     }
   }, []);
+
+  // useEffect(() => {
+
+  //   getCartCount(user, token);
+  // }, []);
 
   return (
     <section className="nav-section">
@@ -124,8 +132,8 @@ const Nav = () => {
               <li className="nav-li">
                 <Link to={`/cart/${user._id}`}>
                   <div className="nav-cart-icon-sec">
-                    <div className="nav-cart-icon-value">{cartCount}</div>
-                    <img src={cart} alt="" className="nav-cart-icon" />
+                    <div className="nav-cart-icon-value">{cart.length}</div>
+                    <img src={CartIcon} alt="" className="nav-cart-icon" />
                   </div>
                 </Link>
               </li>

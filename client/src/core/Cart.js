@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { isAuthenticated } from "../auth";
+import { CartContext } from "../context/Context";
 import {
   deleteFromCart,
   getUser,
-  getUserCart,
+  // getUserCart,
   updateFromUserCart,
 } from "../user";
 import CartItem from "./CartItem";
-// import { getProduct } from "./helper/productDetailHelper";
 
 const Cart = () => {
-  const [cart, setCart] = useState([]);
+  const { cart, setCart, preLoadCart } = useContext(CartContext);
+  // const [cart, setCart] = useState([]);
   const [subTotal_items, setSubTotal_items] = useState(0);
   const [subTotal_value, setSubTotal_value] = useState(0);
   const [shippingAddress_state, setShippingAddress_state] = useState("default");
@@ -27,16 +28,6 @@ const Cart = () => {
 
   const { shippingAddress_houseName, shippingAddress_streetName } =
     shippingAddress;
-
-  const preLoadCart = async (userId, token) => {
-    try {
-      const data = await getUserCart(userId, token);
-      // console.log("cart", data);
-      return setCart(data.cart);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const preLoadShippingAddress = async (userId, token) => {
     try {
@@ -54,10 +45,6 @@ const Cart = () => {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    preLoadCart(userId, token);
-  }, [userId, token]);
 
   useEffect(() => {
     preLoadShippingAddress(userId, token);
@@ -79,6 +66,10 @@ const Cart = () => {
   useEffect(() => {
     setSubTotal_items(cart.length);
   }, [cart]);
+
+  useEffect(() => {
+    preLoadCart(userId, token);
+  }, []);
 
   const updateQuantity = async (productId, quantity) => {
     try {
