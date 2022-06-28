@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { isAuthenticated } from "../auth";
 import CrossIcon from "../icons/cross-black.svg";
 import { createProduct } from "../user";
 
 const AddProduct = ({ setAddProductActive }) => {
   const [values, setValues] = useState({
-    pName: "",
-    pDescription: "",
-    pStock: "",
-    pCategory: "",
-    pPrice: "",
-    pImg: "",
+    pName: "kumar",
+    pDescription: "munnar kee caroot",
+    pStock: 85,
+    pCategory:"vegetable",
+    pPrice: 41,
   });
 
-  const { pName, pDescription, pStock, pCategory, pPrice, pImg } = values;
+  const [file, setFile] = useState();
+
+  const { pName, pDescription, pStock, pCategory, pPrice } = values;
 
   const { user, token } = isAuthenticated();
 
@@ -22,19 +23,16 @@ const AddProduct = ({ setAddProductActive }) => {
   };
 
   const handleFileChange = (e) => {
-    // const img = {
-    //   preview: URL.createObjectURL(e.target.files[0]),
-    //   data: e.target.file[0],
-    // };
-    setValues({ ...values, pImg: e.target.files[0] });
-    console.log("pImg", pImg);
+    const file = e.target.files[0];
+    setFile(file);
+    console.log("file", file);
   };
 
   const onSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("pImg", pImg);
+    formData.append("pImg", file);
     formData.append("pName", pName);
     formData.append("pDescription", pDescription);
     formData.append("pStock", pStock);
@@ -46,6 +44,7 @@ const AddProduct = ({ setAddProductActive }) => {
       if (data.error) {
         return console.log(data.error);
       } else {
+        console.log("Data", data);
         return setAddProductActive(null);
       }
     } catch (error) {
@@ -68,7 +67,10 @@ const AddProduct = ({ setAddProductActive }) => {
               </div>
             </div>
 
-            <form className="popup-form" encType="multipart/form-data">
+            <form
+              className="popup-form"
+              onSubmit={onSubmit}
+            >
               <div className="popup-form-single-group">
                 <div className="popup-form-group">
                   <label className="popup-form-label">Product Name</label>
@@ -136,20 +138,28 @@ const AddProduct = ({ setAddProductActive }) => {
                     <input
                       type="file"
                       name="pImg"
-                      accept=".png, .jpg, .jpeg"
+                      accept="image/*"
                       className="popup-form-input"
                       onChange={handleFileChange}
                     />
-                    <button className="popup-form-input-btn">
+                    {/* <button type="submit" className="popup-form-input-btn">
                       Choose File
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </div>
+              <div className="popup-form-single-group">
+                <div className="popup-form-group">
+                  <button
+                    className="popup-form-btn"
+                    type="submit"
+                  
+                  >
+                    Add Product
+                  </button>
+                </div>
+              </div>
             </form>
-            <button className="popup-form-btn" onClick={onSubmit}>
-              Add Product
-            </button>
           </div>
         </div>
       </div>

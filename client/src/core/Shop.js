@@ -26,43 +26,48 @@ const Shop = () => {
       </div>
 
       <div className="wrap products-wrap">
-        {products.map((product, index) => {
-          return (
-            <Link to={`/product/${product._id}`} key={index}>
-              <div className="product-sec">
-                {product.pStock === 0 && (
-                  <div className="outOfStock">
-                    <div className="outOfStock-div">
-                      <p className="outOfStock-p">Out Of Stock</p>
+        {products &&
+          products.map((product, index) => {
+            return (
+              <Link to={`/product/${product._id}`} key={index}>
+                <div className="product-sec">
+                  {product.pStock === 0 && (
+                    <div className="outOfStock">
+                      <div className="outOfStock-div">
+                        <p className="outOfStock-p">Out Of Stock</p>
+                      </div>
                     </div>
+                  )}
+                  <div
+                    className={`product-category-sec ${
+                      product.pCategory === "vegetable"
+                        ? "color-green"
+                        : "color-orange"
+                    }`}
+                  >
+                    <p className="product-category">
+                      {product.pCategory === "vegetable" ? "Veg" : "Fruit"}
+                    </p>
                   </div>
-                )}
-                <div
-                  className={`product-category-sec ${
-                    product.pCategory === "vegetable"
-                      ? "color-green"
-                      : "color-orange"
-                  }`}
-                >
-                  <p className="product-category">
-                    {product.pCategory === "vegetable" ? "Veg" : "Fruit"}
-                  </p>
+                  {product && (
+                    <img
+                      className="adminDashPanel-product-img"
+                      src={`${API}/product/photo/${product.pImg.key}`}
+                      alt=""
+                    />
+                  )}
+
+                  <div className="product-info">
+                    <h2 className="product-name">{product.pName}</h2>
+                    <h3 className="product-stock">
+                      {product.pStock} Kg in stock
+                    </h3>
+                    <h1 className="product-price">{product.pPrice}/Kg</h1>
+                  </div>
                 </div>
-                <img
-                  src={`${API}/product/photo/${product._id}`}
-                  className="product-img"
-                />
-                <div className="product-info">
-                  <h2 className="product-name">{product.pName}</h2>
-                  <h3 className="product-stock">
-                    {product.pStock} Kg in stock
-                  </h3>
-                  <h1 className="product-price">{product.pPrice}/Kg</h1>
-                </div>
-              </div>
-            </Link>
-          );
-        })}
+              </Link>
+            );
+          })}
       </div>
     </section>
   );

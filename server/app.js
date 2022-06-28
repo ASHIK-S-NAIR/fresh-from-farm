@@ -11,7 +11,11 @@ const cors = require("cors");
 const port = process.env.PORT || 8000;
 
 // Middlewares
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(
+  bodyParser.urlencoded({
+    extended: false,
+  })
+);
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors());

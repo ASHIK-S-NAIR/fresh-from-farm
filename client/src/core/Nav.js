@@ -3,11 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { isAuthenticated, logout } from "../auth/index";
 import { CartContext } from "../context/Context";
 import CartIcon from "../icons/cart.svg";
-import {
-  getEmployeeStatus,
-  getUserCart,
-  updateEmployeeStatus,
-} from "../user/index";
+import { getEmployeeStatus, updateEmployeeStatus } from "../user/index";
 
 const Nav = () => {
   const [active, setActive] = useState(false);
@@ -33,21 +29,6 @@ const Nav = () => {
   const toggle = () => {
     setToggled(!toggled);
   };
-
-  // const getCartCount = async (user, token) => {
-  //   try {
-  //     const data = await getUserCart(user._id, token);
-  //     if (data.error) {
-  //       console.log(data.error);
-  //     } else {
-  //       console.log("cart length type", typeof data.cart.length);
-  //       return setCartCount(data.cart.length);
-  //       // return data.cart.length;
-  //     }
-  //   } catch (error) {
-  //     return console.log(error);
-  //   }
-  // };
 
   const loadEmployeeStatus = async () => {
     try {
@@ -79,7 +60,7 @@ const Nav = () => {
   };
 
   useEffect(() => {
-    if (isAuthenticated()) {
+    if (isAuthenticated() && isAuthenticated().user.role === 0) {
       loadEmployeeStatus(isAuthenticated().user._id, isAuthenticated().token);
     }
   }, []);

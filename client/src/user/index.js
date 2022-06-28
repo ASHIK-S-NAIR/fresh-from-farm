@@ -438,20 +438,21 @@ export const employeeUpdatePaymentStatus = async (
 
 // createProducts
 export const createProduct = async (userId, token, formData) => {
-  console.log("formData", formData)
+  console.log("formData type", typeof formData);
   try {
     const result = await fetch(`${API}/product/create/${userId}`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         Accept: "application/json",
+
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(formData),
+      body: formData,
     }).then((res) => res.json());
 
     return result;
   } catch (error) {
+    console.log("error", error.message);
     return error;
   }
 };

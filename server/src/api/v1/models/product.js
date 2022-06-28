@@ -16,8 +16,18 @@ const productSchema = new Schema(
       maxlength: 2000,
     },
     pImg: {
-      data: Buffer,
-      contentType: String,
+      ETag: {
+        type: String,
+      },
+      Location: {
+        type: String,
+      },
+      key: {
+        type: String,
+      },
+      Bucket: {
+        type: String,
+      },
     },
     pPrice: {
       type: Number,

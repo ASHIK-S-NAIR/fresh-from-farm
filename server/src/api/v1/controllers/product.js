@@ -1,11 +1,15 @@
 const Product = require("../models/product");
 const User = require("../models/user");
-// const multer = require("multer");
 const fs = require("fs");
-const path = require("path");
+const util = require("util");
+const unlinkFile = util.promisify(fs.unlink);
+
+const { uploadFile, getFileStream } = require("../s3");
 
 // createProduct
 exports.createProduct = async (req, res) => {
+  console.log("reasched here")
+  console.log("req.body", req.body)
   try {
     var obj = {
       pName: req.body.pName,
@@ -13,18 +17,30 @@ exports.createProduct = async (req, res) => {
       pPrice: req.body.pPrice,
       pStock: req.body.pStock,
       pCategory: req.body.pCategory,
-      pImg: {
-        data: fs.readFileSync(
-          path.join(process.cwd() + "/uploads/" + req.file.filename)
-        ),
-        contentType: "image/jpeg",
-      },
     };
-
     const product = await Product.create(obj);
     await product.save();
 
-    return res.json(product);
+    const file = req.file;
+    const result = await uploadFile(file);
+    await unlinkFile(file.path);
+
+    await Product.findByIdAndUpdate(
+      { _id: product._id },
+      {
+        $set: {
+          pImg: {
+            Etag: result.Etag,
+            Location: result.Location,
+            key: result.key,
+            Bucket: result.Bucket,
+          },
+        },
+      },
+      { new: true, useFindAndModify: false }
+    );
+
+    return res.json(result);
   } catch (error) {
     console.log("Error Message", error.message);
     return res.status(400).json({
@@ -96,11 +112,11 @@ exports.getAllProducts = async (req, res) => {
     const category = req.params.category;
 
     if (category === "all") {
-      const products = await Product.find({}, { pImg: 0 });
+      const products = await Product.find({});
       return res.json(products);
     }
 
-    const products = await Product.find({ pCategory: category }, { pImg: 0 });
+    const products = await Product.find({ pCategory: category }, { });
     return res.json(products);
   } catch (error) {
     return res.json({
@@ -133,7 +149,7 @@ exports.updateStock = async (req, res, next) => {
       updateOne: {
         filter: { _id: prod.product },
         update: { $inc: { pStock: -prod.quantity, pSold: +prod.quantity } },
-      }
+      },
     };
   });
 
@@ -158,10 +174,9 @@ exports.countProducts = async (req, res) => {
 };
 
 // middleware
-exports.photo = (req, res, next) => {
-  if (req.product.pImg.data) {
-    res.set("Content-Type", req.product.pImg.contentType);
-    return res.send(req.product.pImg.data);
-    next();
-  }
+exports.photo = (req, res) => {
+  const key = req.params.key;
+
+  const readStream = getFileStream(key);
+  readStream.pipe(res);
 };

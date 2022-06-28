@@ -38,7 +38,12 @@ router.param("employeeId", getEmployeeById);
 router.param("orderId", getOrderById);
 
 // routes
+
 // create employee
+// @type POST
+// @route /api/v1/employee/create/:employeeUserEmail/:userId
+// @desc route to create employee
+// @access PRIVATE
 router.post(
   "/employee/create/:employeeUserEmail/:userId",
   isSignedIn,

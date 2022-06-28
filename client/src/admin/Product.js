@@ -122,9 +122,14 @@ const Product = () => {
                     <td className="adminDashPanel-right-table-body-value">
                       <img
                         className="adminDashPanel-product-img"
-                        src={`${API}/product/photo/${product._id}`}
+                        src={`${API}/product/photo/${product.pImg.key}`}
                         alt=""
                       />
+                      {/* <img
+                        className="adminDashPanel-product-img"
+                        src={product.pImg}
+                        alt=""
+                      /> */}
                     </td>
                     <td className="adminDashPanel-right-table-body-value">
                       {product.pName}
