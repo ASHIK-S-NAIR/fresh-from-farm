@@ -12,7 +12,6 @@ const {
   deleteFromUserCart,
   changePassword,
   getUserCart,
-  updateQuantity,
   countCustomers,
   getUserOrders,
   getCustomers,

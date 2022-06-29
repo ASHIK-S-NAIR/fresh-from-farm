@@ -109,9 +109,16 @@ const Dashboard = () => {
     <section className="adminDashPanel-right-section dashboard-section">
       <div className="adminDashPanel-right-subsection dashboard-subSection">
         <div className="adminDashPanel-dashboard-status-sec dashboard-status-sec-orders">
-          <p className="dashboard-status-tag">Orders</p>
-          <h1 className="dashboard-status-value">{orderStatus}</h1>
-          <img src={CartIcon} alt="" className="dashboard-status-img" />
+          <div className="adminDashPanel-dashboard-status-left">
+            <p className="dashboard-status-tag">Orders</p>
+            <h1 className="dashboard-status-value">{orderStatus}</h1>
+            <p className="dashboard-status-comment">5 orders not delivered</p>
+          </div>
+          <div className="adminDashPanel-dashboard-status-right">
+            <div className="dashboard-status-img-sec">
+              <img src={CartIcon} alt="" className="dashboard-status-img" />
+            </div>
+          </div>
         </div>
         <div className="adminDashPanel-dashboard-status-sec dashboard-status-sec-products">
           <p className="dashboard-status-tag">Products</p>

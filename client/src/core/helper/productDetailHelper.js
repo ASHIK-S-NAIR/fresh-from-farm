@@ -1,5 +1,4 @@
 import { API } from "../../backend";
-const axios = require("axios");
 
 // getProduct
 export const getProduct = async (productId) => {
@@ -33,6 +32,25 @@ export const getAllProducts = async (category) => {
   }
 };
 
+// updateProduct
+export const updateProduct = async (userId, token, productId) => {
+  try {
+    const result = await fetch(`${API}/product/${productId}/${userId}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+      },
+    }).then((res) => res.json());
+
+    return result;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+// deleteProduct
 export const deleteProduct = async (userId, token, productId) => {
   try {
     const result = await fetch(`${API}/product/${productId}/${userId}`, {

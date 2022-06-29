@@ -1,9 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
-// const uuid = require("uuid");
-// const { v4 } = uuid;
-
 
 const {
   getProductById,
@@ -26,6 +23,10 @@ router.param("productId", getProductById);
 
 // routes
 // createProduct
+// @type POST
+// @route /api/v1/product/create/:userId
+// @desc route to create product
+// @access PRIVATE
 router.post(
   "/product/create/:userId",
   isSignedIn,
@@ -36,9 +37,17 @@ router.post(
 );
 
 // getProduct
+// @type GET
+// @route /api/v1/product/:productId
+// @desc route to get product by productId
+// @access PUBLIC
 router.get("/product/:productId", getProduct);
 
 // updateProduct
+// @type PUT
+// @route /api/v1/product/:productId/:userId
+// @desc route to update product by productId
+// @access PRIVATE
 router.put(
   "/product/:productId/:userId",
   isSignedIn,
@@ -48,6 +57,10 @@ router.put(
 );
 
 // deleteProduct
+// @type DELETE
+// @route /api/v1/product/:productId/:userId
+// @desc route to delete product by productId
+// @access PRIVATE
 router.delete(
   "/product/:productId/:userId",
   isSignedIn,
@@ -57,15 +70,24 @@ router.delete(
 );
 
 // getAllProducts
+// @type GET
+// @route /api/v1/products/:category
+// @desc route to get all products
+// @access PUBLIC
 router.get("/products/:category", getAllProducts);
 
-// getAllCategoryProducts
-// router.get("/categoryproducts/:productId", getAllCategoryProducts);
-
 // getProductPhoto
+// @type GET
+// @route /api/v1/product/photo/:key
+// @desc route to get product photo by product key
+// @access PRIVATE
 router.get("/product/photo/:key", photo);
 
 // countProducts
+// @type GET
+// @route /api/v1/products/countproducts/:userId
+// @desc route to count all products
+// @access PRIVATE
 router.get(
   "/products/countproducts/:userId",
   isSignedIn,

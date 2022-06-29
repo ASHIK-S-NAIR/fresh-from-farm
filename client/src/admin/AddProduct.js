@@ -5,11 +5,11 @@ import { createProduct } from "../user";
 
 const AddProduct = ({ setAddProductActive }) => {
   const [values, setValues] = useState({
-    pName: "kumar",
-    pDescription: "munnar kee caroot",
-    pStock: 85,
-    pCategory:"vegetable",
-    pPrice: 41,
+    pName: "",
+    pDescription: "",
+    pStock: "",
+    pCategory:"",
+    pPrice: "",
   });
 
   const [file, setFile] = useState();

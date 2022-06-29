@@ -436,7 +436,7 @@ export const employeeUpdatePaymentStatus = async (
   }
 };
 
-// createProducts
+// createProduct
 export const createProduct = async (userId, token, formData) => {
   console.log("formData type", typeof formData);
   try {
@@ -444,7 +444,6 @@ export const createProduct = async (userId, token, formData) => {
       method: "POST",
       headers: {
         Accept: "application/json",
-
         Authorization: `Bearer ${token}`,
       },
       body: formData,

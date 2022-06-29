@@ -26,7 +26,6 @@ const {
 const { getUserById, updateUserRole } = require("../controllers/user");
 const {
   updateOrderEmployee,
-  getOrder,
   getOrderById,
 } = require("../controllers/order");
 
@@ -54,6 +53,10 @@ router.post(
 );
 
 // getEmployee
+// @type GET
+// @route /api/v1/employee/:employeeId/:userId
+// @desc route to get employee by userId
+// @access PRIVATE
 router.get(
   "/employee/:employeeId/:userId",
   isSignedIn,
@@ -63,6 +66,10 @@ router.get(
 );
 
 // getAllEmployees
+// @type GET
+// @route /api/v1/employee/:status/:userId
+// @desc route to get all employees withrespect to their status
+// @access PRIVATE
 router.get(
   "/employees/:status/:userId",
   isSignedIn,
@@ -72,6 +79,10 @@ router.get(
 );
 
 // updateEmployeeStatus
+// @type PUT
+// @route /api/v1/employee/updateemployeestatus/:employeeUserId/:userId
+// @desc route to update employee status by employee by employeeUserId
+// @access PRIVATE
 router.put(
   "/employee/updateemployeestatus/:employeeUserId/:userId",
   isSignedIn,
@@ -81,8 +92,12 @@ router.put(
 );
 
 // addEmployeeOrder
+// @type POST
+// @route /api/v1/employee/addemployeeorder/:employeeId/:orderId/:userId
+// @desc route to add delivery order into employee by employeeId
+// @access PRIVATE
 router.post(
-  "/employee/addemployeeorder/:employeeId/:orderId/:userId/",
+  "/employee/addemployeeorder/:employeeId/:orderId/:userId",
   isSignedIn,
   isAuthenticated,
   isAdmin,
@@ -91,8 +106,12 @@ router.post(
 );
 
 // deleteEmployee
+// @type DELETE
+// @route /api/v1/employee/:employeeId/:userId
+// @desc route to delete employee by employeeId
+// @access PRIVATE
 router.delete(
-  "/employee/:employeeId/:orderId/:userId",
+  "/employee/:employeeId/:userId",
   isSignedIn,
   isAuthenticated,
   isAdmin,
@@ -100,6 +119,10 @@ router.delete(
 );
 
 // countEmployee
+// @type GET
+// @route /api/v1/employers/countemployers/:userId
+// @desc route to count all employers
+// @access PRIVATE
 router.get(
   "/employers/countemployers/:userId",
   isSignedIn,
@@ -109,6 +132,10 @@ router.get(
 );
 
 // getAllDelveries
+// @type GET
+// @route /api/v1/employee/alldeliveries/:employeeUserId/:userId
+// @desc route to get all delivery orders of employee by employeeUserId
+// @access PRIVATE
 router.get(
   "/employee/alldeliveries/:employeeUserId/:userId",
   isSignedIn,
@@ -118,6 +145,10 @@ router.get(
 );
 
 // getCountDeliveries
+// @type GET
+// @route /api/v1/employee/countdeliveries/:employeeUserId/:userId
+// @desc route to count all delivery orders of employee by employeeUserId
+// @access PRIVATE
 router.get(
   "/employee/countdeliveries/:employeeUserId/:userId",
   isSignedIn,
@@ -127,6 +158,10 @@ router.get(
 );
 
 // getCountDeliveries
+// @type GET
+// @route /api/v1/employee/countnewdeliveries/:employeeUserId/:userId
+// @desc route to count new delivery orders of employee by employeeUserId
+// @access PRIVATE
 router.get(
   "/employee/countnewdeliveries/:employeeUserId/:userId",
   isSignedIn,
@@ -136,6 +171,10 @@ router.get(
 );
 
 // getEmployeeStatus
+// @type GET
+// @route /api/v1/employee/status/:employeeUserId/:userId
+// @desc route to get employee status by employeeUserId
+// @access PRIVATE
 router.get(
   "/employee/status/:employeeUserId/:userId",
   isSignedIn,

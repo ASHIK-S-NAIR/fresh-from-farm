@@ -3,9 +3,8 @@ import { API } from "../backend";
 import CrossIcon from "../icons/cross-black.svg";
 import moment from "moment";
 
-const ProductDetail = ({product, setProductDetail}) => {
-
-    console.log(product.pCategory);
+const ProductDetail = ({ product, setProductDetail }) => {
+  console.log(product.pCategory);
   return (
     <section className="productDetail-section">
       <div className="black-background">
@@ -18,36 +17,50 @@ const ProductDetail = ({product, setProductDetail}) => {
               </div>
             </div>
 
-            <div className="popup-form" >
+            <div className="popup-form">
               <div className="popup-form-double-group adminDashPanel-profileDetails-double-group">
                 <div className="popup-form-group adminDashPanel-productDetails-img-div">
-                  <img className="adminDashPanel-productDetails-img" src={`${API}/product/photo/${product._id}`} alt="" />
+                  <img
+                    className="adminDashPanel-productDetails-img"
+                    src={`${API}/product/photo/${product.pImg.key}`}
+                    alt=""
+                  />
                 </div>
                 <div className="popup-form-group">
                   <div className="popup-form-group adminDashPanel-profileDetails-group">
                     <label className="popup-form-label">Product Name</label>
-                    <p className="popup-form-value adminDashPanel-productDetails-value">{product.pName}</p>
+                    <p className="popup-form-value adminDashPanel-productDetails-value">
+                      {product.pName}
+                    </p>
                   </div>
                   <div className="popup-form-group adminDashPanel-profileDetails-group">
                     <label className="popup-form-label">
                       Product Description
                     </label>
-                    <p className="popup-form-value adminDashPanel-productDetails-value">{product.pDescription}</p>
+                    <p className="popup-form-value adminDashPanel-productDetails-value">
+                      {product.pDescription}
+                    </p>
                   </div>
                 </div>
               </div>
               <div className="popup-form-triple-group">
                 <div className="popup-form-group">
                   <label className="popup-form-label">Product Price</label>
-                  <p className="popup-form-value adminDashPanel-productDetails-value">{product.pPrice}</p>
+                  <p className="popup-form-value adminDashPanel-productDetails-value">
+                    {product.pPrice}
+                  </p>
                 </div>
                 <div className="popup-form-group">
                   <label className="popup-form-label">Product Stock</label>
-                  <p className="popup-form-value adminDashPanel-productDetails-value">{product.pStock}</p>
+                  <p className="popup-form-value adminDashPanel-productDetails-value">
+                    {product.pStock}
+                  </p>
                 </div>
                 <div className="popup-form-group">
                   <label className="popup-form-label">Product Category</label>
-                  <p className="popup-form-value adminDashPanel-productDetails-value">{product.pCategory}</p>
+                  <p className="popup-form-value adminDashPanel-productDetails-value">
+                    {product.pCategory}
+                  </p>
                 </div>
               </div>
               <div className="popup-form-double-group">

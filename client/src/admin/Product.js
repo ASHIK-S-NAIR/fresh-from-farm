@@ -4,15 +4,20 @@ import EditIcon from "../icons/Edit.svg";
 import AddIcon from "../icons/add.svg";
 import TrashIcon from "../icons/Trash.svg";
 import { isAuthenticated } from "../auth";
-import { deleteProduct, getAllProducts } from "../core/helper/productDetailHelper";
+import {
+  deleteProduct,
+  getAllProducts,
+} from "../core/helper/productDetailHelper";
 import { API } from "../backend";
 import AddProduct from "./AddProduct";
 import ProductDetail from "./ProductDetail";
+import EditProduct from "./EditProduct";
 
 const Product = () => {
   const [products, setProducts] = useState([]);
   const [category, setCategory] = useState("all");
   const [addProductActive, setAddProductActive] = useState("");
+  const [editProductActive, setEditProductActive] = useState("");
   const [productDetail, setProductDetail] = useState("");
   const [product, setProduct] = useState();
 
@@ -31,18 +36,19 @@ const Product = () => {
     }
   };
 
-  const handlePreview = async (product) => {
-    return setProductDetail("productDetail"), setProduct(product)
+  const handlePreview = (product) => {
+    
+    return setProductDetail("productDetail"), setProduct(product);
   };
-  const handleEdit = async (product) => {
-    //
+  const handleEdit = (product) => {
+    return setEditProductActive("editProduct"), setProduct(product);
   };
   const handleDelete = async (product) => {
     try {
       const data = await deleteProduct(user._id, token, product._id);
-      if(data.error){
+      if (data.error) {
         return console.log(data.error);
-      }else{
+      } else {
         return loadProducts(category);
       }
     } catch (error) {
@@ -57,7 +63,17 @@ const Product = () => {
     <section className="adminDashPanel-section product-section">
       <h1 className="adminDashPanel-right-header">Products</h1>
       <div className="adminDashPanel-right-subsection adminDashPanel-product-add-btn-subSection">
-        <button className="adminDashPanel-product-add-btn" onClick={() => setAddProductActive("addProduct")} ><img src={AddIcon} className="adminDashPanel-product-add-btn-icon" alt="" />ADD PRODUCT</button>
+        <button
+          className="adminDashPanel-product-add-btn"
+          onClick={() => setAddProductActive("addProduct")}
+        >
+          <img
+            src={AddIcon}
+            className="adminDashPanel-product-add-btn-icon"
+            alt=""
+          />
+          ADD PRODUCT
+        </button>
       </div>
       <div className="adminDashPanel-right-subsection adminDashPanel-product-filter-subSection">
         <button
@@ -125,11 +141,6 @@ const Product = () => {
                         src={`${API}/product/photo/${product.pImg.key}`}
                         alt=""
                       />
-                      {/* <img
-                        className="adminDashPanel-product-img"
-                        src={product.pImg}
-                        alt=""
-                      /> */}
                     </td>
                     <td className="adminDashPanel-right-table-body-value">
                       {product.pName}
@@ -186,9 +197,18 @@ const Product = () => {
         </table>
       </div>
 
-      {addProductActive === "addProduct" && <AddProduct setAddProductActive={setAddProductActive}/>}
-      {productDetail === "productDetail" && <ProductDetail setProductDetail= {setProductDetail} product={product} />}
-
+      {addProductActive === "addProduct" && (
+        <AddProduct setAddProductActive={setAddProductActive} />
+      )}
+      {editProductActive === "editProduct" && (
+        <EditProduct
+          setEditProductActive={setEditProductActive}
+          product={product}
+        />
+      )}
+      {productDetail === "productDetail" && (
+        <ProductDetail setProductDetail={setProductDetail} product={product} />
+      )}
     </section>
   );
 };
