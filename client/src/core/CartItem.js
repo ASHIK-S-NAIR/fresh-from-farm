@@ -47,7 +47,7 @@ const CartItem = ({
   useEffect(() => {
     updateQuantity(product._id, quantity);
   }, [quantity]);
-
+    
   return (
     <div className="cartItem-item">
       {pImg !== "" && (
