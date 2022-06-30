@@ -17,9 +17,30 @@ const Order = () => {
   const [status, setStatus] = useState("all");
   const [orderEmployeeAssignActive, setOrderEmployeeAssignActive] =
     useState("");
-    const [orderUpdatePayment, setOrderUpdatePayment] = useState("");
+  const [orderUpdatePayment, setOrderUpdatePayment] = useState("");
+  const [countValues, setCountValues] = useState({
+    all: 0,
+    NotConfirmed: 0,
+    Ordered: 0,
+    Processing: 0,
+    PickingUp: 0,
+    OutForDelivery: 0,
+    Delivered: 0,
+    Cancelled: 0,
+  });
 
   const { user, token } = isAuthenticated();
+
+  const {
+    all,
+    NotConfirmed,
+    Ordered,
+    Processing,
+    PickingUp,
+    OutForDelivery,
+    Delivered,
+    Cancelled,
+  } = countValues;
 
   const loadOrders = async (userId, token, status) => {
     try {
@@ -52,9 +73,43 @@ const Order = () => {
     return setOrderUpdatePayment("orderUpdatePayment"), setOrder(order);
   };
 
+  const loadCountValues = async (userId, token) => {
+    var orders = [];
+    try {
+      const data = await getAllOrders(userId, token, "all");
+      if (data.error) {
+        return console.log(data.error);
+      } else {
+        orders = data;
+      }
+    } catch (error) {
+      return console.log(error);
+    }
+
+    setCountValues({
+      ...countValues,
+      all: orders.length,
+      NotConfirmed: orders.filter((order) => order.Ostatus === "Not-Confirmed")
+        .length,
+      Ordered: orders.filter((order) => order.Ostatus === "Ordered").length,
+      Processing: orders.filter((order) => order.Ostatus === "Processing")
+        .length,
+      PickingUp: orders.filter((order) => order.Ostatus === "Picking-Up")
+        .length,
+      OutForDelivery: orders.filter(
+        (order) => order.Ostatus === "Out-For-Delivery"
+      ).length,
+      Delivered: orders.filter((order) => order.Ostatus === "Delivered").length,
+      Cancelled: orders.filter((order) => order.Ostatus === "Cancelled").length,
+    });
+  };
 
   useEffect(() => {
     loadOrders(user._id, token, status);
+  }, [orderActive, orderUpdateActive, status, orderEmployeeAssignActive]);
+
+  useEffect(() => {
+    loadCountValues(user._id, token);
   }, [orderActive, orderUpdateActive, status, orderEmployeeAssignActive]);
 
   return (
@@ -65,7 +120,7 @@ const Order = () => {
           className={`orders-filter-btn ${status === "all" ? "active" : ""}`}
           onClick={() => setStatus("all")}
         >
-          All
+          All{all}
         </button>
         <button
           className={`orders-filter-btn ${
@@ -73,7 +128,7 @@ const Order = () => {
           }`}
           onClick={() => setStatus("Not-Confirmed")}
         >
-          Not-Confirmed
+          Not-Confirmed{NotConfirmed}
         </button>
         <button
           className={`orders-filter-btn ${
@@ -81,7 +136,7 @@ const Order = () => {
           }`}
           onClick={() => setStatus("Ordered")}
         >
-          Ordered
+          Ordered{Ordered}
         </button>
         <button
           className={`orders-filter-btn ${
@@ -89,7 +144,7 @@ const Order = () => {
           }`}
           onClick={() => setStatus("Processing")}
         >
-          Processing
+          Processing{Processing}
         </button>
         <button
           className={`orders-filter-btn ${
@@ -97,7 +152,7 @@ const Order = () => {
           }`}
           onClick={() => setStatus("Picking-Up")}
         >
-          Picking-Up
+          Picking-Up{PickingUp}
         </button>
         <button
           className={`orders-filter-btn ${
@@ -105,7 +160,7 @@ const Order = () => {
           }`}
           onClick={() => setStatus("Out-For-Delivery")}
         >
-          Out-For-Delivery
+          Out-For-Delivery{OutForDelivery}
         </button>
         <button
           className={`orders-filter-btn ${
@@ -113,7 +168,7 @@ const Order = () => {
           }`}
           onClick={() => setStatus("Delivered")}
         >
-          Delivered
+          Delivered{Delivered}
         </button>
         <button
           className={`orders-filter-btn ${
@@ -121,7 +176,7 @@ const Order = () => {
           }`}
           onClick={() => setStatus("Cancelled")}
         >
-          Cancelled
+          Cancelled{Cancelled}
         </button>
       </div>
       <div className="adminDashPanel-right-subsection">
