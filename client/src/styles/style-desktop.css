@@ -367,6 +367,16 @@ a {
   margin-top: 1em;
 }
 
+.popup-form-img-sec{
+  width: 5em;
+  height: 5em;
+  border: 1p solid var(--primary-color);
+}
+
+.popup-form-img{
+  width: 100%;
+}
+
 .popup-table {
   width: 100%;
   border-collapse: collapse;
@@ -1523,47 +1533,23 @@ tr {
   /* border: 1px solid red; */
 }
 
-.adminDashPanel-dashboard-status-right{
+/* .adminDashPanel-dashboard-status-right{
 
-}
+} */
 
 .dashboard-status-sec-orders {
-  /* background: rgb(28, 94, 222);
-  background: linear-gradient(
-    90deg,
-    rgba(28, 94, 222, 1) 0%,
-    rgba(54, 120, 247, 1) 100%
-  ); */
   background-color: #cbe5fa;
 }
 
 .dashboard-status-sec-products {
-  /* background: rgb(252, 97, 48);
-  background: linear-gradient(
-    90deg,
-    rgba(252, 97, 48, 1) 0%,
-    rgba(250, 105, 60, 1) 100%
-  ); */
   background-color: #fbeacc;
 }
 
 .dashboard-status-sec-employers {
-  /* background: rgb(70, 194, 112);
-  background: linear-gradient(
-    90deg,
-    rgba(70, 194, 112, 1) 0%,
-    rgba(78, 215, 124, 1) 100%
-  ); */
   background-color: #bef2c2;
 }
 
 .dashboard-status-sec-customers {
-  /* background: rgb(199, 55, 158);
-  background: linear-gradient(
-    90deg,
-    rgba(199, 55, 158, 1) 0%,
-    rgba(236, 64, 187, 1) 100%
-  ); */
   background-color: #ffdbdb;
 }
 
@@ -1585,26 +1571,33 @@ tr {
 
 .dashboard-status-img {
  height: 1.8em;
-  /* position: absolute; */
-  /* right: 0.5em; */
-  /* bottom: 0; */
-  /* width: 40%; */
-  /* opacity: 0.12; */
+ width: 1.8em;
 }
 
 .dashboard-status-value {
-  /* color: #fff; */
   color: var(--primary-color);
-  /* font-size: 1.875rem; */
-  font-size: 2.2rem;
-  
+  font-size: 2.3rem;
 }
 
 .dashboard-status-comment{
   font-size: 0.7rem;
   font-weight: 500;
-  color: var(--primary-color);
+}
+
+.dashboard-status-comment-orders{
   color: #557a99;
+}
+
+.dashboard-status-comment-products{
+  color: #9f8861;
+}
+
+.dashboard-status-comment-employers{
+  color: #608e64;
+}
+
+.dashboard-status-comment-customers{
+  color: #8e6969;
 }
 
 .adminDashPanel-right-table {
@@ -1741,10 +1734,10 @@ tr {
 }
 
 .adminDashPanel-product-img {
-  width: 10em;
-  height: 10em;
+  width: 5em;
+  height: 5em;
   /* border: 1px solid red; */
-  margin-bottom: 1em;
+  /* margin-bottom: 1em; */
 }
 
 .adminDashPanel-product-filter-subSection {
@@ -1790,8 +1783,7 @@ tr {
 }
 
 .adminDashPanel-addProducts-input-div {
-  display: grid;
-  grid-template-columns: 75% 25%;
+  width: 100%;
 }
 
 .adminDashPanel-productDetails-img-div {

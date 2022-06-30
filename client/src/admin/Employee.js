@@ -92,6 +92,14 @@ const Employee = () => {
         >
           Not-Available
         </button>
+        <button
+          className={`adminDashPanel-product-filter-btn ${
+            status === "OnDuty" ? "active" : ""
+          }`}
+          onClick={() => setStatus("OnDuty")}
+        >
+          On-Duty
+        </button>
       </div>
       <div className="adminDashPanel-right-subsection">
         <table className="adminDashPanel-right-table">

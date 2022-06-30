@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { isAuthenticated } from "../auth";
-import { getProduct } from "../core/helper/productDetailHelper";
+import { API } from "../backend";
+import {
+  getProduct,
+  updateProduct,
+  updateProductWithImage,
+} from "../core/helper/productDetailHelper";
 import CrossIcon from "../icons/cross-black.svg";
 // import { createProduct } from "../user";
 
-const EditProduct
- = ({ setEditProductActive, product }) => {
+const EditProduct = ({ setEditProductActive, product }) => {
   const [values, setValues] = useState({
     pName: "",
     pDescription: "",
     pStock: "",
-    pCategory:"",
+    pCategory: "",
     pPrice: "",
   });
 
-  const [file, setFile] = useState();
+  const [file, setFile] = useState(null);
 
   const { pName, pDescription, pStock, pCategory, pPrice } = values;
 
@@ -32,44 +36,67 @@ const EditProduct
 
   const loadValues = async () => {
     try {
-        const data = await getProduct(product._id)
-    if(data.error){
+      const data = await getProduct(product._id);
+      if (data.error) {
         return console.log(data.error);
-    }else{
-        return setValues({...values, pName: data.pName, pDescription: data.pDescription, pStock: data.pStock, pCategory: data.pCategory, pPrice: data.pPrice})
-    }
-    } catch (error) {
-        return console.log(error);
-    }
-  }
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData();
-    formData.append("pImg", file);
-    formData.append("pName", pName);
-    formData.append("pDescription", pDescription);
-    formData.append("pStock", pStock);
-    formData.append("pPrice", pPrice);
-    formData.append("pCategory", pCategory);
-    try {
-    //   const data = await createProduct(user._id, token, formData);
-
-    //   if (data.error) {
-    //     return console.log(data.error);
-    //   } else {
-    //     console.log("Data", data);
-    //     return setEditProductActive(null);
-    //   }
+      } else {
+        return setValues({
+          ...values,
+          pName: data.pName,
+          pDescription: data.pDescription,
+          pStock: data.pStock,
+          pCategory: data.pCategory,
+          pPrice: data.pPrice,
+        });
+      }
     } catch (error) {
       return console.log(error);
     }
   };
 
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    if (file) {
+      const formData = new FormData();
+      formData.append("pImg", file);
+      formData.append("pName", pName);
+      formData.append("pDescription", pDescription);
+      formData.append("pStock", pStock);
+      formData.append("pPrice", pPrice);
+      formData.append("pCategory", pCategory);
+      try {
+        const data = await updateProductWithImage(
+          user._id,
+          token,
+          product._id,
+          formData
+        );
+        if (data.error) {
+          return console.log(data.error);
+        } else {
+          return setEditProductActive(null);
+        }
+      } catch (error) {
+        return console.log(error);
+      }
+    } else {
+      try {
+        const data = await updateProduct(user._id, token, product._id, values);
+        if(data.error){
+          return console.log(data.error);
+        }else{
+          return setEditProductActive(null);
+        }
+      } catch (error) {
+        return console.log(error);
+      }
+    }
+  };
+
   useEffect(() => {
     loadValues();
-  }, [])
+  }, []);
 
   return (
     <section className="addProduct-section">
@@ -77,7 +104,7 @@ const EditProduct
         <div className="popup-big-sec">
           <div className="popup-group">
             <div className="popup-head-sec">
-              <h1 className="popup-header">Add Product</h1>
+              <h1 className="popup-header">Edit Product</h1>
               <div
                 className="cross-sec"
                 onClick={() => setEditProductActive(null)}
@@ -86,10 +113,7 @@ const EditProduct
               </div>
             </div>
 
-            <form
-              className="popup-form"
-              onSubmit={onSubmit}
-            >
+            <form className="popup-form" onSubmit={onSubmit}>
               <div className="popup-form-single-group">
                 <div className="popup-form-group">
                   <label className="popup-form-label">Product Name</label>
@@ -169,11 +193,7 @@ const EditProduct
               </div>
               <div className="popup-form-single-group">
                 <div className="popup-form-group">
-                  <button
-                    className="popup-form-btn"
-                    type="submit"
-                  
-                  >
+                  <button className="popup-form-btn" type="submit">
                     Add Product
                   </button>
                 </div>
@@ -187,5 +207,4 @@ const EditProduct
   );
 };
 
-export default EditProduct
-;
+export default EditProduct;

@@ -38,7 +38,11 @@ exports.addToUserCart = async (req, res) => {
 
     cart = response.cart;
 
+    console.log("cart", cart);
+
     const { productId, quantity } = req.body;
+
+    console.log("cartLength", cart.length);
 
     if (cart.length === 0) {
       cart.push({ product: productId, quantity: quantity });
@@ -55,17 +59,37 @@ exports.addToUserCart = async (req, res) => {
         { new: true, useFindAndModify: false }
       );
       return res.json({
-        message: "Successfully added to cart",
+        message: "Successfully added to cart 1",
       });
     }
 
-    const cartItem = cart.find((cartItem) => cartItem.product === productId);
+    // const cartItem = cart.find((cartItem) => cartItem.product === productId);
+
+    const cartItem = cart.some((cartItem) => cartItem.product == productId);
+
+    console.log("cartItem", cartItem);
 
     if (cartItem) {
-      cart.map((cartItem) => {
-        if (cartItem.product === productId) {
+      cart.map(async (cartItem) => {
+        if (cartItem.product == productId) {
           cartItem.quantity = parseInt(cartItem.quantity) + parseInt(quantity);
+          console.log("reacher here");
+
+          await User.findByIdAndUpdate(
+            { _id: req.profile._id },
+            { $set: { cart } },
+            { new: true, useFindAndModify: false }
+          );
+
+          return res.json({
+            message: "Successfully added to cart 2",
+          });
         }
+      });
+    } else {
+      cart.push({
+        product: productId,
+        quantity: quantity,
       });
 
       await User.findByIdAndUpdate(
@@ -75,24 +99,9 @@ exports.addToUserCart = async (req, res) => {
       );
 
       return res.json({
-        message: "Successfully added to cart",
+        message: "Successfully added to cart 3",
       });
     }
-
-    cart.push({
-      product: productId,
-      quantity: quantity,
-    });
-
-    await User.findByIdAndUpdate(
-      { _id: req.profile._id },
-      { $set: { cart } },
-      { new: true, useFindAndModify: false }
-    );
-
-    return res.json({
-      message: "Successfully added to cart",
-    });
   } catch (error) {
     return res.status(400).json({
       message: "Adding to cart failed",
@@ -256,8 +265,8 @@ exports.changePassword = async (req, res) => {
 
 // deleteUser
 exports.deleteUser = async (req, res) => {
-  const {customerId} = req.params
-  console.log("CustomerId", customerId)
+  const { customerId } = req.params;
+  console.log("CustomerId", customerId);
   try {
     await User.deleteOne({ _id: customerId });
 

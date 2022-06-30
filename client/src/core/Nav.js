@@ -60,15 +60,10 @@ const Nav = () => {
   };
 
   useEffect(() => {
-    if (isAuthenticated() && isAuthenticated().user.role === 0) {
+    if (isAuthenticated() && isAuthenticated().user.role === 1) {
       loadEmployeeStatus(isAuthenticated().user._id, isAuthenticated().token);
     }
   }, []);
-
-  // useEffect(() => {
-
-  //   getCartCount(user, token);
-  // }, []);
 
   return (
     <section className="nav-section">

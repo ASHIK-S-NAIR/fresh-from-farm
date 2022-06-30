@@ -7,6 +7,7 @@ const {
   createProduct,
   getProduct,
   updateProduct,
+  updateProductWithImage,
   deleteProduct,
   getAllProducts,
   photo,
@@ -54,6 +55,20 @@ router.put(
   isAuthenticated,
   isAdmin,
   updateProduct
+);
+
+// updateProductWithImage
+// @type PUT
+// @route /api/v1/product/updateproductwithimage/:productId/:userId
+// @desc route to update product with produt image by productId
+// @access PRIVATE
+router.put(
+  "/product/updateproductwithimage/:productId/:userId",
+  isSignedIn,
+  isAuthenticated,
+  isAdmin,
+  upload.single("pImg"),
+  updateProductWithImage
 );
 
 // deleteProduct

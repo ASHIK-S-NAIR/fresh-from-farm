@@ -8,8 +8,8 @@ const { uploadFile, getFileStream } = require("../s3");
 
 // createProduct
 exports.createProduct = async (req, res) => {
-  console.log("reasched here")
-  console.log("req.body", req.body)
+  console.log("reasched here");
+  console.log("req.body", req.body);
   try {
     var obj = {
       pName: req.body.pName,
@@ -92,6 +92,47 @@ exports.updateProduct = async (req, res) => {
   }
 };
 
+// updateProductWithImage
+exports.updateProductWithImage = async (req, res) => {
+  try {
+    var obj = {
+      pName: req.body.pName,
+      pDescription: req.body.pDescription,
+      pPrice: req.body.pPrice,
+      pStock: req.body.pStock,
+      pCategory: req.body.pCategory,
+    };
+    // const product = await Product.create(obj);
+    // await product.save();
+
+    const file = req.file;
+    const result = await uploadFile(file);
+    await unlinkFile(file.path);
+
+    obj["pImg"] = {
+      Etag: result.Etag,
+      Location: result.Location,
+      key: result.key,
+      Bucket: result.Bucket,
+    };
+
+    await Product.findByIdAndUpdate(
+      { _id: req.product._id },
+      {
+        $set: obj,
+      },
+      { new: true, useFindAndModify: false }
+    );
+
+    return res.json("updated succesfully");
+  } catch (error) {
+    console.log("Error Message", error.message);
+    return res.status(400).json({
+      message: "Failed to create a product in DB",
+    });
+  }
+};
+
 // deleteProduct
 exports.deleteProduct = async (req, res) => {
   try {
@@ -116,7 +157,7 @@ exports.getAllProducts = async (req, res) => {
       return res.json(products);
     }
 
-    const products = await Product.find({ pCategory: category }, { });
+    const products = await Product.find({ pCategory: category }, {});
     return res.json(products);
   } catch (error) {
     return res.json({

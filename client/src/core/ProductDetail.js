@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { API } from "../backend";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getProduct, getAllProducts } from "./helper/productDetailHelper";
 import { isAuthenticated } from "../auth/index";
 import { addToUserCart } from "../user";
+import { CartContext } from "../context/Context";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState();
@@ -15,6 +16,8 @@ const ProductDetail = () => {
   const { productId } = useParams();
 
   const navigate = useNavigate();
+
+  const { preLoadCart } = useContext(CartContext);
 
   const loadProduct = async (productId) => {
     try {
@@ -52,6 +55,7 @@ const ProductDetail = () => {
         if (data.error) {
           console.log(data.error);
         } else {
+          preLoadCart(user._id, token);
           return navigate(`/cart/${user._id}`);
         }
       } else if (isAuthenticated()) {

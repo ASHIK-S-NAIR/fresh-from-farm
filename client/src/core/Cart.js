@@ -5,13 +5,14 @@ import { CartContext } from "../context/Context";
 import {
   deleteFromCart,
   getUser,
+  getUserCart,
   // getUserCart,
   updateFromUserCart,
 } from "../user";
 import CartItem from "./CartItem";
 
 const Cart = () => {
-  const { cart, setCart, preLoadCart } = useContext(CartContext);
+  const { cart, setCart} = useContext(CartContext);
   // const [cart, setCart] = useState([]);
   const [subTotal_items, setSubTotal_items] = useState(0);
   const [subTotal_value, setSubTotal_value] = useState(0);
@@ -67,7 +68,17 @@ const Cart = () => {
     setSubTotal_items(cart.length);
   }, [cart]);
 
+  const preLoadCart = async (userId, token) => {
+    try {
+      const data = await getUserCart(userId, token);
+      return setCart(data.cart);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
+    console.log("reaching here awsome vini")
     preLoadCart(userId, token);
   }, []);
 

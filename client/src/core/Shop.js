@@ -54,6 +54,7 @@ const Shop = () => {
                       className="adminDashPanel-product-img"
                       src={`${API}/product/photo/${product.pImg.key}`}
                       alt=""
+                      loading="lazy"
                     />
                   )}
 

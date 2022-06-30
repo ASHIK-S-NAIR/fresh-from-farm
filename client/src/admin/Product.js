@@ -58,7 +58,7 @@ const Product = () => {
 
   useEffect(() => {
     loadProducts(category);
-  }, [category]);
+  }, [category, addProductActive,editProductActive]);
   return (
     <section className="adminDashPanel-section product-section">
       <h1 className="adminDashPanel-right-header">Products</h1>

@@ -112,7 +112,7 @@ const Dashboard = () => {
           <div className="adminDashPanel-dashboard-status-left">
             <p className="dashboard-status-tag">Orders</p>
             <h1 className="dashboard-status-value">{orderStatus}</h1>
-            <p className="dashboard-status-comment">5 orders not delivered</p>
+            <p className="dashboard-status-comment dashboard-status-comment-orders">5 orders not delivered</p>
           </div>
           <div className="adminDashPanel-dashboard-status-right">
             <div className="dashboard-status-img-sec">
@@ -120,20 +120,43 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
+
         <div className="adminDashPanel-dashboard-status-sec dashboard-status-sec-products">
-          <p className="dashboard-status-tag">Products</p>
-          <h1 className="dashboard-status-value">{productStatus}</h1>
-          <img src={ProductIcon} alt="" className="dashboard-status-img" />
+          <div className="adminDashPanel-dashboard-status-left">
+            <p className="dashboard-status-tag">Products</p>
+            <h1 className="dashboard-status-value">{productStatus}</h1>
+            <p className="dashboard-status-comment dashboard-status-comment-products">0 products out of Stock</p>
+          </div>
+          <div className="adminDashPanel-dashboard-status-right">
+            <div className="dashboard-status-img-sec">
+              <img src={ProductIcon} alt="" className="dashboard-status-img" />
+            </div>
+          </div>
         </div>
         <div className="adminDashPanel-dashboard-status-sec dashboard-status-sec-employers">
-          <p className="dashboard-status-tag">Employers</p>
-          <h1 className="dashboard-status-value">{employerStatus}</h1>
-          <img src={EmployerIcon} alt="" className="dashboard-status-img" />
+          <div className="adminDashPanel-dashboard-status-left">
+            <p className="dashboard-status-tag">Employers</p>
+            <h1 className="dashboard-status-value">{employerStatus}</h1>
+            <p className="dashboard-status-comment dashboard-status-comment-employers">4 Employees available</p>
+          </div>
+          <div className="adminDashPanel-dashboard-status-right">
+            <div className="dashboard-status-img-sec">
+              <img src={EmployerIcon} alt="" className="dashboard-status-img" />
+            </div>
+          </div>
         </div>
         <div className="adminDashPanel-dashboard-status-sec dashboard-status-sec-customers">
-          <p className="dashboard-status-tag">Customers</p>
-          <h1 className="dashboard-status-value">{customerStatus}</h1>
-          <img src={CustomerIcon} alt="" className="dashboard-status-img" />
+          <div className="adminDashPanel-dashboard-status-left">
+            <p className="dashboard-status-tag">Customers</p>
+
+            <h1 className="dashboard-status-value">{customerStatus}</h1>
+            <p className="dashboard-status-comment dashboard-status-comment-customers">3 Customer order pending</p>
+          </div>
+          <div className="adminDashPanel-dashboard-status-right">
+            <div className="dashboard-status-img-sec">
+              <img src={CustomerIcon} alt="" className="dashboard-status-img" />
+            </div>
+          </div>
         </div>
       </div>
 
