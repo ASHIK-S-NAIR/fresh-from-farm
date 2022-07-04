@@ -14,8 +14,16 @@ const Employee = () => {
   const [employee, setEmployee] = useState();
   const [addEmployeeActive, setAddEmployeeActive] = useState("");
   const [employeeDetail, setEmployeeDetail] = useState("");
+  const [countValues, setCountValues] = useState({
+    all: 0,
+    Available: 0,
+    NotAvailable: 0,
+    OnDuty: 0,
+  });
 
   const { user, token } = isAuthenticated();
+
+  const { all, Available, NotAvailable, OnDuty } = countValues;
 
   const loadEmployees = async (userId, token, status) => {
     try {
@@ -28,6 +36,46 @@ const Employee = () => {
     } catch (error) {
       return console.log(error);
     }
+  };
+
+  const filterBtn = (statusState, statusValue, statusBtnValue) => {
+    return (
+      <button
+        className={`orders-filter-btn ${
+          status === statusState ? "active" : ""
+        }`}
+        onClick={() => setStatus(statusState)}
+      >
+        {statusBtnValue} <span className="filter-btn-value">{statusValue}</span>
+      </button>
+    );
+  };
+
+  const loadCountValues = async (userId, token) => {
+    var employees = [];
+    try {
+      const data = await getEmployees(userId, token, "all");
+      if (data.error) {
+        return console.log(data.error);
+      } else {
+        employees = data;
+      }
+    } catch (error) {
+      return console.log(error);
+    }
+
+    setCountValues({
+      ...countValues,
+      all: employees.length,
+      Available: employees.filter(
+        (employee) => employee.Estatus === "Available"
+      ).length,
+      NotAvailable: employees.filter(
+        (employee) => employee.Estatus === "NotAvailable"
+      ).length,
+      OnDuty: employees.filter((employee) => employee.Estatus === "On-Duty")
+        .length,
+    });
   };
 
   const handlePreview = (employee) => {
@@ -51,6 +99,10 @@ const Employee = () => {
     loadEmployees(user._id, token, status);
   }, [status, addEmployeeActive]);
 
+  useEffect(() => {
+    loadCountValues(user._id, token);
+  }, [status, addEmployeeActive]);
+
   return (
     <section className="adminDashPanel-section employee-section">
       <h1 className="adminDashPanel-right-header">Employees</h1>
@@ -68,45 +120,19 @@ const Employee = () => {
         </button>
       </div>
       <div className="adminDashPanel-right-subsection adminDashPanel-product-filter-subSection">
-        <button
-          className={`adminDashPanel-product-filter-btn ${
-            status === "all" ? "active" : ""
-          }`}
-          onClick={() => setStatus("all")}
-        >
-          All
-        </button>
-        <button
-          className={`adminDashPanel-product-filter-btn ${
-            status === "Available" ? "active" : ""
-          }`}
-          onClick={() => setStatus("Available")}
-        >
-          Available
-        </button>
-        <button
-          className={`adminDashPanel-product-filter-btn ${
-            status === "NotAvailable" ? "active" : ""
-          }`}
-          onClick={() => setStatus("NotAvailable")}
-        >
-          Not-Available
-        </button>
-        <button
-          className={`adminDashPanel-product-filter-btn ${
-            status === "OnDuty" ? "active" : ""
-          }`}
-          onClick={() => setStatus("OnDuty")}
-        >
-          On-Duty
-        </button>
+        {filterBtn("all", all, "All")}
+        {filterBtn("Available", Available, "Available")}
+        {filterBtn("NotAvailable", NotAvailable, "NotAvailable")}
+        {filterBtn("On-Duty", OnDuty, "On-Duty")}
       </div>
       <div className="adminDashPanel-right-subsection">
         <table className="adminDashPanel-right-table">
           <thead className="adminDashPanel-right-table-head-sec">
             <tr>
               <th className="adminDashPanel-right-table-head-value">Name</th>
-              <th className="adminDashPanel-right-table-head-value">Employee ID</th>
+              <th className="adminDashPanel-right-table-head-value">
+                Employee ID
+              </th>
               <th className="adminDashPanel-right-table-head-value">Email</th>
               <th className="adminDashPanel-right-table-head-value">Status</th>
               <th className="adminDashPanel-right-table-head-value">

@@ -20,8 +20,15 @@ const Product = () => {
   const [editProductActive, setEditProductActive] = useState("");
   const [productDetail, setProductDetail] = useState("");
   const [product, setProduct] = useState();
+  const [countValues, setCountValues] = useState({
+    all: 0,
+    Fruit: 0,
+    Vegetable: 0,
+  });
 
   const { user, token } = isAuthenticated();
+
+  const { all, Fruit, Vegetable } = countValues;
 
   const loadProducts = async (category) => {
     try {
@@ -36,8 +43,43 @@ const Product = () => {
     }
   };
 
+  const filterBtn = (CategoryState, CategoryValue, CategoryBtnValue) => {
+    return (
+      <button
+        className={`orders-filter-btn ${
+          category === CategoryState ? "active" : ""
+        }`}
+        onClick={() => setCategory(CategoryState)}
+      >
+        {CategoryBtnValue}{" "}
+        <span className="filter-btn-value">{CategoryValue}</span>
+      </button>
+    );
+  };
+
+  const loadCountValues = async () => {
+    var products = [];
+    try {
+      const data = await getAllProducts("all");
+      if (data.error) {
+        return console.log(data.error);
+      } else {
+        products = data;
+      }
+    } catch (error) {
+      return console.log(error);
+    }
+
+    setCountValues({
+      ...countValues,
+      all: products.length,
+      Fruit: products.filter((product) => product.pCategory === "fruit").length,
+      Vegetable: products.filter((product) => product.pCategory === "vegetable")
+        .length,
+    });
+  };
+
   const handlePreview = (product) => {
-    
     return setProductDetail("productDetail"), setProduct(product);
   };
   const handleEdit = (product) => {
@@ -58,7 +100,12 @@ const Product = () => {
 
   useEffect(() => {
     loadProducts(category);
-  }, [category, addProductActive,editProductActive]);
+  }, [category, addProductActive, editProductActive]);
+
+  useEffect(() => {
+    loadCountValues();
+  }, [category, addProductActive, editProductActive]);
+
   return (
     <section className="adminDashPanel-section product-section">
       <h1 className="adminDashPanel-right-header">Products</h1>
@@ -75,31 +122,10 @@ const Product = () => {
           ADD PRODUCT
         </button>
       </div>
-      <div className="adminDashPanel-right-subsection adminDashPanel-product-filter-subSection">
-        <button
-          className={`adminDashPanel-product-filter-btn ${
-            category === "all" ? "active" : ""
-          }`}
-          onClick={() => setCategory("all")}
-        >
-          All
-        </button>
-        <button
-          className={`adminDashPanel-product-filter-btn ${
-            category === "fruit" ? "active" : ""
-          }`}
-          onClick={() => setCategory("fruit")}
-        >
-          Fruit
-        </button>
-        <button
-          className={`adminDashPanel-product-filter-btn ${
-            category === "vegetable" ? "active" : ""
-          }`}
-          onClick={() => setCategory("vegetable")}
-        >
-          Vegetable
-        </button>
+      <div className="adminDashPanel-right-subsection adminDashPanel-product-filter-subSection"> 
+        {filterBtn("all", all, "All")}
+        {filterBtn("fruit", Fruit, "Fruit")}
+        {filterBtn("vegetable", Vegetable, "Vegetable")}
       </div>
       <div className="adminDashPanel-right-subsection">
         <table className="adminDashPanel-right-table">
@@ -155,7 +181,7 @@ const Product = () => {
                       {product.pCategory}
                     </td>
                     <td className="adminDashPanel-right-table-body-value">
-                      {product.pStock} Kg
+                    {product.pStock !== 0 ? `${product.pStock} Kg` : "Out of Stock"} 
                     </td>
 
                     <td className="adminDashPanel-right-table-body-value">

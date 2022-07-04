@@ -73,6 +73,19 @@ const Order = () => {
     return setOrderUpdatePayment("orderUpdatePayment"), setOrder(order);
   };
 
+  const filterBtn = (statusState, statusValue, statusBtnValue) => {
+    return (
+      <button
+        className={`orders-filter-btn ${
+          status === statusState ? "active" : ""
+        }`}
+        onClick={() => setStatus(statusState)}
+      >
+        {statusBtnValue} <span className="filter-btn-value">{statusValue}</span>
+      </button>
+    );
+  };
+
   const loadCountValues = async (userId, token) => {
     var orders = [];
     try {
@@ -116,68 +129,14 @@ const Order = () => {
     <section className="adminDashPanel-right-section order-section">
       <h1 className="adminDashPanel-right-header">Orders</h1>
       <div className="adminDashPanel-right-subsection orders-filter-subSection">
-        <button
-          className={`orders-filter-btn ${status === "all" ? "active" : ""}`}
-          onClick={() => setStatus("all")}
-        >
-          All{all}
-        </button>
-        <button
-          className={`orders-filter-btn ${
-            status === "Not-Confirmed" ? "active" : ""
-          }`}
-          onClick={() => setStatus("Not-Confirmed")}
-        >
-          Not-Confirmed{NotConfirmed}
-        </button>
-        <button
-          className={`orders-filter-btn ${
-            status === "Ordered" ? "active" : ""
-          }`}
-          onClick={() => setStatus("Ordered")}
-        >
-          Ordered{Ordered}
-        </button>
-        <button
-          className={`orders-filter-btn ${
-            status === "Processing" ? "active" : ""
-          }`}
-          onClick={() => setStatus("Processing")}
-        >
-          Processing{Processing}
-        </button>
-        <button
-          className={`orders-filter-btn ${
-            status === "Picking-Up" ? "active" : ""
-          }`}
-          onClick={() => setStatus("Picking-Up")}
-        >
-          Picking-Up{PickingUp}
-        </button>
-        <button
-          className={`orders-filter-btn ${
-            status === "Out-For-Delivery" ? "active" : ""
-          }`}
-          onClick={() => setStatus("Out-For-Delivery")}
-        >
-          Out-For-Delivery{OutForDelivery}
-        </button>
-        <button
-          className={`orders-filter-btn ${
-            status === "Delivered" ? "active" : ""
-          }`}
-          onClick={() => setStatus("Delivered")}
-        >
-          Delivered{Delivered}
-        </button>
-        <button
-          className={`orders-filter-btn ${
-            status === "Cancelled" ? "active" : ""
-          }`}
-          onClick={() => setStatus("Cancelled")}
-        >
-          Cancelled{Cancelled}
-        </button>
+        {filterBtn("all", all, "All")}
+        {filterBtn("Not-Confirmed", NotConfirmed, "Not-Confirmed")}
+        {filterBtn("Ordered", Ordered, "Ordered")}
+        {filterBtn("Processing", Processing, "Processing")}
+        {filterBtn("Picking-Up", PickingUp, "Picking-Up")}
+        {filterBtn("Out-For-Delivery", OutForDelivery, "Out-For-Delivery")}
+        {filterBtn("Delivered", Delivered, "Delivered")}
+        {filterBtn("Cancelled", Cancelled, "Cancelled")}
       </div>
       <div className="adminDashPanel-right-subsection">
         <table className="adminDashPanel-right-table">

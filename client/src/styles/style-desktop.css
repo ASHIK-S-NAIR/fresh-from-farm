@@ -72,7 +72,7 @@ a {
   top: 0;
   left: 0;
   right: 0;
-  box-shadow: 0px 1px 20px 20px rgba(0, 0, 0, 0.08);
+  /* box-shadow: 0px 1px 20px 20px rgba(0, 0, 0, 0.08); */
 }
 
 .nav-wrap-mobile {
@@ -367,13 +367,13 @@ a {
   margin-top: 1em;
 }
 
-.popup-form-img-sec{
+.popup-form-img-sec {
   width: 5em;
   height: 5em;
   border: 1p solid var(--primary-color);
 }
 
-.popup-form-img{
+.popup-form-img {
   width: 100%;
 }
 
@@ -817,7 +817,7 @@ a {
   font-weight: 200;
 }
 
-.userBoard-user-detail-sec{
+.userBoard-user-detail-sec {
   display: flex;
   align-items: center;
 }
@@ -828,7 +828,7 @@ a {
   margin-right: 0.3em;
 }
 
-.userBoard-user-detail-role{
+.userBoard-user-detail-role {
   font-size: 0.7rem;
   font-weight: 300;
 }
@@ -1409,28 +1409,28 @@ tr {
 }
 
 .userBoard-right-customer-order-table-body-div.Not-Confirmed {
-  background-color: #EFFE96;
-  color: #3D3006;
+  background-color: #effe96;
+  color: #3d3006;
 }
 
 .userBoard-right-customer-order-table-body-div.Ordered {
-  background-color: #C5D7F3;
-  color: #07169D;
+  background-color: #c5d7f3;
+  color: #07169d;
 }
 
 .userBoard-right-customer-order-table-body-div.Processing {
-  background-color: #FDCFA4;
+  background-color: #fdcfa4;
   color: #733406;
 }
 
 .userBoard-right-customer-order-table-body-div.Picking-Up {
-  background-color: #FCC1F6;
+  background-color: #fcc1f6;
   color: #440845;
 }
 
 .userBoard-right-customer-order-table-body-div.Out-For-Delivery {
-  background-color: #BDFDC3;
-  color: #013A07;
+  background-color: #bdfdc3;
+  color: #013a07;
 }
 
 .userBoard-right-customer-order-table-body-div.Delivered {
@@ -1439,8 +1439,8 @@ tr {
 }
 
 .userBoard-right-customer-order-table-body-div.Cancelled {
-  background-color: #FCCCCC;
-  color: #9C1818;
+  background-color: #fccccc;
+  color: #9c1818;
 }
 
 /* order section ends */
@@ -1525,7 +1525,7 @@ tr {
   /* position: relative; */
 }
 
-.adminDashPanel-dashboard-status-left{
+.adminDashPanel-dashboard-status-left {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -1562,7 +1562,7 @@ tr {
   margin-bottom: 0.7em;
 }
 
-.dashboard-status-img-sec{
+.dashboard-status-img-sec {
   background-color: #fff;
   padding: 0.2em;
   border-radius: 10px;
@@ -1570,8 +1570,8 @@ tr {
 }
 
 .dashboard-status-img {
- height: 1.8em;
- width: 1.8em;
+  height: 1.8em;
+  width: 1.8em;
 }
 
 .dashboard-status-value {
@@ -1579,24 +1579,24 @@ tr {
   font-size: 2.3rem;
 }
 
-.dashboard-status-comment{
+.dashboard-status-comment {
   font-size: 0.7rem;
   font-weight: 500;
 }
 
-.dashboard-status-comment-orders{
+.dashboard-status-comment-orders {
   color: #557a99;
 }
 
-.dashboard-status-comment-products{
+.dashboard-status-comment-products {
   color: #9f8861;
 }
 
-.dashboard-status-comment-employers{
+.dashboard-status-comment-employers {
   color: #608e64;
 }
 
-.dashboard-status-comment-customers{
+.dashboard-status-comment-customers {
   color: #8e6969;
 }
 
@@ -1657,31 +1657,31 @@ tr {
 }
 
 .adminDashPanel-right-table-body-div.Not-Confirmed {
-  background-color: #EFFE96;
-  color: #3D3006;
+  background-color: #effe96;
+  color: #3d3006;
   border: 1px solid rgba(61, 48, 6, 0.25);
 }
 
 .adminDashPanel-right-table-body-div.Ordered {
-  background-color: #C5D7F3;
-  color: #07169D;
+  background-color: #c5d7f3;
+  color: #07169d;
   border: 1px solid rgba(7, 22, 157, 0.1);
 }
 .adminDashPanel-right-table-body-div.Processing {
-  background-color: #FDCFA4;
+  background-color: #fdcfa4;
   color: #733406;
   border: 1px solid rgba(115, 52, 6, 0.1);
 }
 
 .adminDashPanel-right-table-body-div.Picking-Up {
-  background-color: #FCC1F6;
+  background-color: #fcc1f6;
   color: #440845;
-  border: 1px solid rgba(68, 8, 69,0.1);
+  border: 1px solid rgba(68, 8, 69, 0.1);
 }
 
 .adminDashPanel-right-table-body-div.Out-For-Delivery {
-  background-color: #BDFDC3;
-  color: #013A07;
+  background-color: #bdfdc3;
+  color: #013a07;
   border: 1px solid rgba(1, 58, 7, 0.1);
 }
 
@@ -1692,10 +1692,9 @@ tr {
 }
 
 .adminDashPanel-right-table-body-div.Cancelled {
-  background-color: #FCCCCC;
-  color: #9C1818;
+  background-color: #fccccc;
+  color: #9c1818;
   border: 1px solid rgba(156, 24, 24, 0.1);
-
 }
 
 .adminDashPanel-right-table-body-div.Pending {
@@ -1723,14 +1722,21 @@ tr {
 }
 
 .orders-filter-btn {
-  margin-right: 2em;
+  margin-right: 0.8em;
   color: var(--primary-color);
   font-size: 0.82rem;
-  font-weight: 500;
+  font-weight: 400;
+  padding: 10px 7px;
+  border-radius: 5px;
+}
+
+.orders-filter-btn:hover {
+  background-color: #ecedef;
 }
 
 .orders-filter-btn.active {
-  font-weight: 1000;
+  font-weight: 700;
+  /* color: #000000; */
 }
 
 .adminDashPanel-product-img {
@@ -1910,31 +1916,28 @@ tr {
 }
 
 .employeeBoard-right-table-body-div.Not-Confirmed {
-  background-color: #EFFE96;
-  color: #3D3006;
+  background-color: #effe96;
+  color: #3d3006;
 }
 
 .employeeBoard-right-table-body-div.Ordered {
-  background-color: #C5D7F3;
-  color: #07169D;
+  background-color: #c5d7f3;
+  color: #07169d;
 }
 
-
-
 .employeeBoard-right-table-body-div.Processing {
-  background-color: #FDCFA4;
+  background-color: #fdcfa4;
   color: #733406;
 }
 
-
 .employeeBoard-right-table-body-div.Picking-Up {
-  background-color: #FCC1F6;
+  background-color: #fcc1f6;
   color: #440845;
 }
 
 .employeeBoard-right-table-body-div.Out-For-Delivery {
-  background-color: #BDFDC3;
-  color: #013A07;
+  background-color: #bdfdc3;
+  color: #013a07;
 }
 
 .employeeBoard-right-table-body-div.Delivered {
@@ -1943,8 +1946,8 @@ tr {
 }
 
 .employeeBoard-right-table-body-div.Cancelled {
-  background-color: #FCCCCC;
-  color: #9C1818;
+  background-color: #fccccc;
+  color: #9c1818;
 }
 
 .employeeBoard-right-table-body-div.Pending {
@@ -2087,6 +2090,10 @@ tr {
 
 /* signup-section ends */
 
-
-
-
+.filter-btn-value {
+  margin-left: 0.4em;
+  border-radius: 50%;
+  padding: 3px 7px;
+  background-color: #ecedef;
+  box-shadow: 0px 0px 5px 0px rgba(182, 183, 184, 0.6);
+}

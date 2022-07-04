@@ -1,25 +1,25 @@
 import React, { useState } from "react";
 import { isAuthenticated } from "../auth";
 import Cross from "../icons/cross-black.svg";
-import { adminUpdatePaymentStatus} from "../user";
+import { adminUpdatePaymentStatus } from "../user";
 
 const PaymentStatusUpdate = ({ setOrderUpdatePayment, order }) => {
   const [status, setStatus] = useState(order.OpaymentStatus);
-  
-  const {user, token} = isAuthenticated();
 
-const handleUpdate = (userId, token, orderId, status) => {
-  try {
-    const data = adminUpdatePaymentStatus(userId, token, orderId, status);
-    if(data.error){
-      return console.log(data.error)
-    }else{
-      return setOrderUpdatePayment("");
+  const { user, token } = isAuthenticated();
+
+  const handleUpdate = (userId, token, orderId, status) => {
+    try {
+      const data = adminUpdatePaymentStatus(userId, token, orderId, status);
+      if (data.error) {
+        return console.log(data.error);
+      } else {
+        return setOrderUpdatePayment("");
+      }
+    } catch (error) {
+      return console.log(error);
     }
-  } catch (error) {
-    return console.log(error)
-  }
-}
+  };
   return (
     <section className="orderUpdate-section">
       <div className="black-background">
@@ -51,17 +51,19 @@ const handleUpdate = (userId, token, orderId, status) => {
                     id="orderStatus"
                     value={status}
                     onChange={(e) => setStatus(e.target.value)}
-                    className= "popup-form-value"
+                    className="popup-form-value"
                   >
                     <option value="Pending">Pending</option>
                     <option value="Paid">Paid</option>
-                    
                   </select>
                 </div>
               </div>
-              <button className={`popup-form-btn ${
+              <button
+                className={`popup-form-btn ${
                   status === order.OpaymentStatus ? "button-unclickable" : ""
-                }`} onClick={() =>  handleUpdate(user._id, token, order._id, status)}>
+                }`}
+                onClick={() => handleUpdate(user._id, token, order._id, status)}
+              >
                 Update
               </button>
             </div>
