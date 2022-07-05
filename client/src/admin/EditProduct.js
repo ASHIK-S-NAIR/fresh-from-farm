@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { isAuthenticated } from "../auth";
-import { API } from "../backend";
 import {
   getProduct,
   updateProduct,
   updateProductWithImage,
 } from "../core/helper/productDetailHelper";
 import CrossIcon from "../icons/cross-black.svg";
-// import { createProduct } from "../user";
 
 const EditProduct = ({ setEditProductActive, product }) => {
   const [values, setValues] = useState({
@@ -185,16 +183,13 @@ const EditProduct = ({ setEditProductActive, product }) => {
                       className="popup-form-input"
                       onChange={handleFileChange}
                     />
-                    {/* <button type="submit" className="popup-form-input-btn">
-                      Choose File
-                    </button> */}
                   </div>
                 </div>
               </div>
               <div className="popup-form-single-group">
                 <div className="popup-form-group">
                   <button className="popup-form-btn" type="submit">
-                    Add Product
+                    Edit Product
                   </button>
                 </div>
               </div>

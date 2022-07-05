@@ -60,7 +60,6 @@ const Dashboard = () => {
   const loadNewDelivery = async (userId, token) => {
     try {
       const data = await getAllDeliveries(userId, token, "pending");
-      // console.log("data", data);
       if (data.error) {
         return console.log(data.error);
       } else {

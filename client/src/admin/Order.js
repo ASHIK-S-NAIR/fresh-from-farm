@@ -202,7 +202,9 @@ const Order = () => {
                       )}
                     </td>
                     <td className="adminDashPanel-right-table-body-value">
-                      {order.OemployeeName ? (
+                    {order.Ostatus === "Not-Confirmed" ? (
+                        " "
+                      ) : order.OemployeeName ? (
                         order.OemployeeName
                       ) : (
                         <button

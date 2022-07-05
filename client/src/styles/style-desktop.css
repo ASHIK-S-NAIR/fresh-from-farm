@@ -1,9 +1,5 @@
 /* general settings starts */
 
-/* font-family: 'Comfortaa', cursive;
-font-family: 'Inter', sans-serif;
-font-family: 'Poppins', sans-serif; */
-
 :root {
   /* color */
   --primary-color: #000000d9;
@@ -312,6 +308,15 @@ a {
 .popup-form-p {
   font-size: 0.875rem;
   font-weight: 600;
+  line-height: 1.5em;
+  color: var(--primary-color);
+}
+
+.popup-form-p-light {
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5em;
+  color: var(--primary-color);
 }
 
 .popup-form-link {

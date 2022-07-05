@@ -120,17 +120,17 @@ const OrderDetails = ({ setOrderActive, order }) => {
                     </p>
                     <p className="orderDetails-info-value">
                       {" "}
-                      {userDetails.name}
+                      {order.Ouser.name}
                     </p>
 
                     <p className="orderDetails-info-value">
                       {" "}
-                      {userDetails.phoneNumber}
+                      {order.Ouser.phoneNumber}
                     </p>
 
                     <p className="orderDetails-info-value">
                       {" "}
-                      {userDetails.email}
+                      {order.Ouser.email}
                     </p>
                   </div>
                   <div className="orderDetails-info-subsec">

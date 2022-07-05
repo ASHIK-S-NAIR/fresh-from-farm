@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { isAuthenticated } from "../auth";
 import Cross from "../icons/cross-black.svg";
 import { employeeUpdateOrderStatus } from "../user";

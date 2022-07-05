@@ -5,10 +5,12 @@ import moment from "moment";
 import ViewIcon from "../icons/view.svg";
 import TrashIcon from "../icons/Trash.svg";
 import CustomerDetail from "./CustomerDetail";
+import DeleteCustomer from "./DeleteCustomer";
 
 const Customer = () => {
   const [customers, setCustomers] = useState([]);
   const [customerDetail, setCustomerDetail] = useState("");
+  const [deleteCustomerActive, setDeleteCustomerActive] = useState("");
   const [customer, setCustomer] = useState("");
 
   const { user, token } = isAuthenticated();
@@ -31,16 +33,7 @@ const Customer = () => {
   };
 
   const handleDelete = async (customer) => {
-    try {
-      const data = await deleteCustomer(user._id, token, customer._id);
-      if (data.error) {
-        return console.log(data.error);
-      } else {
-        return loadCustomers(user._id, token);
-      }
-    } catch (error) {
-      return console.log(error);
-    }
+    return setDeleteCustomerActive("deleteCustomer"), setCustomer(customer);
   };
 
   useEffect(() => {
@@ -125,6 +118,12 @@ const Customer = () => {
         <CustomerDetail
           customer={customer}
           setCustomerDetail={setCustomerDetail}
+        />
+      )}
+      {deleteCustomerActive === "deleteCustomer" && (
+        <DeleteCustomer
+          customer={customer}
+          setDeleteCustomerActive={setDeleteCustomerActive}
         />
       )}
     </section>

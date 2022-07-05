@@ -176,18 +176,18 @@ exports.getAllOrders = async (req, res) => {
     if (status === "pending") {
       const orders = await Order.find({
         $or: [{ Ostatus: "Ordered" }, { Ostatus: "Not-Confirmed" }],
-      });
+      }).populate('Ouser');
 
       return res.json(orders);
     }
 
     if (status === "all") {
-      const orders = await Order.find();
+      const orders = await Order.find().populate('Ouser');
 
       return res.json(orders);
     }
 
-    const orders = await Order.find({ Ostatus: status });
+    const orders = await Order.find({ Ostatus: status }).populate('Ouser');
     return res.json(orders);
   } catch (error) {
     return res.status(400).json({
@@ -212,6 +212,7 @@ exports.deleteOrder = async (req, res) => {
 
 // updateOrderStatus
 exports.updateOrderStatus = async (req, res) => {
+  console.log("Game starts here 1");
   try {
     const { status } = req.body;
     await Order.findByIdAndUpdate(
@@ -219,6 +220,39 @@ exports.updateOrderStatus = async (req, res) => {
       { $set: { Ostatus: status } },
       { new: true, useFindAndModify: false }
     );
+    console.log("Game starts here 2");
+    console.log("Status", status);
+
+    if (status === ("Delivered" || "Cancelled")) {
+      console.log("reached here 1");
+      const order = await Order.findById(req.order._id);
+      const { Eorders } = await Employee.findById(
+        { _id: order.OemployeeId },
+        "Eorders"
+      ).populate("Eorders.EorderId");
+
+      console.log("reached here 2");
+
+      console.log("EOrders", Eorders)
+
+      Eorders.map(Eorder => console.log(Eorder.EorderId.Ostatus))
+
+      const EordersStatus = Eorders.some(
+        (Eorder) => Eorder.EorderId.Ostatus !== ("Delivered" || "Cancelled")
+      );
+
+      console.log("the value if eorder status is ", EordersStatus);
+
+      if (EordersStatus === false) {
+        console.log("reached here 3");
+        console.log("EorderStatus", EordersStatus);
+        await Employee.findByIdAndUpdate(
+          { _id: order.OemployeeId },
+          { $set: { Estatus: "Available" } },
+          { new: true }
+        );
+      }
+    }
 
     return res.json({
       message: "Order updated successfully",
@@ -234,12 +268,20 @@ exports.updateOrderStatus = async (req, res) => {
 exports.updatePaymentStatus = async (req, res) => {
   try {
     const { status } = req.body;
-    console.log("Status", status)
     await Order.findByIdAndUpdate(
       { _id: req.order._id },
       { $set: { OpaymentStatus: status } },
       { new: true, useFindAndModify: false }
     );
+
+    const order = await Order.findById(req.order._id);
+    if (order.Ostatus === "Not-Confirmed") {
+      await Order.findByIdAndUpdate(
+        { _id: req.order._id },
+        { $set: { Ostatus: "Ordered" } },
+        { new: true, useFindAndModify: false }
+      );
+    }
 
     return res.json({
       message: "Order updated successfully",

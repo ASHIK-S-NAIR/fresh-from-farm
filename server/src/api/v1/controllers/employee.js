@@ -205,7 +205,7 @@ exports.addEmplyeeOrder = async (req, res) => {
 
     await Employee.findByIdAndUpdate(
       { _id: req.employee._id },
-      { $set: { Eorders: Eorders } },
+      { $set: { Eorders: Eorders, Estatus: "OnDuty" } },
       { new: true, useFindAndModify: false }
     );
 

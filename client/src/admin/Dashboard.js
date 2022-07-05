@@ -18,7 +18,10 @@ import OrderDetails from "../user/OrderDetails";
 import OrderUpdate from "./OrderUpdate";
 import EmployeeUpdate from "./EmployeeUpdate";
 import PaymentStatusUpdate from "./PaymentStatusUpdate";
-import { Link } from "react-router-dom";
+import BarChart from "../Charts/BarChart";
+import {UserData} from "../core/data";
+import LineChart from "../Charts/LineChart";
+import PieChart from "../Charts/PieChart";
 
 const Dashboard = () => {
   const [statusValues, setStatusValues] = useState({
@@ -34,6 +37,17 @@ const Dashboard = () => {
   const [orderEmployeeAssignActive, setOrderEmployeeAssignActive] =
     useState("");
   const [orderUpdatePayment, setOrderUpdatePayment] = useState("");
+
+  const [userData, setUserData] = useState({
+    labels: UserData.map(data => data.year),
+    datasets: [{
+      label: "User Gain",
+      data: UserData.map(data => data.userGain),
+      backgroundColor: ["#9db8d1" ],
+      borderColor: "black",
+      borderWidth: 2
+    }]
+  })
 
   const { user, token } = isAuthenticated();
 
@@ -95,6 +109,10 @@ const Dashboard = () => {
     );
   };
 
+  // const handleEvent = () => {
+
+  // }
+
   const handlePaymentStatus = (order) => {
     return setOrderUpdatePayment("orderUpdatePayment"), setOrder(order);
   };
@@ -107,6 +125,7 @@ const Dashboard = () => {
     loadPendingOrders(user._id, token);
   }, [orderActive, orderUpdateActive, orderEmployeeAssignActive]);
   return (
+
     <section className="adminDashPanel-right-section dashboard-section">
       <div className="adminDashPanel-right-subsection dashboard-subSection">
         <div className="adminDashPanel-dashboard-status-sec dashboard-status-sec-orders">
@@ -168,6 +187,12 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+
+      {/* <div className="adminDashPanel-right-subsection">
+        <BarChart chartData= {userData} />
+        <LineChart chartData={userData} />
+        <PieChart chartData={userData} />
+      </div> */}
 
       <h1 className="adminDashPanel-right-header">Pending Orders</h1>
       <div className="adminDashPanel-right-subsection">
@@ -234,7 +259,9 @@ const Dashboard = () => {
                       )}
                     </td>
                     <td className="adminDashPanel-right-table-body-value">
-                      {order.OemployeeName ? (
+                      {order.Ostatus === "Not-Confirmed" ? (
+                        " "
+                      ) : order.OemployeeName ? (
                         order.OemployeeName
                       ) : (
                         <button

@@ -12,12 +12,14 @@ import { API } from "../backend";
 import AddProduct from "./AddProduct";
 import ProductDetail from "./ProductDetail";
 import EditProduct from "./EditProduct";
+import DeleteProduct from "./DeleteProduct";
 
 const Product = () => {
   const [products, setProducts] = useState([]);
   const [category, setCategory] = useState("all");
   const [addProductActive, setAddProductActive] = useState("");
   const [editProductActive, setEditProductActive] = useState("");
+  const [deleteProductActive, setDeleteProductActive] = useState("");
   const [productDetail, setProductDetail] = useState("");
   const [product, setProduct] = useState();
   const [countValues, setCountValues] = useState({
@@ -86,16 +88,7 @@ const Product = () => {
     return setEditProductActive("editProduct"), setProduct(product);
   };
   const handleDelete = async (product) => {
-    try {
-      const data = await deleteProduct(user._id, token, product._id);
-      if (data.error) {
-        return console.log(data.error);
-      } else {
-        return loadProducts(category);
-      }
-    } catch (error) {
-      return console.log(error);
-    }
+    return setDeleteProductActive("deleteProduct"), setProduct(product);
   };
 
   useEffect(() => {
@@ -122,7 +115,7 @@ const Product = () => {
           ADD PRODUCT
         </button>
       </div>
-      <div className="adminDashPanel-right-subsection adminDashPanel-product-filter-subSection"> 
+      <div className="adminDashPanel-right-subsection adminDashPanel-product-filter-subSection">
         {filterBtn("all", all, "All")}
         {filterBtn("fruit", Fruit, "Fruit")}
         {filterBtn("vegetable", Vegetable, "Vegetable")}
@@ -181,7 +174,9 @@ const Product = () => {
                       {product.pCategory}
                     </td>
                     <td className="adminDashPanel-right-table-body-value">
-                    {product.pStock !== 0 ? `${product.pStock} Kg` : "Out of Stock"} 
+                      {product.pStock !== 0
+                        ? `${product.pStock} Kg`
+                        : "Out of Stock"}
                     </td>
 
                     <td className="adminDashPanel-right-table-body-value">
@@ -229,6 +224,12 @@ const Product = () => {
       {editProductActive === "editProduct" && (
         <EditProduct
           setEditProductActive={setEditProductActive}
+          product={product}
+        />
+      )}
+      {deleteProductActive === "deleteProduct" && (
+        <DeleteProduct
+          setDeleteProductActive={setDeleteProductActive}
           product={product}
         />
       )}

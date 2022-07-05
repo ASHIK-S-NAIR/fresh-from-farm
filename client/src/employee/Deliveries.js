@@ -18,7 +18,7 @@ const Deliveries = () => {
 
   const loadDelivery = async (userId, token) => {
     try {
-      const data = await getAllDeliveries(userId, token, "pending");
+      const data = await getAllDeliveries(userId, token, "all");
 
       if (data.error) {
         return console.log(data.error);

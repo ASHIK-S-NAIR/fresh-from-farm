@@ -7,12 +7,14 @@ import { deleteEmployee, getEmployees } from "../user";
 import moment from "moment";
 import AddEmployee from "./AddEmployee";
 import EmployeeDetail from "./EmployeeDetail";
+import DeleteEmployee from "./DeleteEmployee";
 
 const Employee = () => {
   const [employees, setEmployees] = useState([]);
   const [status, setStatus] = useState("all");
   const [employee, setEmployee] = useState();
   const [addEmployeeActive, setAddEmployeeActive] = useState("");
+  const [deleteEmployeeActive, setDeleteEmployeeActive] = useState("");
   const [employeeDetail, setEmployeeDetail] = useState("");
   const [countValues, setCountValues] = useState({
     all: 0,
@@ -73,7 +75,7 @@ const Employee = () => {
       NotAvailable: employees.filter(
         (employee) => employee.Estatus === "NotAvailable"
       ).length,
-      OnDuty: employees.filter((employee) => employee.Estatus === "On-Duty")
+      OnDuty: employees.filter((employee) => employee.Estatus === "OnDuty")
         .length,
     });
   };
@@ -83,16 +85,7 @@ const Employee = () => {
   };
 
   const handleDelete = async (employee) => {
-    try {
-      const data = await deleteEmployee(user._id, token, employee._id);
-      if (data.error) {
-        return console.log(data.error);
-      } else {
-        return loadEmployees(user._id, token, status);
-      }
-    } catch (error) {
-      return console.log(error);
-    }
+    return setDeleteEmployeeActive("deleteEmployee"), setEmployee(employee);
   };
 
   useEffect(() => {
@@ -123,7 +116,7 @@ const Employee = () => {
         {filterBtn("all", all, "All")}
         {filterBtn("Available", Available, "Available")}
         {filterBtn("NotAvailable", NotAvailable, "NotAvailable")}
-        {filterBtn("On-Duty", OnDuty, "On-Duty")}
+        {filterBtn("OnDuty", OnDuty, "On-Duty")}
       </div>
       <div className="adminDashPanel-right-subsection">
         <table className="adminDashPanel-right-table">
@@ -200,6 +193,12 @@ const Employee = () => {
       </div>
       {addEmployeeActive === "addEmployee" && (
         <AddEmployee setAddEmployeeActive={setAddEmployeeActive} />
+      )}
+      {deleteEmployeeActive === "deleteEmployee" && (
+        <DeleteEmployee
+          setDeleteEmployeeActive={setDeleteEmployeeActive}
+          employee={employee}
+        />
       )}
       {employeeDetail === "employeeDetail" && (
         <EmployeeDetail
