@@ -13,15 +13,18 @@ import {
   getCountEmployers,
   getCountOrders,
   getCountProducts,
+  getCustomers,
+  getEmployees,
 } from "../user";
 import OrderDetails from "../user/OrderDetails";
 import OrderUpdate from "./OrderUpdate";
 import EmployeeUpdate from "./EmployeeUpdate";
 import PaymentStatusUpdate from "./PaymentStatusUpdate";
 import BarChart from "../Charts/BarChart";
-import {UserData} from "../core/data";
+import { UserData } from "../core/data";
 import LineChart from "../Charts/LineChart";
 import PieChart from "../Charts/PieChart";
+import { getAllProducts } from "../core/helper/productDetailHelper";
 
 const Dashboard = () => {
   const [statusValues, setStatusValues] = useState({
@@ -29,6 +32,12 @@ const Dashboard = () => {
     productStatus: "",
     employerStatus: "",
     customerStatus: "",
+  });
+  const [commentValues, setCommentValues] = useState({
+    orderCommentValue: 0,
+    productCommentValue: 0,
+    employeeCommentValue: 0,
+    customerCommentValue: 0,
   });
   const [pendingOrders, setPendingOrders] = useState();
   const [orderActive, setOrderActive] = useState("");
@@ -39,20 +48,29 @@ const Dashboard = () => {
   const [orderUpdatePayment, setOrderUpdatePayment] = useState("");
 
   const [userData, setUserData] = useState({
-    labels: UserData.map(data => data.year),
-    datasets: [{
-      label: "User Gain",
-      data: UserData.map(data => data.userGain),
-      backgroundColor: ["#9db8d1" ],
-      borderColor: "black",
-      borderWidth: 2
-    }]
-  })
+    labels: UserData.map((data) => data.year),
+    datasets: [
+      {
+        label: "User Gain",
+        data: UserData.map((data) => data.userGain),
+        backgroundColor: ["#9db8d1"],
+        borderColor: "black",
+        borderWidth: 2,
+      },
+    ],
+  });
 
   const { user, token } = isAuthenticated();
 
   const { orderStatus, productStatus, employerStatus, customerStatus } =
     statusValues;
+
+  const {
+    orderCommentValue,
+    productCommentValue,
+    employeeCommentValue,
+    customerCommentValue,
+  } = commentValues;
 
   const loadStatusValues = async (userId, token) => {
     try {
@@ -82,6 +100,49 @@ const Dashboard = () => {
     }
   };
 
+  const loadCommentValues = async (userId, token) => {
+    try {
+      const orderCommentArray = await getAllOrders(userId, token, "all");
+      const productCommentArray = await getAllProducts("all");
+      const emploeeCommentArray = await getEmployees(userId, token, "all");
+      const customerCommentArray = await getAllOrders(userId, token, "all");
+
+      if (
+        orderCommentArray.error ||
+        productCommentArray.error ||
+        emploeeCommentArray.error ||
+        customerCommentArray.error
+      ) {
+        return console.log("comment values update error occured");
+      } else {
+        return setCommentValues({
+          ...commentValues,
+          orderCommentValue: orderCommentArray.filter(
+            (orderComment) =>
+              orderComment.Ostatus === "Not-Confirmed" ||
+              orderComment.Ostatus === "Ordered" ||
+              orderComment.Ostatus === "Processing" ||
+              orderComment.Ostatus === "Picking-Up" ||
+              orderComment.Ostatus === "Out-For-Delivery"
+          ).length,
+          productCommentValue: productCommentArray.filter(
+            (productComment) => productComment.pStock === 0
+          ).length,
+          employeeCommentValue: emploeeCommentArray.filter(
+            (employeeComment) => employeeComment.Estatus === "Available"
+          ).length,
+          customerCommentValue: customerCommentArray.filter(
+            (customerComment) =>
+              customerComment.Ostatus === "Not-Confirmed" ||
+              customerComment.Ostatus === "Ordered"
+          ).length,
+        });
+      }
+    } catch (error) {
+      return console.log(error);
+    }
+  };
+
   const loadPendingOrders = async (userId, token) => {
     try {
       const data = await getAllOrders(userId, token, "pending");
@@ -94,6 +155,12 @@ const Dashboard = () => {
       return console.log(error);
     }
   };
+
+  // const loadFromZero = async (value, setState) => {
+  //   for (var i = 0; i <= value; i++) {
+  //     return i;
+  //   }
+  // };
 
   const handlePreview = async (order) => {
     return setOrderActive("orderDetails"), setOrder(order);
@@ -122,10 +189,13 @@ const Dashboard = () => {
   }, [orderActive, orderUpdateActive, orderEmployeeAssignActive]);
 
   useEffect(() => {
+    loadCommentValues(user._id, token);
+  }, [orderActive, orderUpdateActive, orderEmployeeAssignActive]);
+
+  useEffect(() => {
     loadPendingOrders(user._id, token);
   }, [orderActive, orderUpdateActive, orderEmployeeAssignActive]);
   return (
-
     <section className="adminDashPanel-right-section dashboard-section">
       <div className="adminDashPanel-right-subsection dashboard-subSection">
         <div className="adminDashPanel-dashboard-status-sec dashboard-status-sec-orders">
@@ -133,7 +203,8 @@ const Dashboard = () => {
             <p className="dashboard-status-tag">Orders</p>
             <h1 className="dashboard-status-value">{orderStatus}</h1>
             <p className="dashboard-status-comment dashboard-status-comment-orders">
-              5 orders not delivered
+              {orderCommentValue} orders
+              not delivered
             </p>
           </div>
           <div className="adminDashPanel-dashboard-status-right">
@@ -148,7 +219,7 @@ const Dashboard = () => {
             <p className="dashboard-status-tag">Products</p>
             <h1 className="dashboard-status-value">{productStatus}</h1>
             <p className="dashboard-status-comment dashboard-status-comment-products">
-              0 products out of Stock
+              {productCommentValue} products out of Stock
             </p>
           </div>
           <div className="adminDashPanel-dashboard-status-right">
@@ -157,12 +228,13 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
+
         <div className="adminDashPanel-dashboard-status-sec dashboard-status-sec-employers">
           <div className="adminDashPanel-dashboard-status-left">
             <p className="dashboard-status-tag">Employers</p>
             <h1 className="dashboard-status-value">{employerStatus}</h1>
             <p className="dashboard-status-comment dashboard-status-comment-employers">
-              4 Employees available
+              {employeeCommentValue} Employees available
             </p>
           </div>
           <div className="adminDashPanel-dashboard-status-right">
@@ -171,13 +243,14 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
+        
         <div className="adminDashPanel-dashboard-status-sec dashboard-status-sec-customers">
           <div className="adminDashPanel-dashboard-status-left">
             <p className="dashboard-status-tag">Customers</p>
 
             <h1 className="dashboard-status-value">{customerStatus}</h1>
             <p className="dashboard-status-comment dashboard-status-comment-customers">
-              3 Customer order pending
+              {customerCommentValue} Customer order pending
             </p>
           </div>
           <div className="adminDashPanel-dashboard-status-right">

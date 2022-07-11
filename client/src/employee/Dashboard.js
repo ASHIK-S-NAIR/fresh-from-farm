@@ -93,7 +93,7 @@ const Dashboard = () => {
   return (
     <section className="employeeBoard-section">
       <div className="-right-subsection dashboard-subSection">
-        <div className="employeeBoard-dashboard-status-sec dashboard-status-sec-TotalDeliveries">
+        {/* <div className="employeeBoard-dashboard-status-sec dashboard-status-sec-TotalDeliveries">
           <p className="dashboard-status-tag">Total Deliveries</p>
           <h1 className="dashboard-status-value">{totalDeliveries}</h1>
           <img src={CartIcon} alt="" className="dashboard-status-img" />
@@ -107,7 +107,71 @@ const Dashboard = () => {
           <p className="dashboard-status-tag">My Status</p>
           <h1 className="dashboard-status-value">{EmployeeStatus}</h1>
           <img src={EmployerIcon} alt="" className="dashboard-status-img" />
+        </div> */}
+
+        <div className="employeeBoard-dashboard-status-sec dashboard-status-sec-TotalDeliveries">
+          <div className="adminDashPanel-dashboard-status-left">
+            <p className="dashboard-status-tag">Orders</p>
+            <h1 className="dashboard-status-value">{totalDeliveries}</h1>
+            {/* <p className="dashboard-status-comment dashboard-status-comment-orders">
+              {orderCommentValue} orders
+              not delivered
+            </p> */}
+          </div>
+          <div className="adminDashPanel-dashboard-status-right">
+            <div className="dashboard-status-img-sec">
+              <img src={CartIcon} alt="" className="dashboard-status-img" />
+            </div>
+          </div>
         </div>
+
+        <div className="employeeBoard-dashboard-status-sec dashboard-status-sec-DeliveryStatus">
+          <div className="adminDashPanel-dashboard-status-left">
+            <p className="dashboard-status-tag">Products</p>
+            <h1 className="dashboard-status-value">{NewDeliveries}</h1>
+            {/* <p className="dashboard-status-comment dashboard-status-comment-products">
+              {productCommentValue} products out of Stock
+            </p> */}
+          </div>
+          <div className="adminDashPanel-dashboard-status-right">
+            <div className="dashboard-status-img-sec">
+              <img src={ProductIcon} alt="" className="dashboard-status-img" />
+            </div>
+          </div>
+        </div>
+
+        <div className="employeeBoard-dashboard-status-sec dashboard-status-sec-EmpoyeeStatus">
+          <div className="adminDashPanel-dashboard-status-left">
+            <p className="dashboard-status-tag">Employers</p>
+            <h1 className="dashboard-status-value">{EmployeeStatus}</h1>
+            {/* <p className="dashboard-status-comment dashboard-status-comment-employers">
+              {employeeCommentValue} Employees available
+            </p> */}
+          </div>
+          <div className="adminDashPanel-dashboard-status-right">
+            <div className="dashboard-status-img-sec">
+              <img src={EmployerIcon} alt="" className="dashboard-status-img" />
+            </div>
+          </div>
+        </div>
+
+ 
+
+        {/* <div className="adminDashPanel-dashboard-status-sec dashboard-status-sec-customers">
+          <div className="adminDashPanel-dashboard-status-left">
+            <p className="dashboard-status-tag">Customers</p>
+
+            <h1 className="dashboard-status-value">{customerStatus}</h1>
+            <p className="dashboard-status-comment dashboard-status-comment-customers">
+              {customerCommentValue} Customer order pending
+            </p>
+          </div>
+          <div className="adminDashPanel-dashboard-status-right">
+            <div className="dashboard-status-img-sec">
+              <img src={CustomerIcon} alt="" className="dashboard-status-img" />
+            </div>
+          </div>
+        </div> */}
       </div>
 
       <h1 className="employeeBoard-right-header">New Delivery</h1>

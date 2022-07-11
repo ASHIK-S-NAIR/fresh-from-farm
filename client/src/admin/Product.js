@@ -4,15 +4,13 @@ import EditIcon from "../icons/Edit.svg";
 import AddIcon from "../icons/add.svg";
 import TrashIcon from "../icons/Trash.svg";
 import { isAuthenticated } from "../auth";
-import {
-  deleteProduct,
-  getAllProducts,
-} from "../core/helper/productDetailHelper";
+import { getAllProducts } from "../core/helper/productDetailHelper";
 import { API } from "../backend";
 import AddProduct from "./AddProduct";
 import ProductDetail from "./ProductDetail";
 import EditProduct from "./EditProduct";
 import DeleteProduct from "./DeleteProduct";
+import Cross from "../icons/cross-black.svg";
 
 const Product = () => {
   const [products, setProducts] = useState([]);
@@ -81,6 +79,10 @@ const Product = () => {
     });
   };
 
+  // const loadMessage = () => {
+  //   set
+  // }
+
   const handlePreview = (product) => {
     return setProductDetail("productDetail"), setProduct(product);
   };
@@ -101,6 +103,14 @@ const Product = () => {
 
   return (
     <section className="adminDashPanel-section product-section">
+      {/* <div className="adminDashPanel-right-delete-Message-sec">
+        <p className="adminDashPanel-right-delete-Message">
+          Product Product Name - 99999999999999 was successfully deleted
+        </p>
+        <div className="cross-sec">
+          <img src={Cross} alt="" className="cross-img" />
+        </div>
+      </div> */}
       <h1 className="adminDashPanel-right-header">Products</h1>
       <div className="adminDashPanel-right-subsection adminDashPanel-product-add-btn-subSection">
         <button

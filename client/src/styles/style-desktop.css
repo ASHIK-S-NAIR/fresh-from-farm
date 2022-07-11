@@ -1854,14 +1854,13 @@ tr {
 }
 
 .employeeBoard-dashboard-status-sec {
-  box-shadow: 1px 1px 10px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 1px 1px 10px 10px rgba(0, 0, 0, 0.02);
   border-radius: 5px;
-  display: grid;
-  place-items: center;
+  display: flex;
+  justify-content: space-between;
   width: 28%;
-  height: 6.5em;
-  position: relative;
-  margin-bottom: 5em;
+  height: 7.5em;
+  padding: 1em;
 }
 
 .employeeBoard-right-header {
@@ -2102,3 +2101,19 @@ tr {
   background-color: #ecedef;
   box-shadow: 0px 0px 5px 0px rgba(182, 183, 184, 0.6);
 }
+
+
+/* Message section starts */
+
+.adminDashPanel-right-delete-Message-sec{
+  width: 100%;
+  border: 1px solid rgba(255, 0, 0, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5em 1em;
+  background-color: rgba(255, 0, 0, 0.2);
+  color: rgba(227, 23, 23, 1);
+  margin-bottom: 2em;
+}
+/* Message section ends */
