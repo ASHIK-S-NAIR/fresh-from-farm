@@ -69,24 +69,38 @@ const Nav = () => {
     <section className="nav-section">
       <div className="wrap nav-wrap">
         <div className="nav-left-sec">
+          <div className="nav-logo-sec">
+            <Link className="nav-logo" to="/">
+              fresh from farm
+            </Link>
+          </div>
+        </div>
+
+        <div className="nav-center-sec">
           <ul className="nav-ul">
             <li className="nav-li">
               <Link className="nav-link" to="/">
-                Shop
+                Home
               </Link>
             </li>
             <li className="nav-li">
               <Link className="nav-link" to="/">
-                Contact Us
+                Categories
+              </Link>
+            </li>
+            <li className="nav-li">
+              <Link className="nav-link" to="/">
+                About Us
+              </Link>
+            </li>
+            <li className="nav-li">
+              <Link className="nav-link active" to="/">
+                Contact
               </Link>
             </li>
           </ul>
         </div>
-        <div className="nav-logo-sec">
-          <Link className="nav-logo" to="/">
-            fresh from farm
-          </Link>
-        </div>
+
         <div className="nav-right-sec">
           {!isAuthenticated() && (
             <ul className="nav-ul">
@@ -97,7 +111,7 @@ const Nav = () => {
               </li>
               <li className="nav-li">
                 <Link to="/login">
-                  <button className="nav-btn">Log In</button>
+                  <button className="nav-btn nav-border">Log In</button>
                 </Link>
               </li>
             </ul>
