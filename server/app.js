@@ -1,6 +1,8 @@
 const dotenv = require("dotenv");
 dotenv.config();
 
+const path = require("path");
+
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
@@ -16,6 +18,7 @@ app.use(
     extended: false,
   })
 );
+app.use(express.static('static'));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors());
@@ -45,9 +48,13 @@ app.use("/api/v1/", productRoute);
 app.use("/api/v1/", orderRoute);
 app.use("/api/v1/", employeeRoute);
 
-app.get("/", (req, res) => {
-  res.send("revenew dipp");
-});
+// app.get("/", (req, res) => {
+//   res.send("revenew dipp");
+// });
+
+app.get("*", async (req, res) => {
+   res.sendFile(path.join(__dirname, 'static/index.html'))
+})
 
 app.listen(port, () => {
   console.log(`Server is running on : ${port}`);
