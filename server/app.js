@@ -56,6 +56,7 @@ app.get("*", async (req, res) => {
    res.sendFile(path.join(__dirname, 'static/index.html'))
 })
 
+
 app.listen(port, () => {
   console.log(`Server is running on : ${port}`);
 });
