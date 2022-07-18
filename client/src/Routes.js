@@ -23,6 +23,9 @@ import ScrollToTop from "./ScrollToTop";
 import { getUserCart } from "./user";
 import { isAuthenticated } from "./auth";
 
+// import ProductDetail from "./container/ProductDetail";
+// import ProductListing from "./container/ProductListing";
+
 const Routes = () => {
   const [authActive, setAuthActive] = useState(null);
   const [cart, setCart] = useState([]);
@@ -110,6 +113,9 @@ const Routes = () => {
               />
               <Route path="/signup" element={<Signup />} />
               <Route path="/login" element={<Login />} />
+
+              {/* <Route path="/myproducts" element={<ProductListing />} /> */}
+              {/* <Route path="/myproduct/:productId" element={<ProductDetail />} /> */}
             </Router>
             <Footer />
           </ScrollToTop>

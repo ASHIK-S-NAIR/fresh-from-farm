@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { API } from "../backend";
 import Trash from "../icons/Trash.svg";
 import { getProduct } from "./helper/productDetailHelper";
+import { useSelector } from "react-redux";
 
 const CartItem = ({
   cartItemProductId,
@@ -9,6 +10,9 @@ const CartItem = ({
   updateQuantity,
   deleteProduct,
 }) => {
+
+  const cart = useSelector((state) => state.allCart.cart);
+
   const [product, setProduct] = useState({
     _id: "",
     pName: "",
@@ -42,7 +46,7 @@ const CartItem = ({
 
   useEffect(() => {
     getProductDetails(cartItemProductId);
-  }, []);
+  }, [cart]);
 
   useEffect(() => {
     updateQuantity(product._id, quantity);

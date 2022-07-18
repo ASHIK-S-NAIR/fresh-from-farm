@@ -10,9 +10,16 @@ import {
   updateFromUserCart,
 } from "../user";
 import CartItem from "./CartItem";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchCart } from "../Redux/actions/cartActions";
 
 const Cart = () => {
-  const { cart, setCart} = useContext(CartContext);
+  const cart = useSelector((state) => state.allCart.cart);
+  const dispatch = useDispatch();
+
+  console.log("cartcart", cart);
+
+  // const { cart, setCart} = useContext(CartContext);
   // const [cart, setCart] = useState([]);
   const [subTotal_items, setSubTotal_items] = useState(0);
   const [subTotal_value, setSubTotal_value] = useState(0);
@@ -48,6 +55,10 @@ const Cart = () => {
   };
 
   useEffect(() => {
+    dispatch(fetchCart());
+  }, []);
+
+  useEffect(() => {
     preLoadShippingAddress(userId, token);
   }, []);
 
@@ -68,19 +79,19 @@ const Cart = () => {
     setSubTotal_items(cart.length);
   }, [cart]);
 
-  const preLoadCart = async (userId, token) => {
-    try {
-      const data = await getUserCart(userId, token);
-      return setCart(data.cart);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const preLoadCart = async (userId, token) => {
+  //   try {
+  //     const data = await getUserCart(userId, token);
+  //     // return setCart(data.cart);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  useEffect(() => {
-    console.log("reaching here awsome vini")
-    preLoadCart(userId, token);
-  }, []);
+  // useEffect(() => {
+  //   console.log("reaching here awsome vini")
+  //   preLoadCart(userId, token);
+  // }, []);
 
   const updateQuantity = async (productId, quantity) => {
     try {
@@ -91,7 +102,8 @@ const Cart = () => {
       if (data.error) {
         console.log(data.error);
       } else {
-        return preLoadCart(userId, token);
+        dispatch(fetchCart());
+        // return preLoadCart(userId, token);
       }
     } catch (error) {
       console.log(error);
@@ -104,12 +116,28 @@ const Cart = () => {
       if (data.error) {
         return console.log(data.error);
       } else {
-        return preLoadCart(userId, token);
+        dispatch(fetchCart());
+        // return preLoadCart(userId, token);
       }
     } catch (error) {
       console.log(error);
     }
   };
+
+  // const loadCartItems = (cart) => {
+  //   console.log("cartItem", cart)
+  //   cart.map((cartItem, index) => {
+  //     return (
+  //       <CartItem
+  //         cartItemProductId={cartItem.product._id}
+  //         cartItemQuantity={cartItem.quantity}
+  //         key={index}
+  //         updateQuantity={updateQuantity}
+  //         deleteProduct={deleteProduct}
+  //       />
+  //     );
+  //   });
+  // };
 
   const handleChange = (name) => (e) => {
     setShippingAddress({ ...shippingAddress, [name]: e.target.value });
@@ -123,7 +151,7 @@ const Cart = () => {
         </div>
         <div className="cart-subsection">
           <div className="cartDetail-sec">
-            <div className="cartDetail-sec-hr"></div>
+            {/* <div className="cartDetail-sec-hr"></div> */}
             {cart &&
               cart.map((cartItem, index) => {
                 return (

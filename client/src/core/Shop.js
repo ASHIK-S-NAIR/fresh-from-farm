@@ -3,19 +3,25 @@ import { Link } from "react-router-dom";
 import { API } from "../backend";
 import { getAllProducts } from "./helper/productDetailHelper";
 import CartIcon from "../icons/Shopping/Cart.svg";
-import DeliveryBoy from "../images/deliverboy-green.png"
+import DeliveryBoy from "../images/deliverboy-green.png";
 import DeliveryIcon from "../icons/Shopping/Delivery.svg";
 import ArrowIcon from "../icons/Shopping/Arrow.svg";
+import Loading from "./Loading";
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [searhCategory, setSearchCategory] = useState('all');
+  const [searchSort, setSearchSort]= useState('default');
+  const [searchView, setSearchView] = useState("short");
 
   const loadAllProducts = async () => {
     try {
       const data = await getAllProducts("all");
-      return setProducts(data);
+      return setIsLoading(false), setProducts(data);
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
     }
   };
 
@@ -23,7 +29,9 @@ const Shop = () => {
     loadAllProducts();
   }, []);
 
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <section className="shop-section">
       <div className="hero-sec">
         <div className="wrap hero-wrap">
@@ -37,11 +45,15 @@ const Shop = () => {
                 Make healthy life <br /> with <span>fresh</span> grocery
               </h1>
               <h3 className="hero-subheader">
-                Get the best quality and most delicious grocery food <br /> in the
-                world, you can get them all use our website.
+                Get the best quality and most delicious grocery food <br /> in
+                the world, you can get them all use our website.
               </h3>
               <div className="hero-search-sec">
-                <input type="text" className="hero-search-input" placeholder="Search a product" />
+                <input
+                  type="text"
+                  className="hero-search-input"
+                  placeholder="Search a product"
+                />
                 <button className="hero-search-btn">Shop now</button>
               </div>
               <p className="hero-signin-p">
@@ -54,13 +66,49 @@ const Shop = () => {
               <img src={DeliveryBoy} alt="" className="hero-img" />
               <div className="hero-img-bg">
                 <div className="hero-img-bg-delivery-icon-sec">
-                  <img src={DeliveryIcon} alt="" className="hero-img-bg-delivery-icon" />
+                  <img
+                    src={DeliveryIcon}
+                    alt=""
+                    className="hero-img-bg-delivery-icon"
+                  />
                 </div>
                 <div className="hero-img-bg-arrow-icon-sec">
-                  <img src={ArrowIcon} alt="" className="hero-img-bg-arrow-icon" />
+                  <img
+                    src={ArrowIcon}
+                    alt=""
+                    className="hero-img-bg-arrow-icon"
+                  />
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="search-sec">
+        <div className="wrap search-wrap">
+          <div className="search-input-sec">
+            <input type="text" className="search-input" />
+            <img src="" alt="" className="search-icon" />
+          </div>
+          <div className="search-category-sec">
+            <select name="" id="" className="search-category">
+              <option value="" className="search-category-item"></option>
+              <option value="" className="search-category-item"></option>
+              <option value="" className="search-category-item"></option>
+            </select>
+          </div>
+          <div className="search-sort-sec">
+            <select name="" id="" className="search-sort">
+              <option value="" className="search-sort-item"></option>
+              <option value="" className="search-sort-item"></option>
+              <option value="" className="search-sort-item"></option>
+              <option value="" className="search-sort-item"></option>
+            </select>
+          </div>
+          <div className="search-view-sec">
+            <div className="search-view-short"></div>
+            <div className="search-view-long"></div>
           </div>
         </div>
       </div>

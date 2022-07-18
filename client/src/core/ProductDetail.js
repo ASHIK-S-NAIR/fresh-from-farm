@@ -5,6 +5,8 @@ import { getProduct, getAllProducts } from "./helper/productDetailHelper";
 import { isAuthenticated } from "../auth/index";
 import { addToUserCart } from "../user";
 import { CartContext } from "../context/Context";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchCart } from "../Redux/actions/cartActions";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState();
@@ -17,7 +19,9 @@ const ProductDetail = () => {
 
   const navigate = useNavigate();
 
-  const { preLoadCart } = useContext(CartContext);
+  const dispatch = useDispatch();
+
+  // const { preLoadCart } = useContext(CartContext);
 
   const loadProduct = async (productId) => {
     try {
@@ -55,7 +59,8 @@ const ProductDetail = () => {
         if (data.error) {
           console.log(data.error);
         } else {
-          preLoadCart(user._id, token);
+          // preLoadCart(user._id, token);
+          dispatch(fetchCart());
           return navigate(`/cart/${user._id}`);
         }
       } else if (isAuthenticated()) {
@@ -70,7 +75,7 @@ const ProductDetail = () => {
 
   useEffect(() => {
     loadProduct(productId);
-  }, []);
+  }, [product]);
 
   useEffect(() => {
     loadProducts(productId);
