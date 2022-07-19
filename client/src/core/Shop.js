@@ -18,7 +18,7 @@ const Shop = () => {
   const loadAllProducts = async () => {
     try {
       const data = await getAllProducts("all");
-      return setIsLoading(true), setProducts(data);
+      return setIsLoading(false), setProducts(data);
     } catch (error) {
       console.log(error);
       setIsLoading(false);
