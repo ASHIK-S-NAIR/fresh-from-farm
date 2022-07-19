@@ -9,7 +9,7 @@ import { fetchCart } from "../Redux/actions/cartActions";
 
 const Nav = () => {
   const cart = useSelector((state) => state.allCart.cart);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const [active, setActive] = useState(false);
   const [toggled, setToggled] = useState(false);
@@ -63,6 +63,10 @@ const Nav = () => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    dispatch(fetchCart());
+  }, []);
 
   useEffect(() => {
     if (isAuthenticated() && isAuthenticated().user.role === 1) {
@@ -131,7 +135,7 @@ const Nav = () => {
                     {/* <img src={CartIcon} alt="" className="nav-cart-icon" /> */}
                     <svg
                       className="nav-cart-icon"
-                      stroke-width="0"
+                      strokeWidth="0"
                       viewBox="0 0 24 24"
                       height="1em"
                       width="1em"

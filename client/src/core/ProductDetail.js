@@ -38,7 +38,7 @@ const ProductDetail = () => {
 
   const loadProducts = async () => {
     try {
-      const data = await getAllProducts("all");
+      const data = await getAllProducts(product.pCategory);
       if (data.error) {
         return console.log(data.error);
       } else {
@@ -75,11 +75,11 @@ const ProductDetail = () => {
 
   useEffect(() => {
     loadProduct(productId);
-  }, [product]);
+  }, [productId]);
 
   useEffect(() => {
     loadProducts(productId);
-  }, []);
+  }, [product]);
 
   return (
     <section className="productDetail productDetail-section">

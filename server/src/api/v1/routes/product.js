@@ -12,6 +12,7 @@ const {
   getAllProducts,
   photo,
   countProducts,
+  productSearch
 } = require("../controllers/product");
 const { isSignedIn, isAuthenticated, isAdmin } = require("../controllers/auth");
 const { getUserById } = require("../controllers/user");
@@ -110,5 +111,12 @@ router.get(
   isAdmin,
   countProducts
 );
+
+// productSearch
+// @type GET
+// @route /api/v1/productsearch
+// @desc route to search all products
+// @access PRIVATE
+router.get("/productsearch", productSearch);
 
 module.exports = router;

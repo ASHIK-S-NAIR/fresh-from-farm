@@ -214,6 +214,58 @@ exports.countProducts = async (req, res) => {
   }
 };
 
+exports.productSearch = async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) - 1 || 0;
+    const limit = parseInt(req.query.limit) || 5;
+    const search = req.query.search || "";
+    let sort = req.query.sort || "default";
+    let category = req.query.category || "all";
+
+    const categories = ["fruit", "vegetable"];
+
+    category === "all"
+      ? (category = [...categories])
+      : (category = req.query.category.split(","));
+
+    req.query.sort ? (sort = req.query.sort.split(",")) : (sort = [sort]);
+
+    let sortBy = {};
+    if (sort[1]) {
+      sortBy[sort[0]] = sort[1];
+    } else {
+      sortBy[sort[0]] = "asc";
+    }
+
+    const products = await Product.find({
+      pName: { $regex: search, $options: "i" },
+    })
+      .where("pCategory")
+      .in([...category])
+      .sort(sortBy)
+      .skip(page * limit)
+      .limit(limit);
+
+    const total = await Product.countDocuments({
+      category: { $in: [...category] },
+      pName: { $regex: search, $options: "i" },
+    });
+
+    const response = {
+      error: false,
+      total,
+      page: page + 1,
+      limit,
+      categories,
+      products,
+    };
+
+    res.status(200).json(response);
+  } catch (error) {
+    return res.status(400).json("Failed to search Products");
+  }
+};
+
 // middleware
 exports.photo = (req, res) => {
   const key = req.params.key;
