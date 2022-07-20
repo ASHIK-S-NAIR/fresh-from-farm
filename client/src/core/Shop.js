@@ -7,11 +7,12 @@ import DeliveryBoy from "../images/deliverboy-green.png";
 import DeliveryIcon from "../icons/Shopping/Delivery.svg";
 import ArrowIcon from "../icons/Shopping/Arrow.svg";
 import Loading from "./Loading";
+import { isAuthenticated } from "../auth";
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [searhCategory, setSearchCategory] = useState("all");
+  const [searchCategory, setSearchCategory] = useState([]);
   const [searchSort, setSearchSort] = useState("default");
   const [searchView, setSearchView] = useState("short");
 
@@ -25,9 +26,21 @@ const Shop = () => {
     }
   };
 
+  const handleCategory = (e) => {
+    var updatedList = [...searchCategory];
+    if (e.target.checked) {
+      updatedList = [...searchCategory, e.target.value];
+    } else {
+      updatedList.splice(searchCategory.indexOf(e.target.value), 1);
+    }
+    setSearchCategory(updatedList);
+  };
+
   useEffect(() => {
     loadAllProducts();
   }, []);
+
+  console.log("searchSort", searchSort)
 
   return isLoading ? (
     <Loading />
@@ -73,13 +86,15 @@ const Shop = () => {
                 />
                 <button className="hero-search-btn">Shop now</button>
               </div>
-              <p className="hero-signin-p">
-                Not yet Member ?{" "}
-                <Link to="/signup">
-                  <span>Sign Up</span>
-                </Link>{" "}
-                Now
-              </p>
+              {(!isAuthenticated() || isAuthenticated().user.role === 2) && (
+                <p className="hero-signin-p">
+                  Not yet Member ?{" "}
+                  <Link to="/signup">
+                    <span>Sign Up</span>
+                  </Link>{" "}
+                  Now
+                </p>
+              )}
             </div>
           </div>
           <div className="hero-right">
@@ -124,10 +139,7 @@ const Shop = () => {
                         filterUnits="userSpaceOnUse"
                         colorInterpolationFilters="sRGB"
                       >
-                        <feFlood
-                          floodOpacity="0"
-                          result="BackgroundImageFix"
-                        />
+                        <feFlood floodOpacity="0" result="BackgroundImageFix" />
                         <feColorMatrix
                           in="SourceAlpha"
                           type="matrix"
@@ -199,7 +211,35 @@ const Shop = () => {
         <div className="wrap shop-wrap">
           <div className="search-filter-sec">
             <div className="search-filter-category-sec">
-              <select name="" id="" className="search-filter-category">
+              <h3 className="search-filter-category-header">Category</h3>
+              <div className="search-filter-category-item">
+                <input
+                  type="checkbox"
+                  name="searchCategory"
+                  value="fruit"
+                  onChange={handleCategory}
+                />
+                <label htmlFor="searchCategory">Fruits</label>
+              </div>
+              <div className="search-filter-category-item">
+                <input
+                  type="checkbox"
+                  name="searchCategory"
+                  value="vegetable"
+                  onChange={handleCategory}
+                />
+                <label htmlFor="searchCategory">Vegetables</label>
+              </div>
+              <div className="search-filter-category-item">
+                <input
+                  type="checkbox"
+                  name="searchCategory"
+                  value="meat"
+                  onChange={handleCategory}
+                />
+                <label htmlFor="searchCategory">Meat</label>
+              </div>
+              {/* <select name="" id="" className="search-filter-category">
                 <option value="" className="search-filter-category-item">
                   Fruits
                 </option>
@@ -209,12 +249,13 @@ const Shop = () => {
                 <option value="" className="search-filter-category-item">
                   Poultry
                 </option>
-              </select>
+              </select> */}
             </div>
             <div className="search-filter-sort-sec">
-              <select name="" id="" className="search-filter-sort">
-                <option value="" className="search-filter-sort-item">
-                  Sort by default
+              <h3 className="search-filter-sort-header">Sort by</h3>
+              <select name="searchSort" className="search-filter-sort-select" value={searchSort} onChange={(e) => setSearchSort(e.target.value)}>
+                <option value="default" className="search-filter-sort-item">
+                  Default
                 </option>
                 <option value="" className="search-filter-sort-item">
                   Name: A -Z

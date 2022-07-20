@@ -124,6 +124,11 @@ const Footer = () => {
             <p className="footer-sub-sec-p">Vegetables</p>
             <p className="footer-sub-sec-p">Fruits</p>
           </div>
+          <div className="footer-sub-sec">
+            <h3 className="footer-sub-sec-heading">PAYMENT</h3>
+            <p className="footer-sub-sec-p">Cash On Delivery</p>
+            <p className="footer-sub-sec-p">RazorPay</p>
+          </div>
         </div>
         <div className="footer-copyRight-sec">
           <p className="footer-copyRight-p">

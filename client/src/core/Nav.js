@@ -180,7 +180,7 @@ const Nav = () => {
                       <button
                         className="nav-drop-btn"
                         onClick={() => {
-                          logout(() => navigate("/"));
+                          logout(() => navigate("/login"));
                         }}
                       >
                         Log Out
@@ -265,7 +265,7 @@ const Nav = () => {
                       <button
                         className="nav-drop-btn"
                         onClick={() => {
-                          logout(() => navigate("/"));
+                          logout(() => navigate("/login"));
                         }}
                       >
                         Log Out
@@ -310,7 +310,7 @@ const Nav = () => {
                       <button
                         className="nav-drop-btn"
                         onClick={() => {
-                          logout(() => navigate("/"));
+                          logout(() => navigate("/login"));
                         }}
                       >
                         Log Out
@@ -405,7 +405,7 @@ const Nav = () => {
                     <button
                       className="nav-drop-btn"
                       onClick={() => {
-                        logout(() => navigate("/"));
+                        logout(() => navigate("/login"));
                         toggle();
                       }}
                     >
@@ -497,7 +497,7 @@ const Nav = () => {
                     <button
                       className="nav-drop-btn"
                       onClick={() => {
-                        logout(() => navigate("/"));
+                        logout(() => navigate("/login"));
                       }}
                     >
                       Log Out
@@ -546,7 +546,7 @@ const Nav = () => {
                       className="nav-drop-btn"
                       onClick={() => {
                         toggle();
-                        logout(() => navigate("/"));
+                        logout(() => navigate("/login"));
                       }}
                     >
                       Log Out
