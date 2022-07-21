@@ -92,7 +92,25 @@ export const deleteProduct = async (userId, token, productId) => {
 
     return result;
   } catch (error) {
-    console.log(error);
+    return error;
+  }
+};
+
+// productSearch
+export const productSearch = async (page, limit, category, search, sort) => {
+  try {
+    const result = await fetch(
+      `${API}/productsearch?page=${page}&limit=${limit}&category=${category}&search=${search}&sort=${sort}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+        },
+      }
+    ).then((res) => res.json());
+
+    return result;
+  } catch (error) {
     return error;
   }
 };
