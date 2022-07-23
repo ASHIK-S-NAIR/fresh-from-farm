@@ -1,0 +1,33 @@
+{
+  "files": {
+    "main.css": "/static/css/main.a67479cf.css",
+    "main.js": "/static/js/main.f6ae0c2f.js",
+    "static/media/deliverboy-green.png": "/static/media/deliverboy-green.b7c1e50637a1e6501ff6.png",
+    "static/media/Delivery.svg": "/static/media/Delivery.aa8ca6448f606d32040b0b7e62092e7a.svg",
+    "static/media/Arrow.svg": "/static/media/Arrow.6698f7c2cbbfba73722eae00f143faa3.svg",
+    "static/media/Approve.svg": "/static/media/Approve.65262847c00e1759a04b79fdf09312bb.svg",
+    "static/media/Trash.svg": "/static/media/Trash.2458b158a9e1d96e279ae77ee579de6d.svg",
+    "static/media/product.svg": "/static/media/product.009ad294ac0783af8af78355a9a95f42.svg",
+    "static/media/productActive.svg": "/static/media/productActive.117c21e24dbc7e794acd9fb0f5d244cf.svg",
+    "static/media/Edit.svg": "/static/media/Edit.efdbec5e18f02c182646415fae1f4012.svg",
+    "static/media/view.svg": "/static/media/view.fe62e5d32197b2152ccdbca5550535f2.svg",
+    "static/media/employer.svg": "/static/media/employer.6ff6fe37563886cc56c4e577387f29f4.svg",
+    "static/media/employerActive.svg": "/static/media/employerActive.cccd9dc689f952054fb79b1cc228c760.svg",
+    "static/media/cart-active.svg": "/static/media/cart-active.5bd2b413b7cd8161ec5a767319050744.svg",
+    "static/media/cart.svg": "/static/media/cart.f0a7288c662742c73a74348e9c652145.svg",
+    "index.html": "/index.html",
+    "static/media/customer.svg": "/static/media/customer.637e144fef6a86557912635bf854d535.svg",
+    "static/media/customerActive.svg": "/static/media/customerActive.11b65f470987069e570f1e9e9903f09a.svg",
+    "static/media/add.svg": "/static/media/add.6cf9fb59afa8502a89be773b5e86985f.svg",
+    "static/media/profile.svg": "/static/media/profile.c00c43fc5825e4a9d955e24551d543ba.svg",
+    "static/media/dashboardActive.svg": "/static/media/dashboardActive.35bbd4e4ca0735ff5629fba4daa815b6.svg",
+    "static/media/dashboard.svg": "/static/media/dashboard.b8c720fa02367de23baff26effb8ea39.svg",
+    "static/media/cross-black.svg": "/static/media/cross-black.76173ff2cfa32b9905a31a202a3e493f.svg",
+    "main.a67479cf.css.map": "/static/css/main.a67479cf.css.map",
+    "main.f6ae0c2f.js.map": "/static/js/main.f6ae0c2f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a67479cf.css",
+    "static/js/main.f6ae0c2f.js"
+  ]
+}
