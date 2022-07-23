@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { API } from "../backend";
 import { getAllProducts, productSearch } from "./helper/productDetailHelper";
-import CartIcon from "../icons/Shopping/Cart.svg";
+// import CartIcon from "../icons/Shopping/Cart.svg";
 import DeliveryBoy from "../images/deliverboy-green.png";
 import DeliveryIcon from "../icons/Shopping/Delivery.svg";
 import ArrowIcon from "../icons/Shopping/Arrow.svg";
@@ -71,7 +71,7 @@ const Shop = () => {
           <div className="hero-left">
             <div className="hero-left-sec">
               <div className="hero-title-sec">
-                <img src={CartIcon} alt="" className="hero-title-img" />
+                {/* <img src={CartIcon} alt="" className="hero-title-img" /> */}
                 <h4 className="hero-title">Grocery delivey Services</h4>
               </div>
               <h1 className="hero-header">
