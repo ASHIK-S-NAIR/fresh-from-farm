@@ -19,7 +19,7 @@ jobs:
       AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY}}
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: 16
       - name: Creting env file on client
@@ -31,7 +31,7 @@ jobs:
           echo RAZORPAY_KEY_SECRET= $RAZORPAY_KEY_SECRET >> .env
       - name: Client section
         run: |
-
+          cd client 
           npm i
           touch .env
           echo ''
