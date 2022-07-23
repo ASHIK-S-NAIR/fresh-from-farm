@@ -33,6 +33,7 @@ jobs:
         run: |
           cd client 
           npm i
+          sudo chmod -R 777 node_modules
           npm run build
           mv build ../server/static
 
