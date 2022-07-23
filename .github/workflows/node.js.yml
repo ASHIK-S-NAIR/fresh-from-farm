@@ -17,16 +17,11 @@ jobs:
       AWS_BUCKET_REGION: ${{secrets.AWS_BUCKET_REGION}}
       AWS_ACCESS_KEY: ${{secrets.AWS_ACCESS_KEY}}
       AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY}}
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x, 16.x]
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: "npm"
+          node-version: 16
       - name: Creting env file on client
         run: |
           cd client
