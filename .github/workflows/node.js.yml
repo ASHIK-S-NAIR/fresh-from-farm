@@ -33,14 +33,12 @@ jobs:
         run: |
           cd client 
           npm i
-          touch .env
-          echo ''
           npm run build
           mv build ../server/static
 
       - name: Creting env file on server
         run: |
-          cd ../server
+          cd server
           touch .env
           echo DATABASE= $DATABASE >> .env
           echo SECRET= $SECRET >> .env
@@ -52,6 +50,7 @@ jobs:
           echo AWS_SECRET_KEY= $AWS_SECRET_KEY >> .env
       - name: Server section
         run: |
+          cd server
           npm i
           pm2 stop 0
           pm2 start 0
