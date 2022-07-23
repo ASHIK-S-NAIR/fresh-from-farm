@@ -35,7 +35,7 @@ jobs:
           npm i
           sudo chmod -R 777 node_modules
           npm run build
-          mv build ../server/static
+          sudo mv build ../server/static
 
       - name: Creting env file on server
         run: |
