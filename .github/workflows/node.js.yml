@@ -1,0 +1,66 @@
+name: "freshfromfarm CICD deploy"
+
+on:
+  push:
+    branches: ["master"]
+
+jobs:
+  build:
+    runs-on: self-hosted
+    env:
+      REACT_APP_BACKEND: ${{secrets.REACT_APP_BACKEND}}
+      RAZORPAY_KEY_ID: ${{secrets.RAZORPAY_KEY_ID}}
+      RAZORPAY_KEY_SECRET: ${{secrets.RAZORPAY_KEY_SECRET}}
+      DATABASE: ${{secrets.DATABASE}}
+      SECRET: ${{secrets.SECRET}}
+      AWS_BUCKET_NAME: ${{secrets.AWS_BUCKET_NAME}}
+      AWS_BUCKET_REGION: ${{secrets.AWS_BUCKET_REGION}}
+      AWS_ACCESS_KEY: ${{secrets.AWS_ACCESS_KEY}}
+      AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY}}
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - name: Creting env file on client
+        run: |
+          cd client
+          touch .env
+          echo REACT_APP_BACKEND= $REACT_APP_BACKEND >> .env
+          echo RAZORPAY_KEY_ID= $RAZORPAY_KEY_ID >> .env
+          echo RAZORPAY_KEY_SECRET= $RAZORPAY_KEY_SECRET >> .env
+      - name: Client section
+        run: |
+
+          npm i
+          touch .env
+          echo ''
+          npm run build
+          mv build ../server/static
+
+      - name: Creting env file on server
+        run: |
+          cd ../server
+          touch .env
+          echo DATABASE= $DATABASE >> .env
+          echo SECRET= $SECRET >> .env
+          echo RAZORPAY_KEY_ID= $RAZORPAY_KEY_ID >> .env
+          echo RAZORPAY_KEY_SECRET= $RAZORPAY_KEY_SECRET >> .env
+          echo AWS_BUCKET_NAME= $AWS_BUCKET_NAME >> .env
+          echo AWS_BUCKET_REGION= $AWS_BUCKET_REGION >> .env
+          echo AWS_ACCESS_KEY= $AWS_ACCESS_KEY >> .env
+          echo AWS_SECRET_KEY= $AWS_SECRET_KEY >> .env
+      - name: Server section
+        run: |
+          npm i
+          pm2 stop 0
+          pm2 start 0
+          pm2 save
+          sudo service nginx restart
+      - name: Setup finish
+        run: echo "Deployment completed"
