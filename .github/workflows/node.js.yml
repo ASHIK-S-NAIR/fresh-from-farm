@@ -8,15 +8,15 @@ jobs:
   build:
     runs-on: self-hosted
     env:
-      REACT_APP_BACKEND: ${{secrets.REACT_APP_BACKEND}}
-      RAZORPAY_KEY_ID: ${{secrets.RAZORPAY_KEY_ID}}
-      RAZORPAY_KEY_SECRET: ${{secrets.RAZORPAY_KEY_SECRET}}
-      DATABASE: ${{secrets.DATABASE}}
-      SECRET: ${{secrets.SECRET}}
-      AWS_BUCKET_NAME: ${{secrets.AWS_BUCKET_NAME}}
-      AWS_BUCKET_REGION: ${{secrets.AWS_BUCKET_REGION}}
-      AWS_ACCESS_KEY: ${{secrets.AWS_ACCESS_KEY}}
-      AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY}}
+      REACT_APP_BACKEND: ${{ secrets.REACT_APP_BACKEND }}
+      RAZORPAY_KEY_ID: ${{ secrets.RAZORPAY_KEY_ID }}
+      RAZORPAY_KEY_SECRET: ${{ secrets.RAZORPAY_KEY_SECRET }}
+      DATABASE: ${{ secrets.DATABASE }}
+      SECRET: ${{ secrets.SECRET }}
+      AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
+      AWS_BUCKET_REGION: ${{ secrets.AWS_BUCKET_REGION }}
+      AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+      AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -26,11 +26,11 @@ jobs:
         run: |
           cd client
           touch .env
-          echo REACT_APP_BACKEND= $REACT_APP_BACKEND >> .env
-          echo RAZORPAY_KEY_ID= $RAZORPAY_KEY_ID >> .env
-          echo RAZORPAY_KEY_SECRET= $RAZORPAY_KEY_SECRET >> .env
+          echo REACT_APP_BACKEND= ${{ secrets.REACT_APP_BACKEND }} >> .env
+          echo RAZORPAY_KEY_ID= ${{ secrets.RAZORPAY_KEY_ID }} >> .env
+          echo RAZORPAY_KEY_SECRET= ${{ secrets.RAZORPAY_KEY_SECRET }} >> .env
       - name: Split out
-        run: echo $REACT_APP_BACKEND
+        run: echo ${{ secrets.REACT_APP_BACKEND }}
       - name: Client section
         run: |
           cd client 
