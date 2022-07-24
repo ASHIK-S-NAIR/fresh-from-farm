@@ -33,9 +33,8 @@ jobs:
         run: |
           cd client 
           npm i
-          sudo chmod -R 777 node_modules
           npm run build
-          sudo mv build ../server/static
+          mv build ../server/static
 
       - name: Creting env file on server
         run: |

@@ -70,7 +70,7 @@ const AdminBoard = () => {
                     tabActive === "accounts" ? "active" : ""
                   }`}
                 >
-                  My Accounts
+                  ACCOUNT
                 </div>
               </Link>
             </li>
@@ -84,7 +84,7 @@ const AdminBoard = () => {
                     tabActive === "settings" ? "active" : ""
                   }`}
                 >
-                  My Settings
+                  SETTINGS
                 </div>
               </Link>
             </li>

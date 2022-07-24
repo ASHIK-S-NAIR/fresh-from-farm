@@ -6,9 +6,9 @@ const UserPanel = () => {
       <div className="userPanel-left">
         <div className="userPanel-user-detail"></div>
         <ul className="userPanel-left-ul">
-          <li className="userPanel-left-li">My Orders</li>
-          <li className="userPanel-left-li">My Account</li>
-          <li className="userPanel-left-li">My Settings</li>
+          <li className="userPanel-left-li">ORDERS</li>
+          <li className="userPanel-left-li">ACCOUNT</li>
+          <li className="userPanel-left-li">SETTINGS</li>
         </ul>
       </div>
       <div className="userPanel-right">

@@ -73,7 +73,7 @@ const EmployeeBoard = () => {
                     tabActive === "dashboard" ? "active" : ""
                   }`}
                 >
-                  Dashboard
+                  DASHBOARD
                 </div>{" "}
               </Link>
             </li>
@@ -88,7 +88,7 @@ const EmployeeBoard = () => {
                     tabActive === "deliveries" ? "active" : ""
                   }`}
                 >
-                  Deliveries
+                  DELIVERIES
                 </div>{" "}
               </Link>
             </li>
@@ -102,7 +102,7 @@ const EmployeeBoard = () => {
                     tabActive === "accounts" ? "active" : ""
                   }`}
                 >
-                  My Accounts
+                  ACCOUNT
                 </div>
               </Link>
             </li>
@@ -116,7 +116,7 @@ const EmployeeBoard = () => {
                     tabActive === "settings" ? "active" : ""
                   }`}
                 >
-                  My Settings
+                  SETTINGS
                 </div>
               </Link>
             </li>

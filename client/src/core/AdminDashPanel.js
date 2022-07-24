@@ -66,7 +66,7 @@ const AdminDashPanel = () => {
                     alt=""
                     className="adminDashPanel-left-img"
                   />
-                  Dashboard
+                  DASHBOARD
                 </div>
               </Link>
             </li>
@@ -85,7 +85,7 @@ const AdminDashPanel = () => {
                     alt=""
                     className="adminDashPanel-left-img"
                   />
-                  Order
+                  ORDER
                 </div>
               </Link>
             </li>
@@ -104,7 +104,7 @@ const AdminDashPanel = () => {
                     alt=""
                     className="adminDashPanel-left-img"
                   />
-                  Product
+                  PRODUCT
                 </div>
               </Link>
             </li>
@@ -123,7 +123,7 @@ const AdminDashPanel = () => {
                     alt=""
                     className="adminDashPanel-left-img"
                   />
-                  Employee
+                  EMPLOYEE
                 </div>
               </Link>
             </li>
@@ -142,7 +142,7 @@ const AdminDashPanel = () => {
                     alt=""
                     className="adminDashPanel-left-img"
                   />
-                  Customer
+                  CUSTOMER
                 </div>
               </Link>
             </li>

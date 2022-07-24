@@ -70,7 +70,7 @@ const CustomerBoard = () => {
                     tabActive === "orders" ? "active" : ""
                   }`}
                 >
-                  My Orders
+                  ORDERS
                 </div>{" "}
               </Link>
             </li>
@@ -84,7 +84,7 @@ const CustomerBoard = () => {
                     tabActive === "accounts" ? "active" : ""
                   }`}
                 >
-                  My Accounts
+                  ACCOUNT
                 </div>
               </Link>
             </li>
@@ -98,7 +98,7 @@ const CustomerBoard = () => {
                     tabActive === "settings" ? "active" : ""
                   }`}
                 >
-                  My Settings
+                  SETTINGS
                 </div>
               </Link>
             </li>

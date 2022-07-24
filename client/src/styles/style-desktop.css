@@ -25,6 +25,10 @@
   font-family: var(--primary-font);
 }
 
+html{
+  scroll-behavior: smooth;
+}
+
 body {
   font-size: 16px;
   /* loader general setting starts */
@@ -322,9 +326,12 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .nav-border {
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   padding: 0.5em 1.8em;
   border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
 }
 
 /* .nav-left-sec .nav-li {
@@ -705,6 +712,8 @@ body::-webkit-scrollbar-thumb:hover {
   padding-bottom: 5em;
 }
 
+/* hero section starts */
+
 .hero-sec {
   background: linear-gradient(92.57deg, #20292a 20.03%, #386745 79.04%);
   width: 100%;
@@ -715,9 +724,6 @@ body::-webkit-scrollbar-thumb:hover {
   height: 100%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  /* background-color: grey; */
-  /* margin-top: 2em; */
-  /* margin-bottom: 5em; */
 }
 
 .hero-left {
@@ -767,12 +773,13 @@ body::-webkit-scrollbar-thumb:hover {
   position: relative;
 }
 
-.hero-header span svg {
+.hero-header-svg {
   position: absolute;
   bottom: -0.18em;
   left: 0;
   right: 0;
-  width: 100%;
+  width: 80%;
+  margin-left: 0.2em;
 }
 
 .hero-subheader {
@@ -783,43 +790,22 @@ body::-webkit-scrollbar-thumb:hover {
   margin-bottom: 2em;
 }
 
-.hero-search-sec {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 30px;
-  display: grid;
-  grid-template-columns: 70% 30%;
-  height: 3.5em;
-  width: 60%;
-  padding: 5px;
-  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(5px);
-  margin-bottom: 1em;
-}
-
-.hero-search-input {
-  background-color: transparent;
-  border: none;
-  height: 100%;
-  width: 100%;
-  padding-left: 1.8em;
-  /* border: 1px solid tomato; */
-  border-radius: 30px 0 0 30px;
-  /* color: rgba(255,255,255,0.9); */
-  font-size: 0.9rem;
-}
-
-/* .hero-search-input:focus{
-  border: 1px solid red;
-} */
-
 .hero-search-btn {
   background-color: #ffe916;
   color: rgba(0, 0, 0, 0.8);
-  border-radius: 0 30px 30px 0;
-  padding: 0 1em;
+  padding: 1em 3em;
   height: 100%;
-  font-weight: 700;
+  font-weight: 800;
   font-size: 0.938rem;
+  margin-bottom: 1.1em;
+  border-radius: 5px;
+  transition: 200ms ease-in-out;
+  border: 1px solid #ffe916;
+}
+
+.hero-search-btn:hover{
+  background-color: transparent;
+  color: #ffe916;
 }
 
 .hero-signin-p {
@@ -836,14 +822,12 @@ body::-webkit-scrollbar-thumb:hover {
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
-  /* border: 1px solid violet; */
 }
 
 .hero-img-sec {
   position: relative;
   width: 98%;
   height: 88%;
-  /* border: 1px solid yellow; */
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -852,13 +836,11 @@ body::-webkit-scrollbar-thumb:hover {
 .hero-img {
   width: 100%;
   height: auto;
-  /* border: 1px solid red; */
   z-index: 1;
 }
 
 .hero-img-bg {
   position: absolute;
-  /* z-index: 0; */
   bottom: 0;
   height: 100%;
   width: 83%;
@@ -907,6 +889,8 @@ body::-webkit-scrollbar-thumb:hover {
 .hero-img-bg-arrow-icon {
   border: 1px solid lightcyan;
 }
+
+/* hero section ends */
 
 .shop-sec {
   padding-top: 5em;
@@ -1036,20 +1020,21 @@ body::-webkit-scrollbar-thumb:hover {
 
 .products-wrap {
   display: grid;
-  grid-template-columns: repeat(5, 13.375em);
+  grid-template-columns: repeat(5, auto);
   justify-content: space-between;
   row-gap: 5em;
+  column-gap: 1em;
 }
 
 .product-sec {
   height: 18.125em;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  /* border: 1px solid rgba(0, 0, 0, 0.1); */
   display: flex;
   flex-direction: column;
   align-items: center;
   border-radius: 10px;
-  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.2);
-  padding: 1em;
+  /* box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.2); */
+  padding: 1em 1em;
   position: relative;
 }
 
@@ -1091,6 +1076,7 @@ body::-webkit-scrollbar-thumb:hover {
   display: grid;
   place-items: center;
   border-radius: 10px 0 10px 0;
+  display: none;
 }
 
 .product-category-sec.color-green {
@@ -1108,10 +1094,11 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .product-img {
-  width: 90%;
-  height: 60%;
+  width: 80%;
+  height: 70%;
   margin: 0 auto;
-  margin-bottom: 1em;
+  margin-bottom: 1.5em;
+  /* border: 1px solid red; */
 }
 
 .product-info {
