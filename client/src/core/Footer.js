@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { isAuthenticated } from "../auth";
+import { isAuthenticated } from "../setup/auth";
 
 const Footer = () => {
   return (

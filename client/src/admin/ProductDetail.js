@@ -1,6 +1,6 @@
 import React from "react";
-import { API } from "../backend";
-import CrossIcon from "../icons/cross-black.svg";
+import { API } from "../setup/backend-manager/backend";
+import CrossIcon from "../assets/svg/cross-black.svg";
 import moment from "moment";
 
 const ProductDetail = ({ product, setProductDetail }) => {

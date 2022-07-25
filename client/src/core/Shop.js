@@ -2,22 +2,20 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 // importing Authentication function
-import { isAuthenticated } from "../auth";
+import { isAuthenticated } from "../setup/auth";
 
-// importing API 
-import { API } from "../backend";
+// importing API
+import { API } from "../setup/backend-manager/backend";
 
 // importing API helper functions
 import { getAllProducts, productSearch } from "./helper/productDetailHelper";
- 
+
 // importing Images and Icons
-// import CartIcon from "../icons/Shopping/Cart.svg";
-import DeliveryBoy from "../images/deliverboy-green.png";
-import DeliveryIcon from "../icons/Shopping/Delivery.svg";
+import DeliveryBoy from "../assets/images/deliverboy-green.png";
+import DeliveryIcon from "../assets/svg/Shopping/Delivery.svg";
 
 // importing loading component
 import Loading from "./Loading";
-
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
@@ -131,9 +129,7 @@ const Shop = () => {
                     className="hero-img-bg-delivery-icon"
                   />
                 </div>
-                <div className="hero-img-bg-arrow-icon-sec">
-              
-                </div>
+                <div className="hero-img-bg-arrow-icon-sec"></div>
               </div>
             </div>
           </div>

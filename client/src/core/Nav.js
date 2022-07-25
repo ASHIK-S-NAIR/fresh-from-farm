@@ -1,11 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { isAuthenticated, logout } from "../auth/index";
-import { CartContext } from "../context/Context";
-import CartIcon from "../icons/cart.svg";
+import { isAuthenticated, logout } from "../setup/auth/index";
 import { getEmployeeStatus, updateEmployeeStatus } from "../user/index";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchCart } from "../Redux/actions/cartActions";
+import { fetchCart } from "../setup/redux-manager/actions/cartActions";
 
 const Nav = () => {
   const cart = useSelector((state) => state.allCart.cart);

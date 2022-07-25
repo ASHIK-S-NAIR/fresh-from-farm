@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useContext } from "react";
-import { API } from "../backend";
+import React, { useState, useEffect } from "react";
+import { API } from "../setup/backend-manager/backend";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getProduct, getAllProducts } from "./helper/productDetailHelper";
-import { isAuthenticated } from "../auth/index";
+import { isAuthenticated } from "../setup/auth/index";
 import { addToUserCart } from "../user";
-import { CartContext } from "../context/Context";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchCart } from "../Redux/actions/cartActions";
+import { useDispatch } from "react-redux";
+import { fetchCart } from "../setup/redux-manager/actions/cartActions";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState();

@@ -1,4 +1,4 @@
-import { API } from "../../backend";
+import { API } from "../../setup/backend-manager/backend";
 
 // getProduct
 export const getProduct = async (productId) => {

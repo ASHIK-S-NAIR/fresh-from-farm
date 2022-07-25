@@ -1,27 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes as Router, Route } from "react-router-dom";
-import { AuthContext, CartContext } from "./context/Context";
+import { AuthContext, CartContext } from "../context-manager/Context";
 
-import Nav from "./core/Nav";
-import ProductDetail from "./core/ProductDetail";
-import Shop from "./core/Shop";
-import AdminRoutes from "./auth/AdminRoutes";
-import EmployeeRoutes from "./auth/EmployeeRoutes";
-import CustomerRoutes from "./auth/CustomerRoutes";
-import CustomerBoard from "./core/CustomerBoard";
-import EmployeeBoard from "./core/EmployeeBoard.";
-import AdminBoard from "./core/AdminBoard";
-import Signup from "./user/Signup";
-import Login from "./user/Login";
+import Nav from "../../core/Nav";
+import ProductDetail from "../../core/ProductDetail";
+import Shop from "../../core/Shop";
+import AdminRoutes from "../../setup/auth/AdminRoutes";
+import EmployeeRoutes from "../../setup/auth/EmployeeRoutes";
+import CustomerRoutes from "../../setup/auth/CustomerRoutes";
+import CustomerBoard from "../../core/CustomerBoard";
+import EmployeeBoard from "../../core/EmployeeBoard.";
+import AdminBoard from "../../core/AdminBoard";
+import Signup from "../../user/Signup";
+import Login from "../../user/Login";
 
-import Cart from "./core/Cart";
-import { CartPayment } from "./core/CartPayment";
-import ThankYou from "./core/ThankYou";
-import AdminDashPanel from "./core/AdminDashPanel";
-import Footer from "./core/Footer";
-import ScrollToTop from "./ScrollToTop";
-import { getUserCart } from "./user";
-import { isAuthenticated } from "./auth";
+import Cart from "../../core/Cart";
+import { CartPayment } from "../../core/CartPayment";
+import ThankYou from "../../core/ThankYou";
+import AdminDashPanel from "../../core/AdminDashPanel";
+import Footer from "../../core/Footer";
+import ScrollToTop from "../../ScrollToTop";
+import { getUserCart } from "../../user";
+import { isAuthenticated } from "../../setup/auth";
 
 // import ProductDetail from "./container/ProductDetail";
 // import ProductListing from "./container/ProductListing";

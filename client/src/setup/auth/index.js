@@ -1,4 +1,4 @@
-import { API } from "../backend";
+import { API } from "../backend-manager/backend";
 
 export const signup = async ({name, email, phoneNumber, password, address}) => {
   try{

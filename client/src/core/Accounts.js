@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { AccountsContext } from "../context/Context";
-import EditIcon from "../icons/Edit.svg";
+import { AccountsContext } from "../setup/context-manager/Context";
+import EditIcon from "../assets/svg/Edit.svg";
 import EditPersonalInformation from "./EditPersonalInformation";
 import EditAddress from "./EditAddress";
 import { getUser } from "../user";
-import { isAuthenticated } from "../auth";
+import { isAuthenticated } from "../setup/auth";
 import { useParams } from "react-router-dom";
 
 const Accounts = () => {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { isAuthenticated, logout } from "../auth";
+import { isAuthenticated, logout } from "../setup/auth";
 import { changePassword } from "../user";
 
 const Settings = () => {

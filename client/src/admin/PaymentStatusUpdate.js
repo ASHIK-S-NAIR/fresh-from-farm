@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { isAuthenticated } from "../auth";
-import Cross from "../icons/cross-black.svg";
+import { isAuthenticated } from "../setup/auth";
+import Cross from "../assets/svg/cross-black.svg";
 import { adminUpdatePaymentStatus } from "../user";
 
 const PaymentStatusUpdate = ({ setOrderUpdatePayment, order }) => {

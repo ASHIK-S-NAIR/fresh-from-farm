@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { getAllOrders } from "../user";
-import { isAuthenticated } from "../auth";
-import ViewIcon from "../icons/view.svg";
-import EditIcon from "../icons/Edit.svg";
+import { isAuthenticated } from "../setup/auth";
+import ViewIcon from "../assets/svg/view.svg";
+import EditIcon from "../assets/svg/Edit.svg";
 import OrderDetails from "../user/OrderDetails";
 import OrderUpdate from "./OrderUpdate";
 import EmployeeUpdate from "./EmployeeUpdate";

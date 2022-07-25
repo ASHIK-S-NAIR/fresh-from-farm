@@ -1,6 +1,5 @@
 import { isAuthenticated } from "../../auth";
 import { ActionTypes } from "../constants/action-types";
-import {API} from "../../backend"
 
 export const fetchProducts = () => async (dispatch) => {
   const response = await fetch("https://fakestoreapi.com/products", {

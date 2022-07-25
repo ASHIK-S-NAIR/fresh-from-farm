@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { isAuthenticated } from "../auth";
+import { isAuthenticated } from "../setup/auth";
 import { getAllDeliveries } from "../user";
-import ViewIcon from "../icons/view.svg";
-import EditIcon from "../icons/Edit.svg";
+import ViewIcon from "../assets/svg/view.svg";
+import EditIcon from "../assets/svg/Edit.svg";
 import OrderDetails from "./OrderDetails";
 import OrderUpdate from "./OrderUpdate";
 import PaymentStatusUpdate from "./PaymentStatusUpdate";

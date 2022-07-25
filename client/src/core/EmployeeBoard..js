@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { isAuthenticated } from "../auth";
+import { isAuthenticated } from "../setup/auth";
 import Dashboard from "../employee/Dashboard";
 import Deliveries from "../employee/Deliveries";
 import { getUser } from "../user";
-import Profile from "../icons/profile.svg";
+import Profile from "../assets/svg/profile.svg";
 import Accounts from "./Accounts";
 import Settings from "./Settings";
 

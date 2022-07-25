@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { API } from "../backend";
-import Trash from "../icons/Trash.svg";
+import { API } from "../setup/backend-manager/backend";
+import Trash from "../assets/svg/Trash.svg";
 import { getProduct } from "./helper/productDetailHelper";
 import { useSelector } from "react-redux";
 

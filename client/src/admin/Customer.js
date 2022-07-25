@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { isAuthenticated } from "../auth";
-import { deleteCustomer, getCustomers } from "../user";
+import { isAuthenticated } from "../setup/auth";
+import { getCustomers } from "../user";
 import moment from "moment";
-import ViewIcon from "../icons/view.svg";
-import TrashIcon from "../icons/Trash.svg";
+import ViewIcon from "../assets/svg/view.svg";
+import TrashIcon from "../assets/svg/Trash.svg";
 import CustomerDetail from "./CustomerDetail";
 import DeleteCustomer from "./DeleteCustomer";
 

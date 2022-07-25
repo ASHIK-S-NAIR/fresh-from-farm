@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { isAuthenticated } from "../auth";
-import { AccountsContext } from "../context/Context";
+import { isAuthenticated } from "../setup/auth";
+import { AccountsContext } from "../setup/context-manager/Context";
 import { updateUser, getUser } from "../user";
-import Cross from "../icons/cross-black.svg";
+import Cross from "../assets/svg/cross-black.svg";
 
 const EditPersonalInformation = () => {
   const { userId } = useParams();

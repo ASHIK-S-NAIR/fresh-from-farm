@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
-import Approve from "../icons/Approve.svg";
+import Approve from "../assets/svg/Approve.svg";
 
 const ThankYou = () => {
   const { orderId } = useParams();

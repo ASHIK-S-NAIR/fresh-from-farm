@@ -1,4 +1,4 @@
-import { API } from "../backend";
+import { API } from "../setup/backend-manager/backend";
 
 // getUser
 export const getUser = async (userId, token) => {

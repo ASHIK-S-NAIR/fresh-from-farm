@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-// import moment from "moment";
-import CartIcon from "../icons/cart.svg";
-import ProductIcon from "../icons/product.svg";
-import EmployerIcon from "../icons/employer.svg";
-import ViewIcon from "../icons/view.svg";
-import EditIcon from "../icons/Edit.svg";
-import { isAuthenticated } from "../auth";
+import CartIcon from "../assets/svg/cart.svg";
+import ProductIcon from "../assets/svg/product.svg";
+import EmployerIcon from "../assets/svg/employer.svg";
+import ViewIcon from "../assets/svg/view.svg";
+import EditIcon from "../assets/svg/Edit.svg";
+import { isAuthenticated } from "../setup/auth";
 import {
   getAllDeliveries,
   getCountDeliveries,

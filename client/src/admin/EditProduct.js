@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { isAuthenticated } from "../auth";
+import { isAuthenticated } from "../setup/auth";
 import {
   getProduct,
   updateProduct,
   updateProductWithImage,
 } from "../core/helper/productDetailHelper";
-import CrossIcon from "../icons/cross-black.svg";
+import CrossIcon from "../assets/svg/cross-black.svg";
 
 const EditProduct = ({ setEditProductActive, product }) => {
   const [values, setValues] = useState({

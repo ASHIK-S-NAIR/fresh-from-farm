@@ -1,26 +1,19 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { isAuthenticated } from "../auth";
-import { CartContext } from "../context/Context";
+import { isAuthenticated } from "../setup/auth";
 import {
   deleteFromCart,
   getUser,
-  getUserCart,
-  // getUserCart,
   updateFromUserCart,
 } from "../user";
 import CartItem from "./CartItem";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchCart } from "../Redux/actions/cartActions";
+import { fetchCart } from "../setup/redux-manager/actions/cartActions";
 
 const Cart = () => {
   const cart = useSelector((state) => state.allCart.cart);
   const dispatch = useDispatch();
 
-  console.log("cartcart", cart);
-
-  // const { cart, setCart} = useContext(CartContext);
-  // const [cart, setCart] = useState([]);
   const [subTotal_items, setSubTotal_items] = useState(0);
   const [subTotal_value, setSubTotal_value] = useState(0);
   const [shippingAddress_state, setShippingAddress_state] = useState("default");

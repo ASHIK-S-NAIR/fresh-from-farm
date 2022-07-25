@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
-import ViewIcon from "../icons/view.svg";
-import EditIcon from "../icons/Edit.svg";
-import AddIcon from "../icons/add.svg";
-import TrashIcon from "../icons/Trash.svg";
-import { isAuthenticated } from "../auth";
+import ViewIcon from "../assets/svg/view.svg";
+import EditIcon from "../assets/svg/Edit.svg";
+import AddIcon from "../assets/svg//add.svg";
+import TrashIcon from "../assets/svg/Trash.svg";
+import { isAuthenticated } from "../setup/auth";
 import { getAllProducts } from "../core/helper/productDetailHelper";
-import { API } from "../backend";
+import { API } from "../setup/backend-manager/backend";
 import AddProduct from "./AddProduct";
 import ProductDetail from "./ProductDetail";
 import EditProduct from "./EditProduct";
 import DeleteProduct from "./DeleteProduct";
-import Cross from "../icons/cross-black.svg";
 
 const Product = () => {
   const [products, setProducts] = useState([]);

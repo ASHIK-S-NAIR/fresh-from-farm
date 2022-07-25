@@ -1,5 +1,5 @@
 import React from "react";
-import CrossIcon from "../icons/cross-black.svg";
+import CrossIcon from "../assets/svg/cross-black.svg";
 import moment from "moment";
 
 const EmployeeDetail = ({ employee, setEmployeeDetail }) => {

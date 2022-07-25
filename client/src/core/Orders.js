@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { isAuthenticated } from "../auth";
+import { isAuthenticated } from "../setup/auth";
 import { getUserOrders } from "../user";
-import ViewIcon from "../icons/view.svg";
+import ViewIcon from "../assets/svg/view.svg";
 import moment from "moment";
 import OrderDetails from "../user/OrderDetails";
 

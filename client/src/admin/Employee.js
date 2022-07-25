@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import ViewIcon from "../icons/view.svg";
-import TrashIcon from "../icons/Trash.svg";
-import AddIcon from "../icons/add.svg";
-import { isAuthenticated } from "../auth";
-import { deleteEmployee, getEmployees } from "../user";
+import ViewIcon from "../assets/svg/view.svg";
+import TrashIcon from "../assets/svg/Trash.svg";
+import AddIcon from "../assets/svg/add.svg";
+import { isAuthenticated } from "../setup/auth";
 import moment from "moment";
 import AddEmployee from "./AddEmployee";
 import EmployeeDetail from "./EmployeeDetail";
 import DeleteEmployee from "./DeleteEmployee";
+import { getEmployees } from "../user";
 
 const Employee = () => {
   const [employees, setEmployees] = useState([]);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
-import { isAuthenticated } from "../auth";
+import { isAuthenticated } from "../setup/auth";
 import {
   getUserCart,
   createOrder,

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { isAuthenticated } from "../auth";
-import Cross from "../icons/cross-black.svg";
+import { isAuthenticated } from "../setup/auth";
+import Cross from "../assets/svg/cross-black.svg";
 import { addEmployeeOrder, getEmployees } from "../user";
 
 const EmployeeUpdate = ({ order, setOrderEmployeeAssignActive }) => {
