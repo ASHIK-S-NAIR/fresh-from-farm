@@ -1974,7 +1974,7 @@ tr {
 
 .adminDashPanel-left {
   width: 100%;
-  /* border: 1px solid orange; */
+  /* border-right: 1px solid rgba(0,0,0,0.3); */
 }
 
 .adminDashPanel-left-tag {
