@@ -32,7 +32,7 @@ exports.login = async (req, res) => {
 
   if ( await user.authenticate(password)) {
     const token = jwt.sign({ _id: user._id }, process.env.SECRET);
-    res.cookie("token", token, { expire: new Date() + 9999 });
+    res.cookie("token", token, { expires: new Date() + 9999 });
 
     const { _id, name, email, role } = user;
 

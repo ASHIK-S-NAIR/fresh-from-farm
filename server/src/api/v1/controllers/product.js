@@ -8,7 +8,6 @@ const { uploadFile, getFileStream } = require("../s3");
 
 // createProduct
 exports.createProduct = async (req, res) => {
-  console.log("reasched here");
   console.log("req.body", req.body);
   try {
     var obj = {
