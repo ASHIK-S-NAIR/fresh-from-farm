@@ -61,6 +61,7 @@ exports.logout = (req, res) => {
 exports.isSignedIn = expressJWT({
   secret: process.env.SECRET,
   algorithms: ["HS256"],
+  userProperty: "user"
 });
 
 // isAuthenticated

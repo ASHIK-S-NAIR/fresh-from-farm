@@ -20,46 +20,30 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 14
-      - name: Creting env file on client
+      # - name: Creting env file on client
         run: |
           cd client
-          sudo chmod -R 755 node_modules
           sudo touch .env
           sudo echo REACT_APP_BACKEND= ${{ secrets.REACT_APP_BACKEND }} >> .env
           sudo echo RAZORPAY_KEY_ID= ${{ secrets.RAZORPAY_KEY_ID }} >> .env
           sudo echo RAZORPAY_KEY_SECRET= ${{ secrets.RAZORPAY_KEY_SECRET }} >> .env
-          sudo cat .env
-      - name: Split out
-        run: |
-          sudo echo "The react app backend:$REACT_APP_BACKEND"
-          sudo echo "The test token1:$TEST_TOKEN"
-          sudo echo "The test token2:${{env.TEST_TOKEN}}"
-      - name: Client section
-        run: |
-          cd client 
           npm i
           npm run build
           sudo mv build ../server/static
-
-      - name: Creting env file on server
-        run: |
-          cd server
-          touch .env
-          echo DATABASE= $DATABASE >> .env
-          echo SECRET= $SECRET >> .env
-          echo RAZORPAY_KEY_ID= $RAZORPAY_KEY_ID >> .env
-          echo RAZORPAY_KEY_SECRET= $RAZORPAY_KEY_SECRET >> .env
-          echo AWS_BUCKET_NAME= $AWS_BUCKET_NAME >> .env
-          echo AWS_BUCKET_REGION= $AWS_BUCKET_REGION >> .env
-          echo AWS_ACCESS_KEY= $AWS_ACCESS_KEY >> .env
-          echo AWS_SECRET_KEY= $AWS_SECRET_KEY >> .env
-      - name: Server section
-        run: |
-          cd server
+          cd ../server
+          sudo touch .env
+          sudo echo DATABASE= ${{ secrets.DATABASE }} >> .env
+          echo SECRET= ${{ secrets.SECRET }} >> .env
+          echo RAZORPAY_KEY_ID= ${{ secrets.RAZORPAY_KEY_ID }} >> .env
+          echo RAZORPAY_KEY_SECRET= ${{ secrets.RAZORPAY_KEY_SECRET }} >> .env
+          echo AWS_BUCKET_NAME= ${{ secrets.AWS_BUCKET_NAME }} >> .env
+          echo AWS_BUCKET_REGION= ${{ secrets.AWS_BUCKET_REGION }} >> .env
+          echo AWS_ACCESS_KEY= ${{ secrets.AWS_ACCESS_KEY }} >> .env
+          sudo echo AWS_SECRET_KEY= ${{ secrets.AWS_SECRET_KEY }} >> .env
           npm i
           pm2 stop 0
           pm2 start 0
