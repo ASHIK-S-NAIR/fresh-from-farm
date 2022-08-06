@@ -27,7 +27,7 @@ jobs:
       - name: Creting env file on client
         run: |
           cd client
-          sudo chmod +x .env
+          sudo chmod -R 777 ./
           sudo touch .env
           sudo echo REACT_APP_BACKEND= ${{ secrets.REACT_APP_BACKEND }} >> .env
           sudo echo RAZORPAY_KEY_ID= ${{ secrets.RAZORPAY_KEY_ID }} >> .env
