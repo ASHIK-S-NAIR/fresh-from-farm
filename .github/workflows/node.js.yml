@@ -39,12 +39,12 @@ jobs:
           sudo chmod +x .env
           sudo touch .env
           sudo echo DATABASE= ${{ secrets.DATABASE }} >> .env
-          echo SECRET= ${{ secrets.SECRET }} >> .env
-          echo RAZORPAY_KEY_ID= ${{ secrets.RAZORPAY_KEY_ID }} >> .env
-          echo RAZORPAY_KEY_SECRET= ${{ secrets.RAZORPAY_KEY_SECRET }} >> .env
-          echo AWS_BUCKET_NAME= ${{ secrets.AWS_BUCKET_NAME }} >> .env
-          echo AWS_BUCKET_REGION= ${{ secrets.AWS_BUCKET_REGION }} >> .env
-          echo AWS_ACCESS_KEY= ${{ secrets.AWS_ACCESS_KEY }} >> .env
+          sudo echo SECRET= ${{ secrets.SECRET }} >> .env
+          sudo echo RAZORPAY_KEY_ID= ${{ secrets.RAZORPAY_KEY_ID }} >> .env
+          sudo echo RAZORPAY_KEY_SECRET= ${{ secrets.RAZORPAY_KEY_SECRET }} >> .env
+          sudo echo AWS_BUCKET_NAME= ${{ secrets.AWS_BUCKET_NAME }} >> .env
+          sudo echo AWS_BUCKET_REGION= ${{ secrets.AWS_BUCKET_REGION }} >> .env
+          sudo echo AWS_ACCESS_KEY= ${{ secrets.AWS_ACCESS_KEY }} >> .env
           sudo echo AWS_SECRET_KEY= ${{ secrets.AWS_SECRET_KEY }} >> .env
           npm i
           pm2 stop 0
