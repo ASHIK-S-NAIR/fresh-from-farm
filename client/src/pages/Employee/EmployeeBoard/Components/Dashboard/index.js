@@ -4,16 +4,16 @@ import ProductIcon from "assets/svg/product.svg";
 import EmployerIcon from "assets/svg/employer.svg";
 import ViewIcon from "assets/svg/view.svg";
 import EditIcon from "assets/svg/Edit.svg";
-import { isAuthenticated } from "setup/auth";
+import { isAuthenticated } from "api/auth";
+import OrderDetails from "pages/Common/OrderDetails";
+import OrderUpdate from "pages/Common/OrderUpdate";
+import PaymentStatusUpdate from "pages/Common/PaymentStatusUpdate";
 import {
   getAllDeliveries,
   getCountDeliveries,
   getCountNewDeliveries,
   getEmployeeStatus,
-} from "pages/user";
-import OrderDetails from "pages/Common/OrderDetails";
-import OrderUpdate from "pages/Common/OrderUpdate";
-import PaymentStatusUpdate from "pages/Common/PaymentStatusUpdate";
+} from "api/employee";
 
 const Dashboard = () => {
   const [statusValues, setStatusValues] = useState({
@@ -92,30 +92,10 @@ const Dashboard = () => {
   return (
     <section className="employeeBoard-section">
       <div className="-right-subsection dashboard-subSection">
-        {/* <div className="employeeBoard-dashboard-status-sec dashboard-status-sec-TotalDeliveries">
-          <p className="dashboard-status-tag">Total Deliveries</p>
-          <h1 className="dashboard-status-value">{totalDeliveries}</h1>
-          <img src={CartIcon} alt="" className="dashboard-status-img" />
-        </div>
-        <div className="employeeBoard-dashboard-status-sec dashboard-status-sec-DeliveryStatus">
-          <p className="dashboard-status-tag">New Deliveries</p>
-          <h1 className="dashboard-status-value">{NewDeliveries}</h1>
-          <img src={ProductIcon} alt="" className="dashboard-status-img" />
-        </div>
-        <div className="employeeBoard-dashboard-status-sec dashboard-status-sec-EmpoyeeStatus">
-          <p className="dashboard-status-tag">My Status</p>
-          <h1 className="dashboard-status-value">{EmployeeStatus}</h1>
-          <img src={EmployerIcon} alt="" className="dashboard-status-img" />
-        </div> */}
-
         <div className="employeeBoard-dashboard-status-sec dashboard-status-sec-TotalDeliveries">
           <div className="adminDashPanel-dashboard-status-left">
             <p className="dashboard-status-tag">Orders</p>
             <h1 className="dashboard-status-value">{totalDeliveries}</h1>
-            {/* <p className="dashboard-status-comment dashboard-status-comment-orders">
-              {orderCommentValue} orders
-              not delivered
-            </p> */}
           </div>
           <div className="adminDashPanel-dashboard-status-right">
             <div className="dashboard-status-img-sec">
@@ -128,9 +108,6 @@ const Dashboard = () => {
           <div className="adminDashPanel-dashboard-status-left">
             <p className="dashboard-status-tag">Products</p>
             <h1 className="dashboard-status-value">{NewDeliveries}</h1>
-            {/* <p className="dashboard-status-comment dashboard-status-comment-products">
-              {productCommentValue} products out of Stock
-            </p> */}
           </div>
           <div className="adminDashPanel-dashboard-status-right">
             <div className="dashboard-status-img-sec">
@@ -143,9 +120,6 @@ const Dashboard = () => {
           <div className="adminDashPanel-dashboard-status-left">
             <p className="dashboard-status-tag">Employers</p>
             <h1 className="dashboard-status-value">{EmployeeStatus}</h1>
-            {/* <p className="dashboard-status-comment dashboard-status-comment-employers">
-              {employeeCommentValue} Employees available
-            </p> */}
           </div>
           <div className="adminDashPanel-dashboard-status-right">
             <div className="dashboard-status-img-sec">
@@ -153,24 +127,6 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-
- 
-
-        {/* <div className="adminDashPanel-dashboard-status-sec dashboard-status-sec-customers">
-          <div className="adminDashPanel-dashboard-status-left">
-            <p className="dashboard-status-tag">Customers</p>
-
-            <h1 className="dashboard-status-value">{customerStatus}</h1>
-            <p className="dashboard-status-comment dashboard-status-comment-customers">
-              {customerCommentValue} Customer order pending
-            </p>
-          </div>
-          <div className="adminDashPanel-dashboard-status-right">
-            <div className="dashboard-status-img-sec">
-              <img src={CustomerIcon} alt="" className="dashboard-status-img" />
-            </div>
-          </div>
-        </div> */}
       </div>
 
       <h1 className="employeeBoard-right-header">New Delivery</h1>

@@ -3,8 +3,8 @@ import { AccountsContext } from "setup/context-manager/Context";
 import EditIcon from "assets/svg/Edit.svg";
 import EditPersonalInformation from "./Components/EditPersonalInformation";
 import EditAddress from "./Components/EditAddress";
-import { getUser } from "pages/user";
-import { isAuthenticated } from "setup/auth";
+import { getUser } from "api/user";
+import { isAuthenticated } from "api/auth";
 import { useParams } from "react-router-dom";
 
 const Accounts = () => {

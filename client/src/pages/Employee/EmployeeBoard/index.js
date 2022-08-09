@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { isAuthenticated } from "setup/auth";
+import { isAuthenticated } from "api/auth";
 import Dashboard from "./Components/Dashboard";
 import Deliveries from "./Components/Deliveries/index.js";
-import { getUser } from "pages/user";
+import { getUser } from "api/user";
 import Profile from "assets/svg/profile.svg";
 import Accounts from "pages/Core/Components/Accounts";
 import Settings from "pages/Core/Components/Settings";

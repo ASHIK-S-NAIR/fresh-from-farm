@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { signup, login, authenticate } from "setup/auth";
+import { signup, login, authenticate } from "api/auth";
+
+import "./style.css";
+import bgBackground from "assets/images/pattern.svg";
 
 const Signup = () => {
   const [values, setValues] = useState({
@@ -158,6 +161,8 @@ const Signup = () => {
 
   return (
     <section className="signup-section">
+      <div className="signup-bg-background">
+      </div>
       <div className="wrap signup-wrap">
         <div className="popup-small-sec signup-popup">
           <div className="popup-group">

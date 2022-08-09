@@ -6,15 +6,7 @@ import EmployerIcon from "assets/svg/employer.svg";
 import CustomerIcon from "assets/svg/customer.svg";
 import ViewIcon from "assets/svg/view.svg";
 import EditIcon from "assets/svg/Edit.svg";
-import { isAuthenticated } from "setup/auth";
-import {
-  getAllOrders,
-  getCountCustomers,
-  getCountEmployers,
-  getCountOrders,
-  getCountProducts,
-  getEmployees,
-} from "pages/user";
+import { isAuthenticated } from "api/auth";
 import OrderDetails from "pages/Common/OrderDetails";
 import OrderUpdate from "pages/Common/OrderUpdate";
 import EmployeeUpdate from "../Employee/Components/EmployeeUpdate";
@@ -23,7 +15,10 @@ import PaymentStatusUpdate from "pages/Common/PaymentStatusUpdate";
 import { UserData } from "pages/Core/data";
 // import LineChart from "../Charts/LineChart";
 // import PieChart from "../Charts/PieChart";
-import { getAllProducts } from "pages/Core/helper/productDetailHelper";
+import { getAllProducts, getCountProducts } from "api/product";
+import { getAllOrders, getCountOrders } from "api/order";
+import { getCountCustomers } from "api/user";
+import { getCountEmployers, getEmployees } from "api/employee";
 
 const Dashboard = () => {
   const [statusValues, setStatusValues] = useState({
@@ -202,8 +197,7 @@ const Dashboard = () => {
             <p className="dashboard-status-tag">Orders</p>
             <h1 className="dashboard-status-value">{orderStatus}</h1>
             <p className="dashboard-status-comment dashboard-status-comment-orders">
-              {orderCommentValue} orders
-              not delivered
+              {orderCommentValue} orders not delivered
             </p>
           </div>
           <div className="adminDashPanel-dashboard-status-right">
@@ -242,7 +236,7 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="adminDashPanel-dashboard-status-sec dashboard-status-sec-customers">
           <div className="adminDashPanel-dashboard-status-left">
             <p className="dashboard-status-tag">Customers</p>

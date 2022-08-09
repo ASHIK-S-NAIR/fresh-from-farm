@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { login, authenticate } from "setup/auth";
+import { login, authenticate } from "api/auth";
+
+import "./style.css";
 
 const Login = () => {
   const [values, setValues] = useState({
@@ -97,6 +99,7 @@ const Login = () => {
   };
   return (
     <section className="login-section">
+      <div className="login-bg-background"></div>
       <div className="wrap login-wrap">
         <div className="popup-small-sec login-popup">
           <div className="popup-group">

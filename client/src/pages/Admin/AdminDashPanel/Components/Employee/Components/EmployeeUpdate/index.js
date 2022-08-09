@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { isAuthenticated } from "setup/auth";
+import { isAuthenticated } from "api/auth";
 import Cross from "assets/svg/cross-black.svg";
-import { addEmployeeOrder, getEmployees } from "pages/user";
+import { addEmployeeOrder, getEmployees } from "api/employee";
 
 const EmployeeUpdate = ({ order, setOrderEmployeeAssignActive }) => {
   const [employees, setEmployees] = useState([]);

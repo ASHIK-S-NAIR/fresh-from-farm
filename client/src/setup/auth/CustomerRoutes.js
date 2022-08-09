@@ -1,5 +1,5 @@
 import {useNavigate} from "react-router-dom";
-import {isAuthenticated} from "./index";
+import {isAuthenticated} from "../../api/auth/index";
 
 const CustomerRoutes = ({children}) => {
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { isAuthenticated, logout } from "setup/auth";
-import { getEmployeeStatus, updateEmployeeStatus } from "../../user/index";
+import { isAuthenticated, logout } from "api/auth";
+import { getEmployeeStatus, updateEmployeeStatus } from "api/employee";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCart } from "setup/redux-manager/actions/cartActions";
 

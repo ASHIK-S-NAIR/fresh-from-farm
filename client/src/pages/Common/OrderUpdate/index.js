@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { isAuthenticated } from "setup/auth";
+import { isAuthenticated } from "api/auth";
 import Cross from "assets/svg/cross-black.svg";
-import { adminUpdateOrderStatus, employeeUpdateOrderStatus } from "pages/user";
+import { adminUpdateOrderStatus, employeeUpdateOrderStatus } from "api/order";
 
 const OrderUpdate = ({ setOrderUpdateActive, order }) => {
   const [status, setStatus] = useState(order.Ostatus);

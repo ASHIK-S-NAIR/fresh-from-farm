@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { API } from "setup/backend-manager/backend";
+import { API } from "setup/backend-manager";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { getProduct, getAllProducts } from "../helper/productDetailHelper";
-import { isAuthenticated } from "setup/auth/index";
-import { addToUserCart } from "../../user";
+import { getProduct, getAllProducts } from "api/product";
+import { isAuthenticated } from "api/auth/index";
+import { addToUserCart } from "api/user";
 import { useDispatch } from "react-redux";
 import { fetchCart } from "setup/redux-manager/actions/cartActions";
+import "./style.css";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState();
@@ -139,22 +140,22 @@ const ProductDetail = () => {
             return (
               <Link to={`/product/${product._id}`} key={index}>
                 <div className="product-sec">
-                  <div
-                    className={`product-category-sec ${
-                      product.pCategory === "vegetable"
-                        ? "color-green"
-                        : "color-orange"
-                    }`}
-                  >
-                    <p className="product-category">
-                      {product.pCategory === "vegetable" ? "Veg" : "Fruit"}
-                    </p>
-                  </div>
-                  <img
-                    className="product-img"
-                    src={`${API}/product/photo/${product.pImg.key}`}
-                    alt=""
-                  />
+                  {product.pStock === 0 && (
+                    <div className="outOfStock">
+                      <div className="outOfStock-div">
+                        <p className="outOfStock-p">Out Of Stock</p>
+                      </div>
+                    </div>
+                  )}
+                  {product && (
+                    <img
+                      className="product-img"
+                      src={`${API}/product/photo/${product.pImg.key}`}
+                      alt=""
+                      loading="lazy"
+                    />
+                  )}
+
                   <div className="product-info">
                     <h2 className="product-name">{product.pName}</h2>
                     <h3 className="product-stock">

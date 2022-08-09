@@ -20,8 +20,8 @@ import ThankYou from "pages/Core/ThankYou";
 import AdminDashPanel from "pages/Admin/AdminDashPanel";
 import Footer from "pages/Core/Footer";
 import ScrollToTop from "../../ScrollToTop";
-import { getUserCart } from "pages/user";
-import { isAuthenticated } from "../auth";
+import { getUserCart } from "api/user";      
+import { isAuthenticated } from "../../api/auth";
 
 const Routes = () => {
   const [authActive, setAuthActive] = useState(null);

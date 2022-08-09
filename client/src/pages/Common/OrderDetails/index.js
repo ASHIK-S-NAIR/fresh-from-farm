@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { isAuthenticated } from "setup/auth";
+import { isAuthenticated } from "api/auth";
 import Cross from "assets/svg/cross-black.svg";
-import { getUser } from "pages/user";
+import { getUser } from "api/user";
+
+import "./style.css";
 
 const OrderDetails = ({ setOrderActive, order }) => {
   const [userDetails, setUserDetails] = useState();

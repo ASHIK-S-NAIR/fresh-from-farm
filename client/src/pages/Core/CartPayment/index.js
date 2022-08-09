@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
-import { isAuthenticated } from "setup/auth";
+import { isAuthenticated } from "api/auth";
+import { getUser, getUserCart } from "api/user";
 import {
-  getUserCart,
   createOrder,
-  getUser,
-  razorPayOrder,
   paymentVerify,
+  razorPayOrder,
   updateOrderConfirmation,
-} from "../../user";
+} from "api/order";
 
 export const CartPayment = () => {
   const { userId } = useParams();
@@ -65,7 +64,7 @@ export const CartPayment = () => {
         console.log(data.error);
       } else {
         // return (userDetails = data);
-        console.log("Userdata", data)
+        console.log("Userdata", data);
         return setValues({ ...values, userDetails: data });
       }
     } catch (error) {
@@ -87,9 +86,14 @@ export const CartPayment = () => {
           await handlePayment(total);
         } else {
           try {
-            const data = await updateOrderConfirmation(userId, token, order._id, {
-              Ostatus: "Ordered",
-            });
+            const data = await updateOrderConfirmation(
+              userId,
+              token,
+              order._id,
+              {
+                Ostatus: "Ordered",
+              }
+            );
             if (data.error) {
               return console.log(data.error);
             } else {
@@ -172,7 +176,9 @@ export const CartPayment = () => {
                   <label className="cardPayment-delivery-details-label">
                     Name
                   </label>
-                  <p className="cardPayment-delivery-details-value">{userDetails.name}</p>
+                  <p className="cardPayment-delivery-details-value">
+                    {userDetails.name}
+                  </p>
                 </div>
               </div>
               <div className="cardPayment-delivery-details-double-group">
@@ -187,7 +193,7 @@ export const CartPayment = () => {
                     Phone
                   </label>
                   <p className="cardPayment-delivery-details-value">
-                  {/* {userDetails.phoneNumber} */}
+                    {/* {userDetails.phoneNumber} */}
                   </p>
                 </div>
               </div>
@@ -200,7 +206,7 @@ export const CartPayment = () => {
                     House Name
                   </label>
                   <p className="cardPayment-delivery-details-value">
-                  {/* {userDetails.address.houseName} */}
+                    {/* {userDetails.address.houseName} */}
                   </p>
                 </div>
                 <div className="cardPayment-delivery-details-group">
@@ -208,7 +214,7 @@ export const CartPayment = () => {
                     Street Name
                   </label>
                   <p className="cardPayment-delivery-details-value">
-                  {/* {userDetails.address.streetName} */}
+                    {/* {userDetails.address.streetName} */}
                   </p>
                 </div>
               </div>

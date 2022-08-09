@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { isAuthenticated } from "setup/auth";
+import { isAuthenticated } from "api/auth";
 import CrossIcon from "assets/svg/cross-black.svg";
-import { deleteCustomer } from "pages/user";
+import { deleteCustomer } from "api/user";
 
 const DeleteCustomer = ({ setDeleteCustomerActive, customer }) => {
   const [value, setValue] = useState("");

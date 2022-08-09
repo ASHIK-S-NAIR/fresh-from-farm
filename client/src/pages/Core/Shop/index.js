@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import "./style.css";
 
 // importing Authentication function
-import { isAuthenticated } from "setup/auth";
+import { isAuthenticated } from "api/auth";
 
 // importing API
-import { API } from "setup/backend-manager/backend";
+import { API } from "setup/backend-manager";
 
 // importing API helper functions
-import { getAllProducts, productSearch } from "../helper/productDetailHelper";
+import { getAllProducts, productSearch } from "../../../api/product";
 
 // importing Images and Icons
 import DeliveryBoy from "assets/images/deliverboy-green.png";
@@ -369,19 +370,6 @@ const Shop = () => {
                             </div>
                           </div>
                         )}
-                        <div
-                          className={`product-category-sec ${
-                            product.pCategory === "vegetable"
-                              ? "color-green"
-                              : "color-orange"
-                          }`}
-                        >
-                          <p className="product-category">
-                            {product.pCategory === "vegetable"
-                              ? "Veg"
-                              : "Fruit"}
-                          </p>
-                        </div>
                         {product && (
                           <img
                             className="product-img"

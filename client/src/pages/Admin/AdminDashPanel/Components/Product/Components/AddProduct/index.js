@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { isAuthenticated } from "setup/auth";
+import { isAuthenticated } from "api/auth";
 import CrossIcon from "assets/svg/cross-black.svg";
-import { createProduct } from "pages/user";
+import { createProduct } from "api/product";
 
 const AddProduct = ({ setAddProductActive }) => {
   const [values, setValues] = useState({

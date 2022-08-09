@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { isAuthenticated } from "setup/auth";
+import { isAuthenticated } from "api/auth";
 import Cross from "assets/svg/cross-black.svg";
 import {
   adminUpdatePaymentStatus,
   employeeUpdatePaymentStatus,
-} from "pages/user";
+} from "api/order";
 
 const PaymentStatusUpdate = ({ setOrderUpdatePayment, order }) => {
   const [status, setStatus] = useState(order.OpaymentStatus);

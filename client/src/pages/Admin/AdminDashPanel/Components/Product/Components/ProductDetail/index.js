@@ -1,5 +1,5 @@
 import React from "react";
-import { API } from "setup/backend-manager/backend";
+import { API } from "setup/backend-manager";
 import CrossIcon from "assets/svg/cross-black.svg";
 import moment from "moment";
 

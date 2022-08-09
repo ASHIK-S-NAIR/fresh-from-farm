@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { isAuthenticated } from "setup/auth";
-import { getAllDeliveries } from "pages/user";
+import { isAuthenticated } from "api/auth";
+import { getAllDeliveries } from "api/employee";
 import ViewIcon from "assets/svg/view.svg";
 import EditIcon from "assets/svg/Edit.svg";
 import OrderDetails from "pages/Common/OrderDetails";

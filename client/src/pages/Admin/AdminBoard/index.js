@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { isAuthenticated } from "setup/auth";
-import { getUser } from "pages/user";
+import { isAuthenticated } from "api/auth";
+import { getUser } from "api/user";
 import Profile from "assets/svg/profile.svg";
 import Accounts from "pages/Core/Components/Accounts";
 import Settings from "pages/Core/Components/Settings";

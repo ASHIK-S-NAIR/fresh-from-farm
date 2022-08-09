@@ -1,7 +1,7 @@
 import React, { useState} from "react";
-import { isAuthenticated } from "setup/auth";
+import { isAuthenticated } from "api/auth";
 import CrossIcon from "assets/svg/cross-black.svg";
-import { createEmployee } from "pages/user";
+import { createEmployee } from "api/employee";
 
 const AddEmployee = ({ setAddEmployeeActive }) => {
   const [email, setEmail] = useState("");

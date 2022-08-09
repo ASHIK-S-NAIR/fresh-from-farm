@@ -1,6 +1,6 @@
-import { isAuthenticated } from "../../auth";
+import { isAuthenticated } from "../../../api/auth";
 import { ActionTypes } from "../../redux-manager/constants/action-types";
-import { API } from "../../backend-manager/backend";
+import { API } from "../../backend-manager";
 const { user, token } = isAuthenticated();
 
 export const fetchCart = () => async (dispatch) => {

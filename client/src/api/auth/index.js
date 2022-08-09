@@ -1,4 +1,4 @@
-import { API } from "../backend-manager/backend";
+import { API } from "../../setup/backend-manager";
 
 export const signup = async ({name, email, phoneNumber, password, address}) => {
   try{
@@ -9,10 +9,10 @@ export const signup = async ({name, email, phoneNumber, password, address}) => {
         "Content-Type": "application/json"
       }
     })
-    
+
     return result.json();
   }catch(error){
-    console.log(error);
+    return error;
   }
 }
 
@@ -28,7 +28,7 @@ export const login = async ({ email, password }) => {
 
     return result.json();
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 

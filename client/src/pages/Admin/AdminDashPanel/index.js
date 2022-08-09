@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { isAuthenticated } from "setup/auth";
-import { getUser } from "pages/user";
+import { isAuthenticated } from "api/auth";
+import { getUser } from "api/user";
 import DashboardIcon from "assets/svg/dashboard.svg";
 import DashboardActiveIcon from "assets/svg/dashboardActive.svg";
 import CartIcon from "assets/svg/cart.svg";

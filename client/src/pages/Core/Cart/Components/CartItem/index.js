@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { API } from "setup/backend-manager/backend";
+import { API } from "setup/backend-manager";
 import Trash from "assets/svg/Trash.svg";
-import { getProduct } from "pages/Core/helper/productDetailHelper";
+import { getProduct } from "api/product";
 import { useSelector } from "react-redux";
+
+import "./style.css";
 
 const CartItem = ({
   cartItemProductId,

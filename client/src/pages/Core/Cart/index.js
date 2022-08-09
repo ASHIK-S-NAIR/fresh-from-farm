@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { isAuthenticated } from "setup/auth";
-import {
-  deleteFromCart,
-  getUser,
-  updateFromUserCart,
-} from "pages/user";
+import { isAuthenticated } from "api/auth";
 import CartItem from "./Components/CartItem";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCart } from "setup/redux-manager/actions/cartActions";
+
+import "./style.css";
+import { deleteFromCart, getUser, updateFromUserCart } from "api/user";
 
 const Cart = () => {
   const cart = useSelector((state) => state.allCart.cart);
@@ -72,20 +70,6 @@ const Cart = () => {
     setSubTotal_items(cart.length);
   }, [cart]);
 
-  // const preLoadCart = async (userId, token) => {
-  //   try {
-  //     const data = await getUserCart(userId, token);
-  //     // return setCart(data.cart);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   console.log("reaching here awsome vini")
-  //   preLoadCart(userId, token);
-  // }, []);
-
   const updateQuantity = async (productId, quantity) => {
     try {
       const data = await updateFromUserCart(userId, token, {
@@ -96,7 +80,6 @@ const Cart = () => {
         console.log(data.error);
       } else {
         dispatch(fetchCart());
-        // return preLoadCart(userId, token);
       }
     } catch (error) {
       console.log(error);
@@ -110,27 +93,11 @@ const Cart = () => {
         return console.log(data.error);
       } else {
         dispatch(fetchCart());
-        // return preLoadCart(userId, token);
       }
     } catch (error) {
       console.log(error);
     }
   };
-
-  // const loadCartItems = (cart) => {
-  //   console.log("cartItem", cart)
-  //   cart.map((cartItem, index) => {
-  //     return (
-  //       <CartItem
-  //         cartItemProductId={cartItem.product._id}
-  //         cartItemQuantity={cartItem.quantity}
-  //         key={index}
-  //         updateQuantity={updateQuantity}
-  //         deleteProduct={deleteProduct}
-  //       />
-  //     );
-  //   });
-  // };
 
   const handleChange = (name) => (e) => {
     setShippingAddress({ ...shippingAddress, [name]: e.target.value });
@@ -144,7 +111,6 @@ const Cart = () => {
         </div>
         <div className="cart-subsection">
           <div className="cartDetail-sec">
-            {/* <div className="cartDetail-sec-hr"></div> */}
             {cart &&
               cart.map((cartItem, index) => {
                 return (

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { isAuthenticated } from "setup/auth";
-import { getUserOrders } from "pages/user";
+import { isAuthenticated } from "api/auth";
+import { getUserOrders } from "api/user";
 import ViewIcon from "assets/svg/view.svg";
 import moment from "moment";
 import OrderDetails from "pages/Common/OrderDetails";

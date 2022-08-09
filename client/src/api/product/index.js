@@ -1,4 +1,4 @@
-import { API } from "setup/backend-manager/backend";
+import { API } from "setup/backend-manager";
 
 // getProduct
 export const getProduct = async (productId) => {
@@ -11,7 +11,7 @@ export const getProduct = async (productId) => {
     }).then((res) => res.json());
     return result;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 
@@ -27,7 +27,6 @@ export const getAllProducts = async (category) => {
 
     return result;
   } catch (error) {
-    console.log(error);
     return error;
   }
 };
@@ -47,7 +46,6 @@ export const updateProduct = async (userId, token, productId, values) => {
 
     return result;
   } catch (error) {
-    console.log(error);
     return error;
   }
 };
@@ -59,7 +57,6 @@ export const updateProductWithImage = async (
   productId,
   formData
 ) => {
-  console.log("formData type", typeof formData);
   try {
     const result = await fetch(
       `${API}/product/updateproductwithimage/${productId}/${userId}`,
@@ -75,7 +72,6 @@ export const updateProductWithImage = async (
 
     return result;
   } catch (error) {
-    console.log("error", error.message);
     return error;
   }
 };
@@ -108,6 +104,41 @@ export const productSearch = async (page, limit, category, search, sort) => {
         },
       }
     ).then((res) => res.json());
+
+    return result;
+  } catch (error) {
+    return error;
+  }
+};
+
+// countProducts
+export const getCountProducts = async (userId, token) => {
+  try {
+    const result = await fetch(`${API}/products/countproducts/${userId}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((res) => res.json());
+
+    return result;
+  } catch (error) {
+    return error;
+  }
+};
+
+// createProduct
+export const createProduct = async (userId, token, formData) => {
+  try {
+    const result = await fetch(`${API}/product/create/${userId}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    }).then((res) => res.json());
 
     return result;
   } catch (error) {

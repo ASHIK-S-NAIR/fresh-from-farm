@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
-import { getAllOrders } from "pages/user";
-import { isAuthenticated } from "setup/auth";
+import { getAllOrders } from "api/order";
+import { isAuthenticated } from "api/auth";
 import ViewIcon from "assets/svg/view.svg";
 import EditIcon from "assets/svg/Edit.svg";
 import OrderDetails from "pages/Common/OrderDetails";

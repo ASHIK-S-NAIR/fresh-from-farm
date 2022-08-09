@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { isAuthenticated, logout } from "setup/auth";
-import { changePassword } from "../../../user";
+import { isAuthenticated, logout } from "api/auth";
+import { changePassword } from "api/user";
 
 const Settings = () => {
   const { userId } = useParams();

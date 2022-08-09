@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { isAuthenticated } from "setup/auth";
-import { deleteProduct } from "pages/Core/helper/productDetailHelper";
+import { isAuthenticated } from "api/auth";
+import { deleteProduct } from "api/product";
 import CrossIcon from "assets/svg/cross-black.svg";
 
 const DeleteProduct = ({ setDeleteProductActive, product }) => {

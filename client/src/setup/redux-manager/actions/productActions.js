@@ -1,4 +1,4 @@
-import { isAuthenticated } from "../../auth";
+import { isAuthenticated } from "../../../api/auth";
 import { ActionTypes } from "../constants/action-types";
 
 export const fetchProducts = () => async (dispatch) => {

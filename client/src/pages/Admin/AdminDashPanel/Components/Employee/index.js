@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import ViewIcon from "assets/svg/view.svg";
 import TrashIcon from "assets/svg/Trash.svg";
 import AddIcon from "assets/svg/add.svg";
-import { isAuthenticated } from "setup/auth";
+import { isAuthenticated } from "api/auth";
 import moment from "moment";
 import AddEmployee from "./Components/AddEmployee";
 import EmployeeDetail from "./Components/EmployeeDetail";
 import DeleteEmployee from "./Components/DeleteEmployee";
-import { getEmployees } from "pages/user";
+import { getEmployees } from "api/employee";
 
 const Employee = () => {
   const [employees, setEmployees] = useState([]);

@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { isAuthenticated } from "setup/auth";
+import { isAuthenticated } from "api/auth";
 import { AccountsContext } from "setup/context-manager/Context";
-import { updateUser, getUser } from "pages/user";
+import { updateUser, getUser } from "api/user";
 import Cross from "assets/svg/cross-black.svg";
 
 const EditPersonalInformation = () => {

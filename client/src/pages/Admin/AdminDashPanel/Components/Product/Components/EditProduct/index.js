@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { isAuthenticated } from "setup/auth";
+import { isAuthenticated } from "api/auth";
 import {
   getProduct,
   updateProduct,
   updateProductWithImage,
-} from "pages/Core/helper/productDetailHelper";
+} from "api/product";
 import CrossIcon from "assets/svg/cross-black.svg";
 
 const EditProduct = ({ setEditProductActive, product }) => {
