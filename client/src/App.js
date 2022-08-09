@@ -1,5 +1,5 @@
 import React from "react";
-import Routes from "./setup/routes-manager/Routes";
+import Routes from "./setup/routes-manager";
 import { Provider } from "react-redux";
 import store from "./setup/redux-manager/store";
 

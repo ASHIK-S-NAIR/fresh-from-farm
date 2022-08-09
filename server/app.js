@@ -26,9 +26,6 @@ app.use(cors());
 //DB connection
 mongoose
   .connect(process.env.DATABASE, {
-    useNewUrlParser: true,
-    // useUnifiedTopoloy: true,
-    // useCreateIndex: true
   })
   .then(() => {
     console.log("DB connected");
