@@ -92,7 +92,6 @@ const AdminBoard = () => {
         </div>
         <div className="userBoard-right">
           {tabActive === "accounts" && <Accounts />}
-          {/* {tabActive === "orders" && <Orders userValues={values} />} */}
           {tabActive === "settings" && <Settings />}
         </div>
       </div>

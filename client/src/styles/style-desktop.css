@@ -1311,7 +1311,6 @@ body::-webkit-scrollbar-thumb:hover {
   min-height: calc(100vh - 5em);
   grid-template-columns: 23% auto;
   column-gap: 2em;
-  /* border: 10px solid mediumorchid; */
 }
 
 .userBoard-left {
@@ -1319,12 +1318,10 @@ body::-webkit-scrollbar-thumb:hover {
   flex-direction: column;
   width: 100%;
   height: auto;
-  /* background-color: #ebf1f1; */
   position: sticky;
 }
 
 .userBoard-user-detail {
-  /* background-color: var(--primary-color); */
   border: 1px dashed var(--primary-color);
   color: var(--primary-color);
   width: 100%;
@@ -1374,7 +1371,6 @@ body::-webkit-scrollbar-thumb:hover {
 
 .userBoard-left-li {
   width: 100%;
-  /* border: 1px solid red; */
   padding: 0.5em;
 }
 
@@ -1396,17 +1392,11 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .userBoard-left-tag.active {
-  /* background-color: #d3e4e5; */
-  /* background-color: #2657f7; */
-  /* background-color: var(--main-color); */
   background-color: var(--main-color);
-  /* background-color: #f7cc01; */
-  /* color: #2a5b77; */
   color: #fff;
 }
 
 .userBoard-right {
-  /* background-color: blue; */
   height: 100%;
   width: 100%;
 }
@@ -1416,7 +1406,6 @@ body::-webkit-scrollbar-thumb:hover {
   height: 100%;
   padding-left: 1.5em;
   padding-top: 2.5em;
-  /* background-color: red; */
 }
 
 .userBoard-right-header {
@@ -1429,7 +1418,6 @@ body::-webkit-scrollbar-thumb:hover {
 .userBoard-right-subSec {
   margin-bottom: 3em;
   width: 100%;
-  /* border: 1px solid red; */
 }
 
 .userBoard-right-subSec-small {

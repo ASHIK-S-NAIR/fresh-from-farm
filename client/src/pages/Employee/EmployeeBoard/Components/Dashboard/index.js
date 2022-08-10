@@ -90,8 +90,8 @@ const Dashboard = () => {
   }, [orderUpdateActive, orderUpdatePayment]);
 
   return (
-    <section className="employeeBoard-section">
-      <div className="-right-subsection dashboard-subSection">
+    <section className="userBoard-right-section employeeBoard-dashboard-section">
+      <div className="right-subsection dashboard-subSection">
         <div className="employeeBoard-dashboard-status-sec dashboard-status-sec-TotalDeliveries">
           <div className="adminDashPanel-dashboard-status-left">
             <p className="dashboard-status-tag">Orders</p>
